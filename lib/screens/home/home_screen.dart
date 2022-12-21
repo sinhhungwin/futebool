@@ -52,22 +52,35 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          UserCard(user: User.users[0]),
+          Draggable(
+            child: UserCard(user: User.users[0]),
+            feedback: UserCard(user: User.users[0]),
+            childWhenDragging: UserCard(user: User.users[1]),
+            onDragEnd: (drag) {
+              if (drag.velocity.pixelsPerSecond.dx < 0) {
+                // Swiped Left
+                print('Swipe Left');
+              } else {
+                // Swiped Right
+                print('Swipe Right');
+              }
+            },
+          ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 60),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 60),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ChoiceButton(
                   size: 25,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   icon: Icons.clear_rounded,
                   height: 60,
                   width: 60,
                 ),
                 ChoiceButton(
                   size: 30,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   icon: Icons.favorite,
                   height: 80,
                   width: 80,
@@ -86,47 +99,6 @@ class HomeScreen extends StatelessWidget {
       ),
 
       // bottomNavigationBar: const CustomNavBar(),
-    );
-  }
-}
-
-class ChoiceButton extends StatelessWidget {
-  final double width;
-  final double height;
-  final double size;
-  final Color color;
-  final IconData icon;
-
-  const ChoiceButton(
-      {Key? key,
-      required this.width,
-      required this.height,
-      required this.size,
-      required this.color,
-      required this.icon})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withAlpha(50),
-            spreadRadius: 4,
-            blurRadius: 4,
-            offset: Offset(3, 3),
-          ),
-        ],
-      ),
-      child: Icon(
-        icon,
-        color: color,
-      ),
     );
   }
 }

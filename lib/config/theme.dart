@@ -5,11 +5,12 @@ const primaryColor = Color(0xFF2B2E4A);
 ThemeData theme() {
   return ThemeData(
     primaryColor: primaryColor,
-    accentColor: const Color(0xFFE84545),
     scaffoldBackgroundColor: Colors.white,
     backgroundColor: const Color(0xFFF4F4F4),
     fontFamily: 'Optima',
     textTheme: textTheme(),
+    colorScheme:
+        ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFFE84545)),
   );
 }
 
