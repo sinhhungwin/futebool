@@ -3,7 +3,7 @@ import 'package:futebol/screens/base_screen.dart';
 import 'package:futebol/widgets/choice_button.dart';
 
 import '../../enums/view_state.dart';
-import '../../models/user/models.dart';
+import '../../models/models.dart';
 import '../../scoped_models/models.dart';
 
 class UserScreen extends StatelessWidget {

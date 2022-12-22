@@ -5,7 +5,7 @@ import 'package:futebol/screens/screens.dart';
 import 'package:futebol/widgets/widgets.dart';
 
 import '../../enums/view_state.dart';
-import '../../models/user/models.dart';
+import '../../models/models.dart';
 import '../base_screen.dart';
 
 class HomeScreen extends StatelessWidget {
