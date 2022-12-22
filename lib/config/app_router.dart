@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:futebol/models/models.dart';
 import 'package:futebol/screens/screens.dart';
 import 'package:futebol/widgets/custom_appbar.dart';
 
@@ -15,7 +16,7 @@ class AppRouter {
       case MatchScreen.routeName:
         return MatchScreen.route();
       case UserScreen.routeName:
-        return UserScreen.route();
+        return UserScreen.route(user: settings.arguments as User);
       case ChatScreen.routeName:
         return ChatScreen.route();
 

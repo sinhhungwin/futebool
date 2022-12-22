@@ -35,6 +35,7 @@ class ChoiceButton extends StatelessWidget {
       ),
       child: Icon(
         icon,
+        size: size,
         color: color,
       ),
     );

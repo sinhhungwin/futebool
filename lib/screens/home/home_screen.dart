@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:futebol/scoped_models/home_model.dart';
+import 'package:futebol/screens/screens.dart';
 import 'package:futebol/widgets/widgets.dart';
 
 import '../../enums/view_state.dart';
@@ -66,25 +67,31 @@ class HomeScreen extends StatelessWidget {
               case ViewState.retrieved:
                 return Column(
                   children: [
-                    Draggable(
-                      feedback: UserCard(user: model.currentUser),
-                      childWhenDragging: UserCard(user: model.nextUser),
-                      onDragEnd: (drag) {
-                        if (drag.velocity.pixelsPerSecond.dx < 0) {
-                          // Swiped Left
-                          if (kDebugMode) {
-                            model.swipeLeft();
-                            print('Swipe Left');
-                          }
-                        } else {
-                          // Swiped Right
-                          if (kDebugMode) {
-                            model.swipeRight();
-                            print('Swipe Right');
-                          }
-                        }
+                    InkWell(
+                      onDoubleTap: () {
+                        Navigator.pushNamed(context, UserScreen.routeName,
+                            arguments: model.currentUser);
                       },
-                      child: UserCard(user: model.currentUser),
+                      child: Draggable(
+                        feedback: UserCard(user: model.currentUser),
+                        childWhenDragging: UserCard(user: model.nextUser),
+                        onDragEnd: (drag) {
+                          if (drag.velocity.pixelsPerSecond.dx < 0) {
+                            // Swiped Left
+                            if (kDebugMode) {
+                              model.swipeLeft();
+                              print('Swipe Left');
+                            }
+                          } else {
+                            // Swiped Right
+                            if (kDebugMode) {
+                              model.swipeRight();
+                              print('Swipe Right');
+                            }
+                          }
+                        },
+                        child: UserCard(user: model.currentUser),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -105,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                           InkWell(
                             onTap: () => model.swipeRight(),
                             child: ChoiceButton(
-                              size: 30,
+                              size: 40,
                               color: Theme.of(context).colorScheme.secondary,
                               icon: Icons.favorite,
                               height: 80,
