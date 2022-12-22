@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:futebol/models/models.dart';
+import 'package:futebol/screens/onboarding/onboarding_screen.dart';
 import 'package:futebol/screens/screens.dart';
 import 'package:futebol/widgets/custom_appbar.dart';
 
@@ -19,7 +20,8 @@ class AppRouter {
         return UserScreen.route(user: settings.arguments as User);
       case ChatScreen.routeName:
         return ChatScreen.route();
-
+      case OnboardingScreen.routeName:
+        return OnboardingScreen.route();
       default:
         return _errorRoute();
     }

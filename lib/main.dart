@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Futebol',
       theme: theme(),
       onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: HomeScreen.routeName,
+      initialRoute: OnboardingScreen.routeName,
       debugShowCheckedModeBanner: false,
     );
   }
