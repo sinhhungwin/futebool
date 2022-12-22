@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:futebol/models/models.dart';
-import 'package:futebol/screens/onboarding/onboarding_screen.dart';
 import 'package:futebol/screens/screens.dart';
 import 'package:futebol/widgets/custom_appbar.dart';
 

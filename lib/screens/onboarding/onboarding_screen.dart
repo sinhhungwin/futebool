@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:futebol/screens/onboarding/email_verification_screen.dart';
+import 'package:futebol/screens/onboarding/screen2_email_verification.dart';
 import 'package:futebol/widgets/custom_appbar.dart';
 
 import '../../scoped_models/models.dart';
 import '../base_screen.dart';
-import 'bio_screen.dart';
-import 'email_screen.dart';
-import 'picture_screen.dart';
-import 'start_screen.dart';
+import 'screen0_start.dart';
+import 'screen1_email.dart';
+import 'screen3_picture.dart';
+import 'screen4_bio.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  static const String routeName = '/template';
+  static const String routeName = '/onboard';
 
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (_) => OnboardingScreen(),
+      builder: (_) => const OnboardingScreen(),
     );
   }
 
@@ -55,7 +55,7 @@ class OnboardingScreen extends StatelessWidget {
             });
 
             return Scaffold(
-              appBar: CustomAppBar(
+              appBar: const CustomAppBar(
                 title: 'futebol',
                 hasActions: false,
               ),

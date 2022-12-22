@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:futebol/enums/view_state.dart';
 import 'package:futebol/service_locator.dart';
 import 'package:futebol/services/api.dart';
@@ -26,7 +27,9 @@ class HomeModel extends BaseModel {
   swipeLeft() {
     currentUser = nextUser;
     int nextIndex = (users.indexOf(nextUser) + 1) % 3;
-    print('nextIndex = $nextIndex');
+    if (kDebugMode) {
+      print('nextIndex = $nextIndex');
+    }
     nextUser = users[nextIndex];
     notifyListeners();
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-import 'custom_button.dart';
-import 'custom_img_container.dart';
-import 'custom_text_header.dart';
+import 'widget_custom_button.dart';
+import 'widget_custom_img_container.dart';
+import 'widget_custom_text_header.dart';
 
 class Picture extends StatelessWidget {
   final TabController tabController;
@@ -13,7 +13,7 @@ class Picture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -22,7 +22,7 @@ class Picture extends StatelessWidget {
             children: [
               CustomTextHeader(
                   tabController: tabController, text: "Add 2 or More Pictures"),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(

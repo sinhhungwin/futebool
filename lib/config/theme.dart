@@ -7,7 +7,7 @@ ThemeData theme() {
     primaryColor: primaryColor,
     scaffoldBackgroundColor: Colors.white,
     backgroundColor: const Color(0xFFF4F4F4),
-    fontFamily: 'Optima',
+    fontFamily: 'Montserrat',
     textTheme: textTheme(),
     colorScheme:
         ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFFE84545)),
@@ -17,7 +17,10 @@ ThemeData theme() {
 TextTheme textTheme() {
   return const TextTheme(
     headline1: TextStyle(
-        color: primaryColor, fontSize: 36, fontWeight: FontWeight.bold),
+        fontFamily: 'Merriweather',
+        color: primaryColor,
+        fontSize: 36,
+        fontWeight: FontWeight.bold),
     headline2: TextStyle(
         color: primaryColor, fontSize: 24, fontWeight: FontWeight.bold),
     headline3: TextStyle(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-import 'custom_button.dart';
-import 'custom_text_field.dart';
-import 'custom_text_header.dart';
+import 'widget_custom_button.dart';
+import 'widget_custom_text_field.dart';
+import 'widget_custom_text_header.dart';
 
 class Bio extends StatelessWidget {
   final TabController tabController;
@@ -13,7 +13,7 @@ class Bio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -24,7 +24,7 @@ class Bio extends StatelessWidget {
                   tabController: tabController, text: "What's is Your Name?"),
               CustomTextField(
                   tabController: tabController, text: "ENTER YOUR NAME"),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
               CustomTextHeader(

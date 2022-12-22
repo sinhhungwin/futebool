@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'custom_button.dart';
+import 'widget_custom_button.dart';
 
 class Start extends StatelessWidget {
   final TabController tabController;
@@ -10,25 +10,25 @@ class Start extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             children: [
-              Container(
+              SizedBox(
                 height: 200,
                 width: 200,
                 child: Image.asset('assets/team.png'),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
                 'Welcome to Futebol',
                 style: Theme.of(context).textTheme.headline2,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Padding(
