@@ -1,6 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:futebol/models/models.dart';
+import 'package:futebol/scoped_models/home_model.dart';
 import 'package:futebol/widgets/widgets.dart';
+
+import '../../enums/view_state.dart';
+import '../../models/models.dart';
+import '../base_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/';
@@ -50,55 +55,88 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Draggable(
-            child: UserCard(user: User.users[0]),
-            feedback: UserCard(user: User.users[0]),
-            childWhenDragging: UserCard(user: User.users[1]),
-            onDragEnd: (drag) {
-              if (drag.velocity.pixelsPerSecond.dx < 0) {
-                // Swiped Left
-                print('Swipe Left');
-              } else {
-                // Swiped Right
-                print('Swipe Right');
-              }
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 60),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ChoiceButton(
-                  size: 25,
-                  color: Theme.of(context).colorScheme.secondary,
-                  icon: Icons.clear_rounded,
-                  height: 60,
-                  width: 60,
-                ),
-                ChoiceButton(
-                  size: 30,
-                  color: Theme.of(context).colorScheme.secondary,
-                  icon: Icons.favorite,
-                  height: 80,
-                  width: 80,
-                ),
-                ChoiceButton(
-                  size: 25,
-                  color: Theme.of(context).primaryColor,
-                  icon: Icons.watch_later,
-                  height: 60,
-                  width: 60,
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+      body: BaseScreen<HomeModel>(
+          onModelReady: (model) => model.onModelReady(User.users),
+          builder: (context, child, model) {
+            switch (model.state) {
+              case ViewState.busy:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case ViewState.retrieved:
+                return Column(
+                  children: [
+                    Draggable(
+                      feedback: UserCard(user: model.currentUser),
+                      childWhenDragging: UserCard(user: model.nextUser),
+                      onDragEnd: (drag) {
+                        if (drag.velocity.pixelsPerSecond.dx < 0) {
+                          // Swiped Left
+                          if (kDebugMode) {
+                            model.swipeLeft();
+                            print('Swipe Left');
+                          }
+                        } else {
+                          // Swiped Right
+                          if (kDebugMode) {
+                            model.swipeRight();
+                            print('Swipe Right');
+                          }
+                        }
+                      },
+                      child: UserCard(user: model.currentUser),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 60),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () => model.swipeLeft(),
+                            child: ChoiceButton(
+                              size: 25,
+                              color: Theme.of(context).colorScheme.secondary,
+                              icon: Icons.clear_rounded,
+                              height: 60,
+                              width: 60,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => model.swipeRight(),
+                            child: ChoiceButton(
+                              size: 30,
+                              color: Theme.of(context).colorScheme.secondary,
+                              icon: Icons.favorite,
+                              height: 80,
+                              width: 80,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => model.swipeLeft(),
+                            child: ChoiceButton(
+                              size: 25,
+                              color: Theme.of(context).primaryColor,
+                              icon: Icons.watch_later,
+                              height: 60,
+                              width: 60,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                );
 
-      // bottomNavigationBar: const CustomNavBar(),
+              case ViewState.error:
+                return const Center(
+                  child: Text('Something went wrong'),
+                );
+
+              default:
+                return const Scaffold();
+            }
+          }),
     );
   }
 }

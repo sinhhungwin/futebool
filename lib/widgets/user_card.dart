@@ -75,13 +75,13 @@ class UserCard extends StatelessWidget {
                       UserImageSmall(url: user.imageUrls[1]),
                       UserImageSmall(url: user.imageUrls[1]),
                       UserImageSmall(url: user.imageUrls[1]),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Container(
                         width: 35,
                         height: 35,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             shape: BoxShape.circle, color: Colors.white),
                         child: Icon(
                           Icons.info_outline,
