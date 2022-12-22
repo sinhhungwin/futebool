@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:futebol/scoped_models/home_model.dart';
+import 'package:futebol/scoped_models/home/home_model.dart';
 import 'package:futebol/screens/screens.dart';
 import 'package:futebol/widgets/widgets.dart';
 
 import '../../enums/view_state.dart';
-import '../../models/models.dart';
+import '../../models/user/models.dart';
 import '../base_screen.dart';
 
 class HomeScreen extends StatelessWidget {

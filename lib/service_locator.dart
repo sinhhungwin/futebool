@@ -1,7 +1,6 @@
-import 'package:futebol/scoped_models/home_model.dart';
 import 'package:get_it/get_it.dart';
 
-import 'scoped_models/user_model.dart';
+import 'scoped_models/models.dart';
 import 'services/api.dart';
 
 GetIt locator = GetIt.instance;

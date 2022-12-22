@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:futebol/models/models.dart';
+import 'package:futebol/models/user/models.dart';
 
 import 'user_img_small.dart';
 
