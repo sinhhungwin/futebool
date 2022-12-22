@@ -17,9 +17,11 @@ class Bio extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // Name and Bio
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Enter Name
               CustomTextHeader(
                   tabController: tabController, text: "What's is Your Name?"),
               CustomTextField(
@@ -27,6 +29,8 @@ class Bio extends StatelessWidget {
               const SizedBox(
                 height: 100,
               ),
+
+              // Enter Bio
               CustomTextHeader(
                   tabController: tabController,
                   text: "Tell Us About Your Team?"),
@@ -35,13 +39,22 @@ class Bio extends StatelessWidget {
                   text: "ENTER YOUR TEAM DESCRIPTION"),
             ],
           ),
-          StepProgressIndicator(
-            totalSteps: 5,
-            currentStep: 4,
-            selectedColor: Theme.of(context).primaryColor,
-            unselectedColor: Theme.of(context).backgroundColor,
+
+          // To next onboarding screen
+          Column(
+            children: [
+              StepProgressIndicator(
+                totalSteps: 5,
+                currentStep: 4,
+                selectedColor: Theme.of(context).primaryColor,
+                unselectedColor: Theme.of(context).backgroundColor,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomButton(tabController: tabController, title: 'Next Step')
+            ],
           ),
-          CustomButton(tabController: tabController, title: 'Next Step')
         ],
       ),
     );

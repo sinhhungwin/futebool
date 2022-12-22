@@ -17,6 +17,7 @@ class Email extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // Enter Email
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -27,13 +28,22 @@ class Email extends StatelessWidget {
                   tabController: tabController, text: "ENTER YOUR EMAIL"),
             ],
           ),
-          StepProgressIndicator(
-            totalSteps: 5,
-            currentStep: 1,
-            selectedColor: Theme.of(context).primaryColor,
-            unselectedColor: Theme.of(context).backgroundColor,
-          ),
-          CustomButton(tabController: tabController, title: 'Next Step')
+
+          // To next onboarding screen
+          Column(
+            children: [
+              StepProgressIndicator(
+                totalSteps: 5,
+                currentStep: 1,
+                selectedColor: Theme.of(context).primaryColor,
+                unselectedColor: Theme.of(context).backgroundColor,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomButton(tabController: tabController, title: 'Next Step'),
+            ],
+          )
         ],
       ),
     );

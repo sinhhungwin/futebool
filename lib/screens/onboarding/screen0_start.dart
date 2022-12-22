@@ -24,6 +24,8 @@ class Start extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+
+              // Welcome Text
               Text(
                 'Welcome to Futebol',
                 style: Theme.of(context).textTheme.headline2,
@@ -31,6 +33,9 @@ class Start extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+
+              // TODO: Update this description to be more attractive
+              // Project Description
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
@@ -44,6 +49,8 @@ class Start extends StatelessWidget {
               ),
             ],
           ),
+
+          // To next onboarding screen
           CustomButton(tabController: tabController, title: 'Start')
         ],
       ),

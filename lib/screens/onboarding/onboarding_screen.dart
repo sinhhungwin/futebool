@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:futebol/screens/onboarding/screen2_email_verification.dart';
-import 'package:futebol/widgets/custom_appbar.dart';
 
 import '../../scoped_models/models.dart';
+import '../../widgets/widgets.dart';
 import '../base_screen.dart';
 import 'screen0_start.dart';
 import 'screen1_email.dart';
+import 'screen2_email_verification.dart';
 import 'screen3_picture.dart';
 import 'screen4_bio.dart';
 
@@ -72,23 +72,6 @@ class OnboardingScreen extends StatelessWidget {
           },
         ),
       );
-      // ,
-      // switch (model.state) {
-      //   case ViewState.busy:
-      //
-      //   case ViewState.retrieved:
-      //     return Scaffold(
-      //         appBar: CustomAppBar(
-      //           title: 'futebol',
-      //           hasActions: false,
-      //         ),
-      //         body: Text('Retrieved'));
-      //
-      //   case ViewState.error:
-      //
-      //   default:
-      //     return const Scaffold();
-      // }
     });
   }
 }

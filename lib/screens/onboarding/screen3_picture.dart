@@ -17,6 +17,7 @@ class Picture extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // Team pics
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -25,6 +26,10 @@ class Picture extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+
+              // Minimum 2 pics, Maximum 6 pics
+              // 3 pics each row
+              // First row of pics
               Row(
                 children: [
                   CustomImageContainer(tabController: tabController),
@@ -32,6 +37,8 @@ class Picture extends StatelessWidget {
                   CustomImageContainer(tabController: tabController),
                 ],
               ),
+
+              // Second row of pics
               Row(
                 children: [
                   CustomImageContainer(tabController: tabController),
@@ -41,13 +48,22 @@ class Picture extends StatelessWidget {
               ),
             ],
           ),
-          StepProgressIndicator(
-            totalSteps: 5,
-            currentStep: 3,
-            selectedColor: Theme.of(context).primaryColor,
-            unselectedColor: Theme.of(context).backgroundColor,
+
+          // To next onboarding screen
+          Column(
+            children: [
+              StepProgressIndicator(
+                totalSteps: 5,
+                currentStep: 3,
+                selectedColor: Theme.of(context).primaryColor,
+                unselectedColor: Theme.of(context).backgroundColor,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomButton(tabController: tabController, title: 'Next Step')
+            ],
           ),
-          CustomButton(tabController: tabController, title: 'Next Step')
         ],
       ),
     );

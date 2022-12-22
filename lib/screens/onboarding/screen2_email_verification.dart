@@ -18,6 +18,7 @@ class EmailVerification extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // Enter Verification Code
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -28,13 +29,22 @@ class EmailVerification extends StatelessWidget {
                   tabController: tabController, text: "ENTER YOUR CODE"),
             ],
           ),
-          StepProgressIndicator(
-            totalSteps: 5,
-            currentStep: 2,
-            selectedColor: Theme.of(context).primaryColor,
-            unselectedColor: Theme.of(context).backgroundColor,
+
+          // To next onboarding screen
+          Column(
+            children: [
+              StepProgressIndicator(
+                totalSteps: 5,
+                currentStep: 2,
+                selectedColor: Theme.of(context).primaryColor,
+                unselectedColor: Theme.of(context).backgroundColor,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomButton(tabController: tabController, title: 'Next Step')
+            ],
           ),
-          CustomButton(tabController: tabController, title: 'Next Step')
         ],
       ),
     );
