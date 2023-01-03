@@ -12,6 +12,9 @@ class Bio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       child: Column(
@@ -25,7 +28,10 @@ class Bio extends StatelessWidget {
               CustomTextHeader(
                   tabController: tabController, text: "What's is Your Name?"),
               CustomTextField(
-                  tabController: tabController, text: "ENTER YOUR NAME"),
+                tabController: tabController,
+                text: "ENTER YOUR NAME",
+                controller: nameController,
+              ),
               const SizedBox(
                 height: 100,
               ),
@@ -35,8 +41,10 @@ class Bio extends StatelessWidget {
                   tabController: tabController,
                   text: "Tell Us About Your Team?"),
               CustomTextField(
-                  tabController: tabController,
-                  text: "ENTER YOUR TEAM DESCRIPTION"),
+                tabController: tabController,
+                text: "ENTER YOUR TEAM DESCRIPTION",
+                controller: descriptionController,
+              ),
             ],
           ),
 
@@ -52,7 +60,10 @@ class Bio extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              CustomButton(tabController: tabController, title: 'Next Step')
+              CustomButton(
+                tabController: tabController,
+                title: 'Next Step',
+              )
             ],
           ),
         ],
