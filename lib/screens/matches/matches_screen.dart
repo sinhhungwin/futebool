@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futebol/screens/chat/chat_screen.dart';
 import 'package:futebol/widgets/widgets.dart';
 
 import '../../models/models.dart';
@@ -73,46 +74,54 @@ class MatchScreen extends StatelessWidget {
               ListView.builder(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      // Avatar Pic
-                      UserImageSmall(
-                          url:
-                              activeMatches[index].matchedUser.imageUrls.first),
+                  return InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, ChatScreen.routeName,
+                          arguments: activeMatches[index]);
+                    },
+                    child: Row(
+                      children: [
+                        // Avatar Pic
+                        UserImageSmall(
+                            url: activeMatches[index]
+                                .matchedUser
+                                .imageUrls
+                                .first),
 
-                      // Other info
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Name
-                          Text(
-                            activeMatches[index].matchedUser.name,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                        // Other info
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Name
+                            Text(
+                              activeMatches[index].matchedUser.name,
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
 
-                          // Last chat message
-                          Text(
-                            activeMatches[index].chat![0].messages[0].message,
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                            // Last chat message
+                            Text(
+                              activeMatches[index].chat![0].messages[0].message,
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
 
-                          // Last chat time
-                          Text(
-                            activeMatches[index]
-                                .chat![0]
-                                .messages[0]
-                                .timeString,
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        ],
-                      )
-                    ],
+                            // Last chat time
+                            Text(
+                              activeMatches[index]
+                                  .chat![0]
+                                  .messages[0]
+                                  .timeString,
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   );
                 },
                 itemCount: activeMatches.length,
