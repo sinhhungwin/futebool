@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
+import '../../widgets/widget_custom_img_container.dart';
 import 'widget_custom_button.dart';
-import 'widget_custom_img_container.dart';
 import 'widget_custom_text_header.dart';
 
 class Picture extends StatelessWidget {

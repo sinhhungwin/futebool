@@ -43,73 +43,66 @@ class ChatScreen extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: userMatch.chat != null
-                  ? Container(
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: userMatch.chat![0].messages.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: userMatch
-                                          .chat![0].messages[index].senderId ==
-                                      1
-                                  ? Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: userMatch.chat![0].messages.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: userMatch.chat![0].messages[index].senderId ==
+                                  1
+                              ? Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                        color:
+                                            Theme.of(context).backgroundColor),
+                                    child: Text(
+                                      userMatch
+                                          .chat![0].messages[index].message,
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                  ),
+                                )
+                              : Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 15,
+                                        backgroundImage: NetworkImage(userMatch
+                                            .matchedUser.imageUrls.first),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
                                         padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 const BorderRadius.all(
                                               Radius.circular(8),
                                             ),
-                                            color: Theme.of(context)
-                                                .backgroundColor),
+                                            color:
+                                                Theme.of(context).primaryColor),
                                         child: Text(
                                           userMatch
                                               .chat![0].messages[index].message,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline6,
+                                              .headline6!
+                                              .copyWith(color: Colors.white),
                                         ),
                                       ),
-                                    )
-                                  : Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Row(
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 15,
-                                            backgroundImage: NetworkImage(
-                                                userMatch.matchedUser.imageUrls
-                                                    .first),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(8),
-                                                ),
-                                                color: Theme.of(context)
-                                                    .primaryColor),
-                                            child: Text(
-                                              userMatch.chat![0].messages[index]
-                                                  .message,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline6!
-                                                  .copyWith(
-                                                      color: Colors.white),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                            );
-                          }),
-                    )
+                                    ],
+                                  ),
+                                ),
+                        );
+                      })
                   : const SizedBox(),
             ),
           ),

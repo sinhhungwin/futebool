@@ -9,7 +9,7 @@ class Message extends Equatable {
   final DateTime dateTime;
   final String timeString;
 
-  Message({
+  const Message({
     required this.id,
     required this.senderId,
     required this.receiverId,

@@ -3,3 +3,4 @@ export 'custom_appbar.dart';
 export 'custom_navbar.dart';
 export 'user_card.dart';
 export 'user_img_small.dart';
+export 'widget_custom_img_container.dart';

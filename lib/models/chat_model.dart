@@ -8,7 +8,7 @@ class Chat extends Equatable {
   final int matchedUserId;
   final List<Message> messages;
 
-  Chat({
+  const Chat({
     required this.id,
     required this.userId,
     required this.matchedUserId,
