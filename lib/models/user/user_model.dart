@@ -53,5 +53,71 @@ class User extends Equatable {
         ],
         bio: 'Hot Girl Bio',
         jobTitle: 'Hot Girl Job Title'),
+    const User(
+        id: 4,
+        name: 'Ceri',
+        age: 20,
+        imageUrls: [
+          'https://kenh14cdn.com/thumb_w/600/203336854389633024/2022/5/28/photo1653721216403-1653721216623132573170.jpg',
+          'https://nguoinoitieng.tv/images/nnt/104/0/bhh9.jpg',
+          'https://danviet.mediacdn.vn/296231569849192448/2022/5/27/hot-girl-nguoi-tay-ceri-3-1653617750291627713801.jpg'
+        ],
+        bio: 'Hot Girl Bio',
+        jobTitle: 'Hot Girl Job Title'),
+    const User(
+        id: 5,
+        name: 'Ceri',
+        age: 20,
+        imageUrls: [
+          'https://kenh14cdn.com/thumb_w/600/203336854389633024/2022/5/28/photo1653721216403-1653721216623132573170.jpg',
+          'https://nguoinoitieng.tv/images/nnt/104/0/bhh9.jpg',
+          'https://danviet.mediacdn.vn/296231569849192448/2022/5/27/hot-girl-nguoi-tay-ceri-3-1653617750291627713801.jpg'
+        ],
+        bio: 'Hot Girl Bio',
+        jobTitle: 'Hot Girl Job Title'),
+    const User(
+        id: 6,
+        name: 'Ceri',
+        age: 20,
+        imageUrls: [
+          'https://kenh14cdn.com/thumb_w/600/203336854389633024/2022/5/28/photo1653721216403-1653721216623132573170.jpg',
+          'https://nguoinoitieng.tv/images/nnt/104/0/bhh9.jpg',
+          'https://danviet.mediacdn.vn/296231569849192448/2022/5/27/hot-girl-nguoi-tay-ceri-3-1653617750291627713801.jpg'
+        ],
+        bio: 'Hot Girl Bio',
+        jobTitle: 'Hot Girl Job Title'),
+    const User(
+        id: 7,
+        name: 'Ceri',
+        age: 20,
+        imageUrls: [
+          'https://kenh14cdn.com/thumb_w/600/203336854389633024/2022/5/28/photo1653721216403-1653721216623132573170.jpg',
+          'https://nguoinoitieng.tv/images/nnt/104/0/bhh9.jpg',
+          'https://danviet.mediacdn.vn/296231569849192448/2022/5/27/hot-girl-nguoi-tay-ceri-3-1653617750291627713801.jpg'
+        ],
+        bio: 'Hot Girl Bio',
+        jobTitle: 'Hot Girl Job Title'),
+    const User(
+        id: 8,
+        name: 'Ceri',
+        age: 20,
+        imageUrls: [
+          'https://kenh14cdn.com/thumb_w/600/203336854389633024/2022/5/28/photo1653721216403-1653721216623132573170.jpg',
+          'https://nguoinoitieng.tv/images/nnt/104/0/bhh9.jpg',
+          'https://danviet.mediacdn.vn/296231569849192448/2022/5/27/hot-girl-nguoi-tay-ceri-3-1653617750291627713801.jpg'
+        ],
+        bio: 'Hot Girl Bio',
+        jobTitle: 'Hot Girl Job Title'),
+    const User(
+        id: 9,
+        name: 'Ceri',
+        age: 20,
+        imageUrls: [
+          'https://kenh14cdn.com/thumb_w/600/203336854389633024/2022/5/28/photo1653721216403-1653721216623132573170.jpg',
+          'https://nguoinoitieng.tv/images/nnt/104/0/bhh9.jpg',
+          'https://danviet.mediacdn.vn/296231569849192448/2022/5/27/hot-girl-nguoi-tay-ceri-3-1653617750291627713801.jpg'
+        ],
+        bio: 'Hot Girl Bio',
+        jobTitle: 'Hot Girl Job Title'),
   ];
 }
