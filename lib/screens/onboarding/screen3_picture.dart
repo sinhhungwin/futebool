@@ -61,7 +61,13 @@ class Picture extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              CustomButton(tabController: tabController, title: 'Next Step')
+              CustomButton(
+                tabController: tabController,
+                title: 'Next Step',
+                onPressed: () {
+                  tabController.animateTo(tabController.index + 1);
+                },
+              )
             ],
           ),
         ],

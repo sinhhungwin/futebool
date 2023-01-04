@@ -63,6 +63,9 @@ class Bio extends StatelessWidget {
               CustomButton(
                 tabController: tabController,
                 title: 'Next Step',
+                onPressed: () {
+                  tabController.animateTo(tabController.index + 1);
+                },
               )
             ],
           ),

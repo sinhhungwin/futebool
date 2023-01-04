@@ -34,7 +34,6 @@ class Start extends StatelessWidget {
                 height: 10,
               ),
 
-              // TODO: Update this description to be more attractive
               // Project Description
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -51,7 +50,13 @@ class Start extends StatelessWidget {
           ),
 
           // To next onboarding screen
-          CustomButton(tabController: tabController, title: 'Start')
+          CustomButton(
+            tabController: tabController,
+            title: 'Start',
+            onPressed: () {
+              tabController.animateTo(tabController.index + 1);
+            },
+          )
         ],
       ),
     );
