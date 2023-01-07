@@ -26,6 +26,7 @@ dependencies:
   cloud_firestore: ^2.5.3
   image_picker: ^0.8.6
   flutter_svg: ^1.1.6
+  page_transition: ^2.0.9
 
 dependency_overrides:
   firebase_core_platform_interface: 4.5.1

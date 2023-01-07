@@ -20,6 +20,11 @@ class CustomButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       child: ElevatedButton(
+          style: const ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll<Color>(
+              Color(0xffC83939),
+            ),
+          ),
           onPressed: onPressed ?? () {},
           child: SizedBox(
             width: double.infinity,

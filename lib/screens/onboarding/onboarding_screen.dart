@@ -56,7 +56,7 @@ class OnboardingScreen extends StatelessWidget {
 
             return Scaffold(
               appBar: const CustomAppBar(
-                title: 'futebol',
+                title: 'Futebol',
                 hasActions: false,
               ),
               body: TabBarView(

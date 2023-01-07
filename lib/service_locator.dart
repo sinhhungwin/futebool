@@ -14,4 +14,6 @@ void setupLocator() {
   locator.registerFactory<UserModel>(() => UserModel());
   locator.registerFactory<OnboardingModel>(() => OnboardingModel());
   locator.registerFactory<EmailModel>(() => EmailModel());
+  locator.registerFactory<SplashModel>(() => SplashModel());
+  locator.registerFactory<SignInModel>(() => SignInModel());
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:futebol/screens/onboarding/sigin_in_screen.dart';
 
 import 'widget_custom_button.dart';
 
@@ -9,6 +11,14 @@ class Start extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const String assetName = 'assets/balling-1.svg';
+
+    final Widget svgIcon = SizedBox(
+      height: 251,
+      width: 251,
+      child: SvgPicture.asset(assetName),
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       child: Column(
@@ -19,7 +29,7 @@ class Start extends StatelessWidget {
               SizedBox(
                 height: 200,
                 width: 200,
-                child: Image.asset('assets/team.png'),
+                child: svgIcon,
               ),
               const SizedBox(
                 height: 20,
@@ -38,7 +48,7 @@ class Start extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
-                  'A Flutter project for underground football club to find its perfect match',
+                  'Convenient football team opponent finder. Join our polite and fair play community. And get your team a matching rival !',
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
@@ -50,12 +60,31 @@ class Start extends StatelessWidget {
           ),
 
           // To next onboarding screen
-          CustomButton(
-            tabController: tabController,
-            title: 'Start',
-            onPressed: () {
-              tabController.animateTo(tabController.index + 1);
-            },
+          // or sign in screen
+          Column(
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            SignInScreen(tabController: tabController),
+                      ),
+                    );
+                  },
+                  child: const Text('Already have an account ?')),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomButton(
+                tabController: tabController,
+                title: 'Next Step',
+                onPressed: () {
+                  tabController.animateTo(tabController.index + 1);
+                },
+              ),
+            ],
           )
         ],
       ),
