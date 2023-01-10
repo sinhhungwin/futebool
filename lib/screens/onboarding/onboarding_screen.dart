@@ -5,9 +5,8 @@ import '../../widgets/widgets.dart';
 import '../base_screen.dart';
 import 'screen0_start.dart';
 import 'screen1_email.dart';
-import 'screen2_email_verification.dart';
+import 'screen2_bio.dart';
 import 'screen3_picture.dart';
-import 'screen4_bio.dart';
 
 class OnboardingScreen extends StatelessWidget {
   static const String routeName = '/onboard';
@@ -29,14 +28,14 @@ class OnboardingScreen extends StatelessWidget {
       text: 'Email',
     ),
     Tab(
-      text: 'Email Verification',
+      text: 'Bio',
     ),
     Tab(
       text: 'Picture',
     ),
-    Tab(
-      text: 'Bio',
-    ),
+    // Tab(
+    //   text: 'Email Verification',
+    // ),
   ];
 
   @override
@@ -63,9 +62,9 @@ class OnboardingScreen extends StatelessWidget {
                 children: [
                   Start(tabController: tabController),
                   Email(tabController: tabController),
-                  EmailVerification(tabController: tabController),
+                  Bio(tabController: tabController),
                   Picture(tabController: tabController),
-                  Bio(tabController: tabController)
+                  // EmailVerification(tabController: tabController),
                 ],
               ),
             );
