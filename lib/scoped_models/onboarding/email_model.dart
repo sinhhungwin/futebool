@@ -12,32 +12,49 @@ class EmailModel extends BaseModel {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final verifiedPasswordController = TextEditingController();
 
   onModelReady() {
     setState(ViewState.retrieved);
   }
 
-  registerWithEmail(TabController tabController) async {
+  registerWithEmail(TabController tabController, context) async {
     String email = emailController.text;
     String password = passwordController.text;
+    String passwordAgain = verifiedPasswordController.text;
 
     if (email.isNotEmpty && password.isNotEmpty) {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: emailController!.text, password: passwordController!.text)
-          .then(
-        (value) {
-          if (kDebugMode) {
-            print('User Added');
-          }
-        },
-      ).catchError(
-        (error) {
-          if (kDebugMode) {
-            print('Failed to Add User');
-          }
-        },
-      );
+      if (password != passwordAgain) {
+        SnackBar snackBar = const SnackBar(
+          content: Text('Passwords not matched'),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else {
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then(
+          (value) {
+            if (kDebugMode) {
+              print('User Added');
+            }
+          },
+        ).catchError(
+          (error) {
+            if (kDebugMode) {
+              SnackBar snackBar = SnackBar(
+                content: Text(
+                  error.toString(),
+                ),
+              );
+
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+              print('Failed to Add User');
+            }
+          },
+        );
+      }
     }
     tabController.animateTo(tabController.index + 1);
   }

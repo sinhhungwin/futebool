@@ -25,54 +25,70 @@ class Email extends StatelessWidget {
           case ViewState.retrieved:
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Enter Email
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomTextHeader(
-                          tabController: tabController,
-                          text: "What's is Your Email Address?"),
-                      CustomTextField(
-                          tabController: tabController,
-                          text: "ENTER YOUR EMAIL",
-                          controller: model.emailController),
-                      const SizedBox(
-                        height: 100,
-                      ),
-                      CustomTextHeader(
-                          tabController: tabController,
-                          text: "Choose a Password"),
-                      CustomTextField(
-                          tabController: tabController,
-                          text: "ENTER YOUR PASSWORD ",
-                          obscureText: true,
-                          controller: model.passwordController),
-                    ],
-                  ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Enter Email
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTextHeader(
+                            tabController: tabController, text: "Email"),
+                        CustomTextField(
+                            tabController: tabController,
+                            text: "ENTER YOUR EMAIL",
+                            controller: model.emailController),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        CustomTextHeader(
+                            tabController: tabController, text: "Password"),
+                        CustomTextField(
+                            tabController: tabController,
+                            text: "ENTER YOUR PASSWORD ",
+                            obscureText: true,
+                            controller: model.passwordController),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        CustomTextHeader(
+                            tabController: tabController,
+                            text: "Password Again"),
+                        CustomTextField(
+                            tabController: tabController,
+                            text: "ENTER YOUR PASSWORD ",
+                            obscureText: true,
+                            controller: model.verifiedPasswordController),
+                      ],
+                    ),
 
-                  // To next onboarding screen
-                  Column(
-                    children: [
-                      StepProgressIndicator(
-                        totalSteps: 5,
-                        currentStep: 1,
-                        selectedColor: Theme.of(context).primaryColor,
-                        unselectedColor: Theme.of(context).backgroundColor,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      CustomButton(
-                        tabController: tabController,
-                        title: 'Next Step',
-                        onPressed: () => model.registerWithEmail(tabController),
-                      ),
-                    ],
-                  )
-                ],
+                    const SizedBox(
+                      height: 50,
+                    ),
+
+                    // To next onboarding screen
+                    Column(
+                      children: [
+                        StepProgressIndicator(
+                          totalSteps: 5,
+                          currentStep: 1,
+                          selectedColor: Theme.of(context).primaryColor,
+                          unselectedColor: Theme.of(context).backgroundColor,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomButton(
+                          tabController: tabController,
+                          title: 'Next Step',
+                          onPressed: () =>
+                              model.registerWithEmail(tabController, context),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             );
           case ViewState.error:
