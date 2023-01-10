@@ -41,39 +41,46 @@ class SignInScreen extends StatelessWidget {
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Enter Email
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomTextHeader(
-                          tabController: tabController, text: "Email"),
-                      CustomTextField(
-                          tabController: tabController,
-                          text: "ENTER YOUR EMAIL",
-                          controller: model.emailController),
-                      const SizedBox(
-                        height: 100,
-                      ),
-                      CustomTextHeader(
-                          tabController: tabController, text: "Password"),
-                      CustomTextField(
-                          tabController: tabController,
-                          text: "ENTER YOUR PASSWORD ",
-                          obscureText: true,
-                          controller: model.passwordController),
-                    ],
-                  ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Enter Email
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTextHeader(
+                            tabController: tabController, text: "Email"),
+                        CustomTextField(
+                            tabController: tabController,
+                            text: "ENTER YOUR EMAIL",
+                            controller: model.emailController),
+                        const SizedBox(
+                          height: 100,
+                        ),
+                        CustomTextHeader(
+                            tabController: tabController, text: "Password"),
+                        CustomTextField(
+                            tabController: tabController,
+                            text: "ENTER YOUR PASSWORD ",
+                            obscureText: true,
+                            controller: model.passwordController),
+                      ],
+                    ),
 
-                  // To next onboarding screen
-                  CustomButton(
-                    tabController: tabController,
-                    title: 'Sign In',
-                    onPressed: () => model.signInWithEmail(tabController),
-                  ),
-                ],
+                    const SizedBox(
+                      height: 100,
+                    ),
+
+                    // To Home Screen
+                    CustomButton(
+                      tabController: tabController,
+                      title: 'Sign In',
+                      onPressed: () =>
+                          model.signInWithEmail(tabController, context),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
