@@ -59,14 +59,14 @@ class UserCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${user.name}, ${user.age}',
+                      '${user.name}',
                       style: Theme.of(context)
                           .textTheme
                           .headline2!
                           .copyWith(color: Colors.white),
                     ),
                     Text(
-                      user.jobTitle,
+                      user.location.name,
                       style: Theme.of(context).textTheme.headline3!.copyWith(
                           color: Colors.white, fontWeight: FontWeight.normal),
                     ),

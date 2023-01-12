@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futebol/screens/onboarding/screen4_map.dart';
 
 import '../../scoped_models/models.dart';
 import '../../widgets/widgets.dart';
@@ -33,6 +34,9 @@ class OnboardingScreen extends StatelessWidget {
     Tab(
       text: 'Picture',
     ),
+    Tab(
+      text: 'Map',
+    ),
     // Tab(
     //   text: 'Email Verification',
     // ),
@@ -64,6 +68,7 @@ class OnboardingScreen extends StatelessWidget {
                   Email(tabController: tabController),
                   Bio(tabController: tabController),
                   Picture(tabController: tabController),
+                  MapScreen(tabController: tabController)
                   // EmailVerification(tabController: tabController),
                 ],
               ),

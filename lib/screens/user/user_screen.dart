@@ -116,11 +116,11 @@ class UserScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${user.name}, ${user.age}',
+                        '${user.name}',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                       Text(
-                        user.jobTitle,
+                        user.location.name,
                         style: Theme.of(context)
                             .textTheme
                             .headline3!

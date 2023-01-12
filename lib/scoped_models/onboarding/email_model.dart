@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../enums/view_state.dart';
 import '../../service_locator.dart';
@@ -34,10 +35,15 @@ class EmailModel extends BaseModel {
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password)
             .then(
-          (value) {
+          (value) async {
             if (kDebugMode) {
               print('User Added');
             }
+
+            // Obtain shared preferences.
+            final prefs = await SharedPreferences.getInstance();
+
+            await prefs.setString('email', email);
           },
         ).catchError(
           (error) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import 'widget_custom_button.dart';
@@ -65,7 +66,13 @@ class Bio extends StatelessWidget {
                 CustomButton(
                   tabController: tabController,
                   title: 'Next Step',
-                  onPressed: () {
+                  onPressed: () async {
+                    // Obtain shared preferences.
+                    final prefs = await SharedPreferences.getInstance();
+
+                    await prefs.setString('name', nameController.text);
+                    await prefs.setString('bio', descriptionController.text);
+
                     tabController.animateTo(tabController.index + 1);
                   },
                 )
