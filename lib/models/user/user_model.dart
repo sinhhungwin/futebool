@@ -42,7 +42,60 @@ class User extends Equatable {
     return user;
   }
 
-  static List<User> users = [];
+  static List<User> users = [
+    const User(
+        id: 1,
+        email: 'foo3@gmail.com',
+        name: 'Alex',
+        bio: 'Lorem Ipsum',
+        imageUrls: [
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
+        ],
+        location: Location(xCoordinate: "0", yCoordinate: "0", name: "Hanoi"),
+        log: [],
+        ratings: []),
+    const User(
+        id: 1,
+        email: 'foo3@gmail.com',
+        name: 'Alex',
+        bio: 'Lorem Ipsum',
+        imageUrls: [
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
+        ],
+        location: Location(xCoordinate: "0", yCoordinate: "0", name: "Hanoi"),
+        log: [],
+        ratings: []),
+    const User(
+        id: 1,
+        email: 'foo3@gmail.com',
+        name: 'Alex',
+        bio: 'Lorem Ipsum',
+        imageUrls: [
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
+        ],
+        location: Location(xCoordinate: "0", yCoordinate: "0", name: "Hanoi"),
+        log: [],
+        ratings: []),
+    const User(
+        id: 1,
+        email: 'foo3@gmail.com',
+        name: 'Alex',
+        bio: 'Lorem Ipsum',
+        imageUrls: [
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
+        ],
+        location: Location(xCoordinate: "0", yCoordinate: "0", name: "Hanoi"),
+        log: [],
+        ratings: []),
+  ];
 
   @override
   List<Object?> get props =>
