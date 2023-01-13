@@ -27,7 +27,12 @@ dependencies:
   image_picker: ^0.8.6
   flutter_svg: ^1.1.6
   page_transition: ^2.0.9
-
+  flutter_map: ^3.1.0
+  latlong2: ^0.8.0
+  flutter_geocoder:
+    git:
+      url: https://github.com/JCKodel/flutter_geocoder.git
+      ref: "7059f6f"
 dependency_overrides:
   firebase_core_platform_interface: 4.5.1
 

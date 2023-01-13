@@ -22,7 +22,7 @@ class Picture extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomTextHeader(
-                  tabController: tabController, text: "Add 2 or More Pictures"),
+                  tabController: tabController, text: "Add Pictures"),
               const SizedBox(
                 height: 20,
               ),
@@ -53,7 +53,7 @@ class Picture extends StatelessWidget {
           Column(
             children: [
               StepProgressIndicator(
-                totalSteps: 5,
+                totalSteps: 4,
                 currentStep: 3,
                 selectedColor: Theme.of(context).primaryColor,
                 unselectedColor: Theme.of(context).backgroundColor,

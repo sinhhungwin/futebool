@@ -71,7 +71,7 @@ class Email extends StatelessWidget {
                     Column(
                       children: [
                         StepProgressIndicator(
-                          totalSteps: 5,
+                          totalSteps: 4,
                           currentStep: 1,
                           selectedColor: Theme.of(context).primaryColor,
                           unselectedColor: Theme.of(context).backgroundColor,

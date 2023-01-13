@@ -55,8 +55,8 @@ class Bio extends StatelessWidget {
             Column(
               children: [
                 StepProgressIndicator(
-                  totalSteps: 5,
-                  currentStep: 4,
+                  totalSteps: 4,
+                  currentStep: 2,
                   selectedColor: Theme.of(context).primaryColor,
                   unselectedColor: Theme.of(context).backgroundColor,
                 ),

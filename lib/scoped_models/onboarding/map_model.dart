@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_geocoder/geocoder.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../enums/view_state.dart';
@@ -11,9 +14,37 @@ class MapModel extends BaseModel {
   ApiService apiService = locator<ApiService>();
 
   final _firestore = FirebaseFirestore.instance;
+  String city = 'Hanoi';
 
-  onModelReady() {
+  Marker marker = Marker(
+    point: LatLng(21.028511, 105.804817),
+    builder: (ctx) => const Icon(
+      Icons.pin_drop,
+      color: Colors.redAccent,
+    ),
+  );
+  BuildContext? context;
+
+  onModelReady(context) {
+    this.context = context;
     setState(ViewState.retrieved);
+  }
+
+  onTap(LatLng location) async {
+    marker = Marker(
+      point: location,
+      builder: (ctx) => const Icon(
+        Icons.pin_drop,
+        color: Colors.redAccent,
+      ),
+    );
+
+    var address = await Geocoder.local.findAddressesFromCoordinates(
+      Coordinates(location.latitude, location.longitude),
+    );
+    city = address.first.locality ?? '...';
+
+    notifyListeners();
   }
 
   createNewUser(TabController tabController, context) async {
