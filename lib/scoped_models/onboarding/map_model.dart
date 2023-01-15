@@ -53,9 +53,10 @@ class MapModel extends BaseModel {
     String email = prefs.getString('email') ?? '';
     String name = prefs.getString('name') ?? '';
     String bio = prefs.getString('bio') ?? '';
+    List<String> imageUrls = prefs.getStringList('imageUrls') ?? [];
 
     _firestore.collection('users').add(
-      {'email': email, 'name': name, 'bio': bio},
+      {'email': email, 'name': name, 'bio': bio, 'imageUrls': imageUrls},
     );
   }
 }

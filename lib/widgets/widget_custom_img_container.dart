@@ -18,6 +18,8 @@ class CustomImageContainer extends StatefulWidget {
 
 class _CustomImageContainerState extends State<CustomImageContainer> {
   bool imageLoaded = false;
+  bool imageLoading = false;
+
   ImageProvider image = const NetworkImage(
       'https://vn112.com/wp-content/uploads/2018/01/pxsolidwhiteborderedsvg-15161310048lcp4.png');
 
@@ -36,6 +38,17 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
     }
   }
 
+  Future<String> getDownloadURL(String imgName) async {
+    final FirebaseStorage storage = FirebaseStorage.instance;
+    final prefs = await SharedPreferences.getInstance();
+
+    String email = prefs.getString('email') ?? 'anonymous';
+
+    String downloadURL = await storage.ref('$email/$imgName').getDownloadURL();
+
+    return downloadURL;
+  }
+
   getImage(context) async {
     ImagePicker picker = ImagePicker();
 
@@ -51,18 +64,64 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
       if (kDebugMode) {
         print('Uploading ...');
       }
-      uploadImage(image);
+
+      setState(() {
+        imageLoading = true;
+      });
+
+      await uploadImage(image);
+
+      setState(() {
+        imageLoading = false;
+      });
+
       setState(() {
         imageLoaded = true;
         this.image = FileImage(
           File(image.path),
         );
       });
+
+      final prefs = await SharedPreferences.getInstance();
+      List<String> imageUrls = prefs.getStringList('imageUrls') ?? [];
+
+      imageUrls.add(
+        await getDownloadURL(image.name),
+      );
+
+      prefs.setStringList('imageUrls', imageUrls);
+
+      if (kDebugMode) {
+        print('ImageUrls: $imageUrls');
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget child = Container();
+
+    if (!imageLoaded && !imageLoading) {
+      child = Align(
+        alignment: Alignment.bottomRight,
+        child: IconButton(
+          onPressed: () => getImage(context),
+          icon: Icon(
+            Icons.add_circle,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+        ),
+      );
+    } else if (!imageLoaded && imageLoading) {
+      child = const Center(
+        child: CircularProgressIndicator(
+          color: Color(0xFFE84545),
+        ),
+      );
+    } else {
+      child = Container();
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0, right: 10),
       child: Container(
@@ -81,18 +140,7 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
             right: BorderSide(color: Theme.of(context).primaryColor, width: 1),
           ),
         ),
-        child: !imageLoaded
-            ? Align(
-                alignment: Alignment.bottomRight,
-                child: IconButton(
-                  onPressed: () => getImage(context),
-                  icon: Icon(
-                    Icons.add_circle,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ),
-              )
-            : Container(),
+        child: child,
       ),
     );
   }

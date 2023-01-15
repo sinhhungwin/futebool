@@ -44,6 +44,8 @@ class EmailModel extends BaseModel {
             final prefs = await SharedPreferences.getInstance();
 
             await prefs.setString('email', email);
+
+            tabController.animateTo(tabController.index + 1);
           },
         ).catchError(
           (error) {
@@ -62,6 +64,5 @@ class EmailModel extends BaseModel {
         );
       }
     }
-    tabController.animateTo(tabController.index + 1);
   }
 }

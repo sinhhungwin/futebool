@@ -14,63 +14,65 @@ class Picture extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Team pics
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomTextHeader(
-                  tabController: tabController, text: "Add Pictures"),
-              const SizedBox(
-                height: 20,
-              ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Team pics
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextHeader(
+                    tabController: tabController, text: "Add Pictures"),
+                const SizedBox(
+                  height: 20,
+                ),
 
-              // Minimum 2 pics, Maximum 6 pics
-              // 3 pics each row
-              // First row of pics
-              Row(
-                children: [
-                  CustomImageContainer(tabController: tabController),
-                  CustomImageContainer(tabController: tabController),
-                  CustomImageContainer(tabController: tabController),
-                ],
-              ),
+                // Minimum 2 pics, Maximum 6 pics
+                // 3 pics each row
+                // First row of pics
+                Row(
+                  children: [
+                    CustomImageContainer(tabController: tabController),
+                    CustomImageContainer(tabController: tabController),
+                    CustomImageContainer(tabController: tabController),
+                  ],
+                ),
 
-              // Second row of pics
-              Row(
-                children: [
-                  CustomImageContainer(tabController: tabController),
-                  CustomImageContainer(tabController: tabController),
-                  CustomImageContainer(tabController: tabController),
-                ],
-              ),
-            ],
-          ),
+                // Second row of pics
+                Row(
+                  children: [
+                    CustomImageContainer(tabController: tabController),
+                    CustomImageContainer(tabController: tabController),
+                    CustomImageContainer(tabController: tabController),
+                  ],
+                ),
+              ],
+            ),
 
-          // To next onboarding screen
-          Column(
-            children: [
-              StepProgressIndicator(
-                totalSteps: 4,
-                currentStep: 3,
-                selectedColor: Theme.of(context).primaryColor,
-                unselectedColor: Theme.of(context).backgroundColor,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomButton(
-                tabController: tabController,
-                title: 'Next Step',
-                onPressed: () {
-                  tabController.animateTo(tabController.index + 1);
-                },
-              )
-            ],
-          ),
-        ],
+            // To next onboarding screen
+            Column(
+              children: [
+                StepProgressIndicator(
+                  totalSteps: 4,
+                  currentStep: 3,
+                  selectedColor: Theme.of(context).primaryColor,
+                  unselectedColor: Theme.of(context).backgroundColor,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                CustomButton(
+                  tabController: tabController,
+                  title: 'Next Step',
+                  onPressed: () {
+                    tabController.animateTo(tabController.index + 1);
+                  },
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

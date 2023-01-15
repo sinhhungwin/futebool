@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'location_model.dart';
 import 'match_result_model.dart';
@@ -100,4 +102,37 @@ class User extends Equatable {
   @override
   List<Object?> get props =>
       [id, email, name, bio, imageUrls, location, elo, log, ratings];
+}
+
+Stream<User> getUser() {
+  final FirebaseFirestore _ff = FirebaseFirestore.instance;
+
+  return _ff.collection('users').doc('JQKj3U7G2uRFxtNR4Pbv').snapshots().map(
+        (event) => User.fromSnapshot(event),
+      );
+}
+
+Future<String> getDownloadURL(String imgName) async {
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  final prefs = await SharedPreferences.getInstance();
+
+  String email = prefs.getString('email') ?? 'anonymous';
+
+  String downloadURL = await storage.ref('$email/$imgName').getDownloadURL();
+
+  return downloadURL;
+}
+
+Future<void> updateUserPictures(String imgName) async {
+  final FirebaseFirestore _ff = FirebaseFirestore.instance;
+
+  String downloadUrl = await getDownloadURL(imgName);
+
+  return _ff.collection('users').doc('JQKj3U7G2uRFxtNR4Pbv').update(
+    {
+      'imageUrls': FieldValue.arrayUnion(
+        [downloadUrl],
+      ),
+    },
+  );
 }
