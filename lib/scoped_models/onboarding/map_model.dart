@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_geocoder/geocoder.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,10 +39,12 @@ class MapModel extends BaseModel {
       ),
     );
 
-    var address = await Geocoder.local.findAddressesFromCoordinates(
-      Coordinates(location.latitude, location.longitude),
-    );
-    city = address.first.locality ?? '...';
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(location.latitude, location.longitude);
+
+    city = placemarks.first.subAdministrativeArea ?? '...';
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('city', city);
 
     notifyListeners();
   }
@@ -53,10 +55,19 @@ class MapModel extends BaseModel {
     String email = prefs.getString('email') ?? '';
     String name = prefs.getString('name') ?? '';
     String bio = prefs.getString('bio') ?? '';
+    String city = prefs.getString('city') ?? '';
     List<String> imageUrls = prefs.getStringList('imageUrls') ?? [];
 
+    prefs.setStringList('imageUrls', []);
+
     _firestore.collection('users').add(
-      {'email': email, 'name': name, 'bio': bio, 'imageUrls': imageUrls},
+      {
+        'email': email,
+        'name': name,
+        'bio': bio,
+        'city': city,
+        'imageUrls': imageUrls
+      },
     );
   }
 }

@@ -49,7 +49,7 @@ class MapScreen extends StatelessWidget {
                       child: FlutterMap(
                         options: MapOptions(
                             center: LatLng(21.028511, 105.804817),
-                            zoom: 9.2,
+                            zoom: 15,
                             onTap: (_, location) {
                               model.onTap(location);
                             }),
