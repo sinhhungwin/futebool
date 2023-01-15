@@ -1,16 +1,51 @@
-# futebol
+# Futebol
+## _Tinder for underground footballers_
 
-A Flutter project for underground football club to find its perfect match
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-## Getting Started
+Dillinger is a mobile application using Flutter SDK
+to help underground football team find opponent
 
-This project is a starting point for a Flutter application.
+- conveniently and easily,
+- who is polite,
+- and matching with their technical level.
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Suggest most suitable opponents
+- Chat with other teams
+- Rate other teams
+- Manage team info
+- Sign up with email
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Tech
+
+Futebol uses a number of technologies to work properly:
+
+- [Flutter] - powerful SDK for building cross-platform applications
+- [Dart] - programming language behind Flutter
+- [Firebase Authentication] - for handling logins
+- [Firebase Cloud Storage] - for storing files
+- [Firestore] - for the backend
+
+## Installation
+
+Futebol requires these to run
+- [Git](https://git-scm.com/)
+- [Flutter](https://docs.flutter.dev/get-started/install)
+
+Install the dependencies and devDependencies and start the app.
+
+```sh
+cd futebool
+flutter pub get
+flutter run lib/main.dart
+```
+
+Or you can download Futebol from Play Store
+
+## License
+
+MIT
+
+**Free Software, Yay!**

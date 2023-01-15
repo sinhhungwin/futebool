@@ -6,6 +6,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../enums/view_state.dart';
+import '../../screens/screens.dart';
 import '../../service_locator.dart';
 import '../../services/api.dart';
 import '../base_model.dart';
@@ -68,6 +69,8 @@ class MapModel extends BaseModel {
         'city': city,
         'imageUrls': imageUrls
       },
-    );
+    ).then((value) {
+      Navigator.pushNamed(context, HomeScreen.routeName);
+    });
   }
 }
