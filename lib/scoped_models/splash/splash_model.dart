@@ -20,7 +20,7 @@ class SplashModel extends BaseModel {
               context,
               PageTransition(
                 type: PageTransitionType.fade,
-                child: OnboardingScreen(),
+                child: const OnboardingScreen(),
               ),
             ));
   }

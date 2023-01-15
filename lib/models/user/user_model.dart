@@ -104,10 +104,11 @@ class User extends Equatable {
       [id, email, name, bio, imageUrls, location, elo, log, ratings];
 }
 
+// TODO: For referencing only. Remove after job finished
 Stream<User> getUser() {
-  final FirebaseFirestore _ff = FirebaseFirestore.instance;
+  final FirebaseFirestore ff = FirebaseFirestore.instance;
 
-  return _ff.collection('users').doc('JQKj3U7G2uRFxtNR4Pbv').snapshots().map(
+  return ff.collection('users').doc('JQKj3U7G2uRFxtNR4Pbv').snapshots().map(
         (event) => User.fromSnapshot(event),
       );
 }
@@ -124,11 +125,11 @@ Future<String> getDownloadURL(String imgName) async {
 }
 
 Future<void> updateUserPictures(String imgName) async {
-  final FirebaseFirestore _ff = FirebaseFirestore.instance;
+  final FirebaseFirestore ff = FirebaseFirestore.instance;
 
   String downloadUrl = await getDownloadURL(imgName);
 
-  return _ff.collection('users').doc('JQKj3U7G2uRFxtNR4Pbv').update(
+  return ff.collection('users').doc('JQKj3U7G2uRFxtNR4Pbv').update(
     {
       'imageUrls': FieldValue.arrayUnion(
         [downloadUrl],

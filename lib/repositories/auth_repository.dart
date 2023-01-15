@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:flutter/foundation.dart';
 import 'package:futebol/repositories/base_auth_repository.dart';
 
 class AuthRepository extends BaseAuthRepository {
@@ -17,7 +18,13 @@ class AuthRepository extends BaseAuthRepository {
       final user = credential.user;
 
       return user;
-    } catch (_) {}
+    } catch (_) {
+      if (kDebugMode) {
+        print('ERROR: $_');
+      }
+
+      return null;
+    }
   }
 
   @override
