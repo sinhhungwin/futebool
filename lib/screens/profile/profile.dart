@@ -19,7 +19,8 @@ class ProfileScreen extends StatelessWidget {
     final User user = User.users[0];
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'PROFILE',
+        title: 'Futebol',
+        hasActions: false,
       ),
       body: Column(
         children: [
@@ -59,12 +60,25 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: Text(
-                    user.name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline1!
-                        .copyWith(color: Colors.white),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        user.name,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(color: Colors.white),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -78,7 +92,7 @@ class ProfileScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Bio
-                const TitleWithIcon(title: 'Biography', icon: Icons.edit),
+                const TitleWithIcon(title: 'About', icon: Icons.edit),
                 Text(
                   user.bio,
                   style: Theme.of(context)
@@ -119,16 +133,6 @@ class ProfileScreen extends StatelessWidget {
                 const TitleWithIcon(title: 'Location', icon: Icons.edit),
                 Text(
                   'America',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(height: 1.5),
-                ),
-
-                // Interest
-                const TitleWithIcon(title: 'Interest', icon: Icons.edit),
-                Text(
-                  'NBA Players',
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!

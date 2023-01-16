@@ -66,7 +66,7 @@ class MapModel extends BaseModel {
 
     prefs.setStringList('imageUrls', []);
 
-    _firestore.collection('users').add(
+    _firestore.collection('users').doc(email).set(
       {
         'email': email,
         'name': name,

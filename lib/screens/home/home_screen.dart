@@ -23,38 +23,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Row(
-          children: [
-            Expanded(
-              child: Image.asset(
-                'assets/logo.png',
-                height: 50,
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                'Discover'.toUpperCase(),
-                style: Theme.of(context).textTheme.headline2,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.message),
-            color: Theme.of(context).primaryColor,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.person),
-            color: Theme.of(context).primaryColor,
-          ),
-        ],
+      appBar: const CustomAppBar(
+        title: 'Futebol',
+        hasActions: true,
       ),
       body: BaseScreen<HomeModel>(
           onModelReady: (model) => model.onModelReady(User.users),

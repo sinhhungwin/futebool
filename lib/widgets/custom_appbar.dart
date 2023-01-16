@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../screens/screens.dart';
+
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final bool hasActions;
@@ -44,7 +46,9 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                 color: Theme.of(context).primaryColor,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, ProfileScreen.routeName);
+                },
                 icon: const Icon(Icons.person),
                 color: Theme.of(context).primaryColor,
               ),
