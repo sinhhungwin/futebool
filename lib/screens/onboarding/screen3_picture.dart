@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../widgets/widget_custom_img_container.dart';
@@ -65,8 +66,21 @@ class Picture extends StatelessWidget {
                 CustomButton(
                   tabController: tabController,
                   title: 'Next Step',
-                  onPressed: () {
-                    tabController.animateTo(tabController.index + 1);
+                  onPressed: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    List<String> imageUrls =
+                        prefs.getStringList('imageUrls') ?? [];
+                    int length = imageUrls.length;
+                    if (length < 2) {
+                      SnackBar snackBar = const SnackBar(
+                        content: Text(
+                          'Add at least 2 pictures of your team',
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    } else {
+                      tabController.animateTo(tabController.index + 1);
+                    }
                   },
                 )
               ],

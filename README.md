@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Dillinger is a mobile application using Flutter SDK
+Futebol is a mobile application using Flutter SDK
 to help underground football team find opponent
 
 - conveniently and easily,

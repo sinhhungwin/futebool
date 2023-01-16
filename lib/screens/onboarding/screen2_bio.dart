@@ -73,7 +73,17 @@ class Bio extends StatelessWidget {
                     await prefs.setString('name', nameController.text);
                     await prefs.setString('bio', descriptionController.text);
 
-                    tabController.animateTo(tabController.index + 1);
+                    if (nameController.text.isNotEmpty &&
+                        descriptionController.text.isNotEmpty) {
+                      tabController.animateTo(tabController.index + 1);
+                    } else {
+                      SnackBar snackBar = const SnackBar(
+                        content: Text(
+                          'Please enter your name and bio',
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
                   },
                 )
               ],

@@ -63,6 +63,7 @@ class OnboardingScreen extends StatelessWidget {
                 hasActions: false,
               ),
               body: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   Start(tabController: tabController),
                   Email(tabController: tabController),

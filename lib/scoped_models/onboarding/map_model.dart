@@ -16,6 +16,7 @@ class MapModel extends BaseModel {
 
   final _firestore = FirebaseFirestore.instance;
   String city = 'Hanoi';
+  LatLng location = LatLng(21.028511, 105.804817);
 
   Marker marker = Marker(
     point: LatLng(21.028511, 105.804817),
@@ -40,6 +41,8 @@ class MapModel extends BaseModel {
       ),
     );
 
+    this.location = location;
+
     List<Placemark> placemarks =
         await placemarkFromCoordinates(location.latitude, location.longitude);
 
@@ -56,6 +59,8 @@ class MapModel extends BaseModel {
     String email = prefs.getString('email') ?? '';
     String name = prefs.getString('name') ?? '';
     String bio = prefs.getString('bio') ?? '';
+    double latitude = location.latitude;
+    double longitude = location.longitude;
     String city = prefs.getString('city') ?? '';
     List<String> imageUrls = prefs.getStringList('imageUrls') ?? [];
 
@@ -67,6 +72,8 @@ class MapModel extends BaseModel {
         'name': name,
         'bio': bio,
         'city': city,
+        'latitude': latitude,
+        'longitude': longitude,
         'imageUrls': imageUrls
       },
     ).then((value) {

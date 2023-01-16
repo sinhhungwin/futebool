@@ -42,7 +42,6 @@ class EmailModel extends BaseModel {
 
             // Obtain shared preferences.
             final prefs = await SharedPreferences.getInstance();
-
             await prefs.setString('email', email);
 
             tabController.animateTo(tabController.index + 1);
@@ -50,16 +49,14 @@ class EmailModel extends BaseModel {
         ).catchError(
           (error) {
             if (kDebugMode) {
-              SnackBar snackBar = SnackBar(
-                content: Text(
-                  error.toString(),
-                ),
-              );
-
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
               print('Failed to Add User');
             }
+            SnackBar snackBar = SnackBar(
+              content: Text(
+                error.toString(),
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
           },
         );
       }
