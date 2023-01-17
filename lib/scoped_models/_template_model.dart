@@ -1,5 +1,5 @@
-// import 'package:futebol/service_locator.dart';
-// import 'package:futebol/services/api.dart';
+// import '../../service_locator.dart';
+// import '../../services/api.dart';
 //
 // import '../base_model.dart';
 //

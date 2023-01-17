@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:futebol/enums/view_state.dart';
-import 'package:futebol/scoped_models/onboarding/email_model.dart';
-import 'package:futebol/screens/base_screen.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-import 'widget_custom_button.dart';
-import 'widget_custom_text_field.dart';
-import 'widget_custom_text_header.dart';
+import '../../enums/view_state.dart';
+import '../../scoped_models/models.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_text_field.dart';
+import '../../widgets/custom_text_header.dart';
+import '../base_screen.dart';
 
 class Email extends StatelessWidget {
   final TabController tabController;
@@ -33,30 +33,23 @@ class Email extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomTextHeader(
-                            tabController: tabController, text: "Email"),
+                        const CustomTextHeader(text: "Email"),
                         CustomTextField(
-                            tabController: tabController,
                             text: "ENTER YOUR EMAIL",
                             controller: model.emailController),
                         const SizedBox(
                           height: 50,
                         ),
-                        CustomTextHeader(
-                            tabController: tabController, text: "Password"),
+                        const CustomTextHeader(text: "Password"),
                         CustomTextField(
-                            tabController: tabController,
                             text: "ENTER YOUR PASSWORD ",
                             obscureText: true,
                             controller: model.passwordController),
                         const SizedBox(
                           height: 50,
                         ),
-                        CustomTextHeader(
-                            tabController: tabController,
-                            text: "Password Again"),
+                        const CustomTextHeader(text: "Password Again"),
                         CustomTextField(
-                            tabController: tabController,
                             text: "ENTER YOUR PASSWORD ",
                             obscureText: true,
                             controller: model.verifiedPasswordController),
@@ -80,7 +73,6 @@ class Email extends StatelessWidget {
                           height: 10,
                         ),
                         CustomButton(
-                          tabController: tabController,
                           title: 'Next Step',
                           onPressed: () =>
                               model.registerWithEmail(tabController, context),

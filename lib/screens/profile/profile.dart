@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:futebol/enums/view_state.dart';
-import 'package:futebol/models/user/user_model.dart';
-import 'package:futebol/scoped_models/models.dart';
-import 'package:futebol/screens/base_screen.dart';
-import 'package:futebol/widgets/custom_appbar.dart';
+
+import '../../enums/view_state.dart';
+import '../../scoped_models/models.dart';
+import '../../widgets/widgets.dart';
+import '../base_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const String routeName = '/profile';
@@ -19,7 +19,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User user = User.users[0];
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Futebol',
@@ -29,7 +28,6 @@ class ProfileScreen extends StatelessWidget {
         builder: (context, child, model) {
           switch (model.state) {
             case ViewState.busy:
-            case ViewState.idle:
               return const Center(
                 child: CircularProgressIndicator(),
               );

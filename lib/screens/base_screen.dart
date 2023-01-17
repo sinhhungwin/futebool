@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import '../../service_locator.dart';
+import '../config/service_locator.dart';
 
 class BaseScreen<T extends Model> extends StatefulWidget {
   final ScopedModelDescendantBuilder<T> _builder;

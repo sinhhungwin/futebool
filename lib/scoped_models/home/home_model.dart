@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:futebol/enums/view_state.dart';
-import 'package:futebol/service_locator.dart';
-import 'package:futebol/services/api.dart';
 
+import '../../config/service_locator.dart';
+import '../../enums/view_state.dart';
 import '../../models/models.dart';
+import '../../services/api.dart';
 import '../base_model.dart';
 
 class HomeModel extends BaseModel {

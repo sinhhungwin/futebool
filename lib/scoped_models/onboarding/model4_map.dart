@@ -1,46 +1,34 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../config/service_locator.dart';
 import '../../enums/view_state.dart';
 import '../../screens/screens.dart';
-import '../../service_locator.dart';
 import '../../services/api.dart';
 import '../base_model.dart';
 
 class MapModel extends BaseModel {
   ApiService apiService = locator<ApiService>();
 
-  final _firestore = FirebaseFirestore.instance;
   String city = 'Hanoi';
   LatLng location = LatLng(21.028511, 105.804817);
 
-  Marker marker = Marker(
-    point: LatLng(21.028511, 105.804817),
-    builder: (ctx) => const Icon(
-      Icons.pin_drop,
-      color: Colors.redAccent,
-    ),
-  );
-  BuildContext? context;
+  Marker get marker => Marker(
+        point: location,
+        builder: (ctx) => const Icon(
+          Icons.pin_drop,
+          color: Colors.redAccent,
+        ),
+      );
 
   onModelReady(context) {
-    this.context = context;
     setState(ViewState.retrieved);
   }
 
   onTap(LatLng location) async {
-    marker = Marker(
-      point: location,
-      builder: (ctx) => const Icon(
-        Icons.pin_drop,
-        color: Colors.redAccent,
-      ),
-    );
-
     this.location = location;
 
     List<Placemark> placemarks =
@@ -56,28 +44,29 @@ class MapModel extends BaseModel {
   createNewUser(TabController tabController, context) async {
     final prefs = await SharedPreferences.getInstance();
 
-    String email = prefs.getString('email') ?? '';
-    String name = prefs.getString('name') ?? '';
-    String bio = prefs.getString('bio') ?? '';
-    double latitude = location.latitude;
-    double longitude = location.longitude;
-    String city = prefs.getString('city') ?? '';
-    List<String> imageUrls = prefs.getStringList('imageUrls') ?? [];
+    Map<String, dynamic> data = {};
+
+    data['email'] = prefs.getString('email') ?? '';
+    data['name'] = prefs.getString('name') ?? '';
+    data['bio'] = prefs.getString('bio') ?? '';
+    data['latitude'] = location.latitude;
+    data['longitude'] = location.longitude;
+    data['city'] = prefs.getString('city') ?? '';
+    data['imageUrls'] = prefs.getStringList('imageUrls') ?? [];
 
     prefs.setStringList('imageUrls', []);
 
-    _firestore.collection('users').doc(email).set(
-      {
-        'email': email,
-        'name': name,
-        'bio': bio,
-        'city': city,
-        'latitude': latitude,
-        'longitude': longitude,
-        'imageUrls': imageUrls
-      },
-    ).then((value) {
+    try {
+      await apiService.setInitialData(data);
       Navigator.pushNamed(context, HomeScreen.routeName);
-    });
+    } catch (e) {
+      SnackBar snackBar = SnackBar(
+        content: Text(
+          e.toString(),
+        ),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 }

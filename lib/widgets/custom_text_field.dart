@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TabController tabController;
   final String text;
   final TextEditingController controller;
   final bool obscureText;
@@ -9,7 +8,6 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField(
       {Key? key,
       this.obscureText = false,
-      required this.tabController,
       required this.text,
       required this.controller})
       : super(key: key);

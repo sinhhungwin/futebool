@@ -4,24 +4,18 @@ import '../../enums/view_state.dart';
 import '../../scoped_models/models.dart';
 import '../../widgets/widgets.dart';
 import '../base_screen.dart';
-import 'widget_custom_button.dart';
-import 'widget_custom_text_field.dart';
-import 'widget_custom_text_header.dart';
 
 class SignInScreen extends StatelessWidget {
   static const String routeName = '/sign-in';
-  final TabController tabController;
 
-  static Route route({required TabController tabController}) {
+  const SignInScreen({super.key});
+
+  static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (_) => SignInScreen(
-        tabController: tabController,
-      ),
+      builder: (_) => const SignInScreen(),
     );
   }
-
-  const SignInScreen({super.key, required this.tabController});
 
   @override
   Widget build(BuildContext context) {
@@ -49,19 +43,15 @@ class SignInScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomTextHeader(
-                            tabController: tabController, text: "Email"),
+                        const CustomTextHeader(text: "Email"),
                         CustomTextField(
-                            tabController: tabController,
                             text: "ENTER YOUR EMAIL",
                             controller: model.emailController),
                         const SizedBox(
                           height: 100,
                         ),
-                        CustomTextHeader(
-                            tabController: tabController, text: "Password"),
+                        const CustomTextHeader(text: "Password"),
                         CustomTextField(
-                            tabController: tabController,
                             text: "ENTER YOUR PASSWORD ",
                             obscureText: true,
                             controller: model.passwordController),
@@ -74,10 +64,8 @@ class SignInScreen extends StatelessWidget {
 
                     // To Home Screen
                     CustomButton(
-                      tabController: tabController,
                       title: 'Sign In',
-                      onPressed: () =>
-                          model.signInWithEmail(tabController, context),
+                      onPressed: () => model.signInWithEmail(context),
                     ),
                   ],
                 ),

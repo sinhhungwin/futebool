@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final TabController tabController;
   final String title;
   final VoidCallback? onPressed;
 
-  const CustomButton(
-      {Key? key,
-      required this.tabController,
-      required this.title,
-      this.onPressed})
+  const CustomButton({Key? key, required this.title, this.onPressed})
       : super(key: key);
 
   @override

@@ -1,6 +1,9 @@
 export 'home/home_model.dart';
-export 'onboarding/email_model.dart';
-export 'onboarding/map_model.dart';
+export 'onboarding/model0_start.dart';
+export 'onboarding/model1_email.dart';
+export 'onboarding/model2_bio.dart';
+export 'onboarding/model3_picture.dart';
+export 'onboarding/model4_map.dart';
 export 'onboarding/onboarding_model.dart';
 export 'onboarding/sign_in_model.dart';
 export 'profile/profile_model.dart';

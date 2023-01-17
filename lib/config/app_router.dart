@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:futebol/models/models.dart';
-import 'package:futebol/screens/screens.dart';
-import 'package:futebol/widgets/custom_appbar.dart';
+
+import '../models/models.dart';
+import '../screens/screens.dart';
+import '../widgets/widgets.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -11,6 +12,8 @@ class AppRouter {
     }
 
     switch (settings.name) {
+      case SignInScreen.routeName:
+        return SignInScreen.route();
       case SplashScreen.routeName:
         return SplashScreen.route();
       case HomeScreen.routeName:

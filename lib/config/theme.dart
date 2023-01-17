@@ -16,7 +16,7 @@ ThemeData theme() {
 }
 
 // Colors
-const primaryColor = Color(0xFF2B2E4A);
+const primaryColor = Color(0xFFE84545);
 
 // Text Theme
 TextTheme textTheme() {

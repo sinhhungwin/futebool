@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:futebol/screens/onboarding/sigin_in_screen.dart';
 
-import 'widget_custom_button.dart';
+import '../../scoped_models/models.dart';
+import '../../widgets/custom_button.dart';
+import '../base_screen.dart';
 
 class Start extends StatelessWidget {
   final TabController tabController;
@@ -19,75 +20,70 @@ class Start extends StatelessWidget {
       child: SvgPicture.asset(assetName),
     );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
+    return BaseScreen<StartModel>(
+      onModelReady: (model) => model.onModelReady(),
+      builder: (context, child, model) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                height: 200,
-                width: 200,
-                child: svgIcon,
-              ),
-              const SizedBox(
-                height: 20,
+              Column(
+                children: [
+                  SizedBox(
+                    height: 200,
+                    width: 200,
+                    child: svgIcon,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  // Welcome Text
+                  Text(
+                    'Welcome to Futebol',
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  // Project Description
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Text(
+                      'Convenient football team opponent finder. Join our polite and fair play community. And get your team a matching rival !',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6!
+                          .copyWith(height: 1.8),
+                    ),
+                  ),
+                ],
               ),
 
-              // Welcome Text
-              Text(
-                'Welcome to Futebol',
-                style: Theme.of(context).textTheme.headline2,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-
-              // Project Description
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Text(
-                  'Convenient football team opponent finder. Join our polite and fair play community. And get your team a matching rival !',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6!
-                      .copyWith(height: 1.8),
-                ),
-              ),
+              // To next onboarding screen
+              // or sign in screen
+              Column(
+                children: [
+                  TextButton(
+                      onPressed: () => model.toSignIn(context),
+                      child: const Text('Already have an account ?')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomButton(
+                    title: 'Next Step',
+                    onPressed: () =>
+                        tabController.animateTo(tabController.index + 1),
+                  ),
+                ],
+              )
             ],
           ),
-
-          // To next onboarding screen
-          // or sign in screen
-          Column(
-            children: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            SignInScreen(tabController: tabController),
-                      ),
-                    );
-                  },
-                  child: const Text('Already have an account ?')),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomButton(
-                tabController: tabController,
-                title: 'Next Step',
-                onPressed: () {
-                  tabController.animateTo(tabController.index + 1);
-                },
-              ),
-            ],
-          )
-        ],
-      ),
+        );
+      },
     );
   }
 }

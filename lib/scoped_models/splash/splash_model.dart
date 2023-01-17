@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:futebol/config/service_locator.dart';
 import 'package:futebol/screens/screens.dart';
-import 'package:futebol/service_locator.dart';
 import 'package:futebol/services/api.dart';
 import 'package:page_transition/page_transition.dart';
 

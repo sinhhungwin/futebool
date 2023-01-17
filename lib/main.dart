@@ -4,7 +4,7 @@ import 'package:futebol/config/app_router.dart';
 import 'package:futebol/config/theme.dart';
 import 'package:futebol/screens/screens.dart';
 
-import 'service_locator.dart';
+import 'config/service_locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:futebol/screens/onboarding/screen4_map.dart';
 
 import '../../scoped_models/models.dart';
 import '../../widgets/widgets.dart';
@@ -8,6 +7,7 @@ import 'screen0_start.dart';
 import 'screen1_email.dart';
 import 'screen2_bio.dart';
 import 'screen3_picture.dart';
+import 'screen4_map.dart';
 
 class OnboardingScreen extends StatelessWidget {
   static const String routeName = '/onboard';
@@ -70,7 +70,6 @@ class OnboardingScreen extends StatelessWidget {
                   Bio(tabController: tabController),
                   Picture(tabController: tabController),
                   MapScreen(tabController: tabController)
-                  // EmailVerification(tabController: tabController),
                 ],
               ),
             );

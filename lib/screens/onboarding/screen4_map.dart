@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:futebol/enums/view_state.dart';
-import 'package:futebol/screens/base_screen.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
+import '../../enums/view_state.dart';
 import '../../scoped_models/models.dart';
-import 'widget_custom_button.dart';
-import 'widget_custom_text_header.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_text_header.dart';
+import '../base_screen.dart';
 
 class MapScreen extends StatelessWidget {
   final TabController tabController;
@@ -32,8 +31,7 @@ class MapScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Map
-                    CustomTextHeader(
-                      tabController: tabController,
+                    const CustomTextHeader(
                       text: 'Where are you?',
                     ),
 
@@ -48,7 +46,7 @@ class MapScreen extends StatelessWidget {
                       height: 300,
                       child: FlutterMap(
                         options: MapOptions(
-                            center: LatLng(21.028511, 105.804817),
+                            center: model.location,
                             zoom: 15,
                             onTap: (_, location) {
                               model.onTap(location);
@@ -87,7 +85,6 @@ class MapScreen extends StatelessWidget {
                           height: 10,
                         ),
                         CustomButton(
-                          tabController: tabController,
                           title: 'Sign Up',
                           onPressed: () =>
                               model.createNewUser(tabController, context),
