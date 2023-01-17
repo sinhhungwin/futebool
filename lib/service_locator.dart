@@ -17,4 +17,5 @@ void setupLocator() {
   locator.registerFactory<MapModel>(() => MapModel());
   locator.registerFactory<SplashModel>(() => SplashModel());
   locator.registerFactory<SignInModel>(() => SignInModel());
+  locator.registerFactory<ProfileModel>(() => ProfileModel());
 }
