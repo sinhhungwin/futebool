@@ -7,10 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomImageContainer extends StatefulWidget {
-  final TabController tabController;
-
-  const CustomImageContainer({Key? key, required this.tabController})
-      : super(key: key);
+  const CustomImageContainer({Key? key}) : super(key: key);
 
   @override
   State<CustomImageContainer> createState() => _CustomImageContainerState();
@@ -32,9 +29,7 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
 
       await storage.ref('$email/${image.name}').putFile(File(image.path));
     } catch (_) {
-      if (kDebugMode) {
-        print(_.toString());
-      }
+      debugPrint(_.toString());
     }
   }
 
@@ -91,9 +86,7 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
 
       prefs.setStringList('imageUrls', imageUrls);
 
-      if (kDebugMode) {
-        print('ImageUrls: $imageUrls');
-      }
+      debugPrint('ImageUrls: $imageUrls');
     }
   }
 

@@ -80,7 +80,7 @@ class ProfileBio extends StatelessWidget {
                               height: 10,
                             ),
                             CustomButton(
-                              title: 'Update',
+                              title: 'Update'.toUpperCase(),
                               onPressed: () => model.updateBio(context),
                             )
                           ],

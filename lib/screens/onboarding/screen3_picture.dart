@@ -35,19 +35,19 @@ class Picture extends StatelessWidget {
                       // 3 pics each row
                       // First row of pics
                       Row(
-                        children: [
-                          CustomImageContainer(tabController: tabController),
-                          CustomImageContainer(tabController: tabController),
-                          CustomImageContainer(tabController: tabController),
+                        children: const [
+                          CustomImageContainer(),
+                          CustomImageContainer(),
+                          CustomImageContainer(),
                         ],
                       ),
 
                       // Second row of pics
                       Row(
-                        children: [
-                          CustomImageContainer(tabController: tabController),
-                          CustomImageContainer(tabController: tabController),
-                          CustomImageContainer(tabController: tabController),
+                        children: const [
+                          CustomImageContainer(),
+                          CustomImageContainer(),
+                          CustomImageContainer(),
                         ],
                       ),
                     ],

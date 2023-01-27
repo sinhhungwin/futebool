@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:futebol/models/models.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
@@ -45,6 +46,22 @@ class ApiService {
         .doc(data['email'])
         .set(data)
         .onError((error, stackTrace) => throw Exception(error));
+  }
+
+  updateMap(String city, LatLng location) async {
+    final prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email') ?? '';
+
+    var ref = _db.collection('users').doc(email);
+
+    ref.update({
+      'city': city,
+      'latitude': location.latitude,
+      'longitude': location.longitude
+    }).then(
+      (value) => debugPrint("DocumentSnapshot successfully updated!"),
+      onError: (e) => debugPrint("Error updating document $e"),
+    );
   }
 
   updateBio(String name, String bio) async {

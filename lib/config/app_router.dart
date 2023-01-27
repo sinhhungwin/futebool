@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:futebol/screens/profile/screen1_bio.dart';
 
 import '../models/models.dart';
 import '../screens/screens.dart';
