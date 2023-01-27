@@ -5,17 +5,17 @@ import '../../scoped_models/models.dart';
 import '../../widgets/widgets.dart';
 import '../base_screen.dart';
 
-class PictureBio extends StatelessWidget {
+class ProfilePic extends StatelessWidget {
   static const String routeName = '/profile-picture';
 
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (_) => const PictureBio(),
+      builder: (_) => const ProfilePic(),
     );
   }
 
-  const PictureBio({super.key});
+  const ProfilePic({super.key});
 
   @override
   Widget build(BuildContext context) {

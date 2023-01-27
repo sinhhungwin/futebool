@@ -14,9 +14,7 @@ class ApiService {
     final docRef = _db.collection('users').doc(email);
 
     DocumentSnapshot value = await docRef.get().onError((error, stackTrace) {
-      if (kDebugMode) {
-        print("Error getting document: $error");
-      }
+      debugPrint("Error getting document: $error");
 
       throw Exception(error);
     });
@@ -33,9 +31,7 @@ class ApiService {
             (error, stackTrace) => throw Exception(error),
           );
 
-      if (kDebugMode) {
-        print('User Signed In Successfully');
-      }
+      debugPrint('User Signed In Successfully');
 
       return credential.user?.email ?? '';
     }
@@ -49,5 +45,17 @@ class ApiService {
         .doc(data['email'])
         .set(data)
         .onError((error, stackTrace) => throw Exception(error));
+  }
+
+  updateBio(String name, String bio) async {
+    final prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email') ?? '';
+
+    var ref = _db.collection('users').doc(email);
+
+    ref.update({'name': name, 'bio': bio}).then(
+      (value) => debugPrint("DocumentSnapshot successfully updated!"),
+      onError: (e) => debugPrint("Error updating document $e"),
+    );
   }
 }

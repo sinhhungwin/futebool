@@ -91,7 +91,7 @@ class ProfileScreen extends StatelessWidget {
                                       .copyWith(color: Colors.white),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () => model.toProfileBio(context),
                                   icon: const Icon(
                                     Icons.edit,
                                     color: Colors.white,
@@ -111,7 +111,11 @@ class ProfileScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Bio
-                          const TitleWithIcon(title: 'About', icon: Icons.edit),
+                          TitleWithIcon(
+                            title: 'About',
+                            icon: Icons.edit,
+                            onPressed: () => model.toProfileBio(context),
+                          ),
                           Text(
                             model.user?.bio ?? '',
                             style: Theme.of(context)
@@ -121,8 +125,11 @@ class ProfileScreen extends StatelessWidget {
                           ),
 
                           // Pics
-                          const TitleWithIcon(
-                              title: 'Pictures', icon: Icons.edit),
+                          TitleWithIcon(
+                            title: 'Pictures',
+                            icon: Icons.edit,
+                            onPressed: () => model.toProfilePic(context),
+                          ),
                           SizedBox(
                             height: 125,
                             child: ListView.builder(
@@ -153,8 +160,11 @@ class ProfileScreen extends StatelessWidget {
                           ),
 
                           // Location
-                          const TitleWithIcon(
-                              title: 'Location', icon: Icons.edit),
+                          TitleWithIcon(
+                            title: 'Location',
+                            icon: Icons.edit,
+                            onPressed: () => model.toProfileMap(context),
+                          ),
                           Text(
                             model.user?.city ?? '',
                             style: Theme.of(context)
@@ -213,12 +223,14 @@ class ProfileScreen extends StatelessWidget {
 class TitleWithIcon extends StatelessWidget {
   final String title;
   final IconData icon;
+  final void Function()? onPressed;
 
-  const TitleWithIcon({
-    Key? key,
-    required this.title,
-    required this.icon,
-  }) : super(key: key);
+  const TitleWithIcon(
+      {Key? key,
+      required this.title,
+      required this.icon,
+      required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +242,7 @@ class TitleWithIcon extends StatelessWidget {
           style: Theme.of(context).textTheme.headline3,
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: onPressed,
           icon: Icon(icon),
         ),
       ],

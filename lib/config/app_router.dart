@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:futebol/screens/profile/screen1_bio.dart';
 
 import '../models/models.dart';
 import '../screens/screens.dart';
@@ -28,6 +29,14 @@ class AppRouter {
         return OnboardingScreen.route();
       case ProfileScreen.routeName:
         return ProfileScreen.route();
+
+      // Edit profile
+      case ProfileBio.routeName:
+        return ProfileBio.route();
+      case ProfilePic.routeName:
+        return ProfilePic.route();
+      case ProfileMap.routeName:
+        return ProfileMap.route();
       default:
         return _errorRoute();
     }

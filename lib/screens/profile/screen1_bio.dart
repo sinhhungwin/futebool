@@ -20,16 +20,20 @@ class ProfileBio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen<ProfileModel>(
-        onModelReady: (model) {},
+        onModelReady: (model) => model.onModelReady(),
         builder: (context, child, model) {
           switch (model.state) {
             case ViewState.busy:
+              return const Scaffold(
+                appBar: CustomAppBar(
+                  title: 'Futebol',
+                  hasActions: false,
+                ),
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
             case ViewState.retrieved:
-              final TextEditingController nameController =
-                  TextEditingController();
-              final TextEditingController descriptionController =
-                  TextEditingController();
-
               return Scaffold(
                 appBar: const CustomAppBar(
                   title: 'Futebol',
@@ -50,7 +54,7 @@ class ProfileBio extends StatelessWidget {
                             const CustomTextHeader(text: "Name"),
                             CustomTextField(
                               text: "ENTER YOUR NAME",
-                              controller: nameController,
+                              controller: model.nameController,
                             ),
                             const SizedBox(
                               height: 100,
@@ -60,7 +64,7 @@ class ProfileBio extends StatelessWidget {
                             const CustomTextHeader(text: "Bio"),
                             CustomTextField(
                               text: "ENTER YOUR TEAM DESCRIPTION",
-                              controller: descriptionController,
+                              controller: model.descriptionController,
                             ),
                           ],
                         ),
@@ -76,8 +80,8 @@ class ProfileBio extends StatelessWidget {
                               height: 10,
                             ),
                             CustomButton(
-                              title: 'Next Step',
-                              onPressed: () {},
+                              title: 'Update',
+                              onPressed: () => model.updateBio(context),
                             )
                           ],
                         ),

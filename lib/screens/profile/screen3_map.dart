@@ -5,17 +5,17 @@ import '../../scoped_models/models.dart';
 import '../../widgets/widgets.dart';
 import '../base_screen.dart';
 
-class MapBio extends StatelessWidget {
+class ProfileMap extends StatelessWidget {
   static const String routeName = '/profile-map';
 
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (_) => const MapBio(),
+      builder: (_) => const ProfileMap(),
     );
   }
 
-  const MapBio({super.key});
+  const ProfileMap({super.key});
 
   @override
   Widget build(BuildContext context) {
