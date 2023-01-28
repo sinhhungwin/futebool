@@ -165,9 +165,9 @@ class ImgContainer extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: IconButton(
-                  onPressed: () => model.updateImage(url, context),
+                  onPressed: () => model.updateImage(context),
                   icon: Icon(
-                    model.isOld(url) ? Icons.edit : Icons.add_circle,
+                    model.isOld ? Icons.edit : Icons.add_circle,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),

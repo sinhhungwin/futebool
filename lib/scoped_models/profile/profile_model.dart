@@ -42,14 +42,13 @@ class ProfileModel extends BaseModel {
   onModelReady() async {
     setState(ViewState.busy);
     user = await apiService.getProfileData();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('imageUrls', user?.imageUrls ?? []);
 
     nameController.text = user?.name ?? '';
     descriptionController.text = user?.bio ?? '';
 
     debugPrint(user?.imageUrls.toString() ?? '[]');
-    final prefs = await SharedPreferences.getInstance();
-
-    prefs.setStringList('imageUrls', user?.imageUrls ?? []);
 
     int urlLength = user?.imageUrls.length ?? 1;
 
@@ -109,7 +108,10 @@ class ProfileModel extends BaseModel {
     onModelReady();
   }
 
-  toProfilePic(context) => Navigator.pushNamed(context, ProfilePic.routeName);
+  toProfilePic(context) async {
+    await Navigator.pushNamed(context, ProfilePic.routeName);
+    onModelReady();
+  }
 
   signOut(context) async {
     final prefs = await SharedPreferences.getInstance();
@@ -136,9 +138,11 @@ class ImgModel extends BaseModel {
 
   late ImageProvider image;
   late String url;
+  late bool isOld;
 
   onModelReady(url) async {
     setState(ViewState.busy);
+    isOld = url != kImgPlaceholderUrl;
     final prefs = await SharedPreferences.getInstance();
     imageUrls = prefs.getStringList('imageUrls') ?? [];
     this.url = url;
@@ -147,7 +151,7 @@ class ImgModel extends BaseModel {
     setState(ViewState.retrieved);
   }
 
-  updateImage(url, context) async {
+  updateImage(context) async {
     ImagePicker picker = ImagePicker();
 
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -159,49 +163,28 @@ class ImgModel extends BaseModel {
         ),
       );
     } else {
-      debugPrint('Uploading ...');
+      debugPrint('Updating ...');
 
       setState(ViewState.busy);
 
-      if (isOld(url)) {
-        await apiService.deleteImage(url);
+      if (isOld) {
+        debugPrint('Deleting ...');
+        await apiService.deleteImage(url).catchError((e) {
+          debugPrint("ERROR WHEN DELETING: $e");
+        });
       }
 
-      await apiService.uploadImage(image);
+      url = await apiService.uploadImage(image);
+      debugPrint("This URL = $url");
 
       this.image = FileImage(
         File(image.path),
       );
 
+      await apiService.updateImg(await apiService.getAllUrls());
+
+      isOld = true;
       setState(ViewState.retrieved);
     }
   }
-
-  addNewImage(String name) async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> imageUrls = prefs.getStringList('imageUrls') ?? [];
-    imageUrls.add(
-      await apiService.getDownloadURL(name),
-    );
-    prefs.setStringList('imageUrls', imageUrls);
-    apiService.updateImg(prefs.getStringList('imageUrls') ?? []);
-    debugPrint('ImageUrls: $imageUrls');
-  }
-
-  modifyImage(String name) async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> imageUrls = prefs.getStringList('imageUrls') ?? [];
-
-    int index = imageUrls.indexOf(url);
-    imageUrls.remove(url);
-    imageUrls.insert(
-      index,
-      await apiService.getDownloadURL(name),
-    );
-    prefs.setStringList('imageUrls', imageUrls);
-    apiService.updateImg(prefs.getStringList('imageUrls') ?? []);
-    debugPrint('ImageUrls: $imageUrls');
-  }
-
-  bool isOld(url) => url != kImgPlaceholderUrl;
 }

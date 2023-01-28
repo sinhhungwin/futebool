@@ -93,15 +93,19 @@ class ApiService {
     );
   }
 
-  Future<void> uploadImage(XFile image) async {
+  Future<String> uploadImage(XFile image) async {
     try {
       final prefs = await SharedPreferences.getInstance();
 
       String email = prefs.getString('email') ?? 'anonymous';
 
       await _fs.ref('$email/${image.name}').putFile(File(image.path));
+
+      String url = await getDownloadURL(image.name);
+      return url;
     } catch (_) {
       debugPrint(_.toString());
+      return '';
     }
   }
 
@@ -120,5 +124,20 @@ class ApiService {
     String downloadURL = await _fs.ref('$email/$imgName').getDownloadURL();
 
     return downloadURL;
+  }
+
+  Future<List<String>> getAllUrls() async {
+    final prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email') ?? 'anonymous';
+
+    List<String> urls = [];
+
+    ListResult res = await _fs.ref(email).listAll();
+    for (var item in res.items) {
+      String downloadURL = await _fs.ref(item.fullPath).getDownloadURL();
+      urls.add(downloadURL);
+    }
+
+    return urls;
   }
 }
