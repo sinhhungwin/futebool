@@ -5,6 +5,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/helper.dart';
@@ -109,6 +110,23 @@ class ProfileModel extends BaseModel {
   }
 
   toProfilePic(context) => Navigator.pushNamed(context, ProfilePic.routeName);
+
+  signOut(context) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('email', '');
+    prefs.setString('name', '');
+    prefs.setDouble('latitude', 0);
+    prefs.setDouble('longitude', 0);
+    prefs.setStringList('imageUrls', []);
+
+    Navigator.push(
+      context,
+      PageTransition(
+        type: PageTransitionType.fade,
+        child: const OnboardingScreen(),
+      ),
+    );
+  }
 }
 
 class ImgModel extends BaseModel {
@@ -145,16 +163,15 @@ class ImgModel extends BaseModel {
 
       setState(ViewState.busy);
 
+      if (isOld(url)) {
+        await apiService.deleteImage(url);
+      }
+
       await apiService.uploadImage(image);
+
       this.image = FileImage(
         File(image.path),
       );
-
-      if (isOld(url)) {
-        modifyImage(image.name);
-      } else {
-        addNewImage(image.name);
-      }
 
       setState(ViewState.retrieved);
     }

@@ -186,7 +186,7 @@ class ProfileScreen extends StatelessWidget {
                                   Color(0xffC83939),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () => model.signOut(context),
                               child: SizedBox(
                                 width: double.infinity,
                                 child: Center(

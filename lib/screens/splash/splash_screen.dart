@@ -46,7 +46,7 @@ class SplashScreen extends StatelessWidget {
           ),
         );
       },
-      onModelReady: (model) => model.toOnboardingScreen(context),
+      onModelReady: (model) => model.onModelReady(context),
     );
   }
 }

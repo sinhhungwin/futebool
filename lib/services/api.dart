@@ -105,6 +105,14 @@ class ApiService {
     }
   }
 
+  Future<void> deleteImage(String url) async {
+    try {
+      await _fs.refFromURL(url).delete();
+    } catch (_) {
+      debugPrint(_.toString());
+    }
+  }
+
   Future<String> getDownloadURL(String imgName) async {
     final prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('email') ?? 'anonymous';
