@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:futebol/models/models.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
   final _db = FirebaseFirestore.instance;
   final _fa = FirebaseAuth.instance;
+  final _fs = FirebaseStorage.instance;
 
   Future<User2> getProfileData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -74,5 +79,38 @@ class ApiService {
       (value) => debugPrint("DocumentSnapshot successfully updated!"),
       onError: (e) => debugPrint("Error updating document $e"),
     );
+  }
+
+  updateImg(List<String> urls) async {
+    final prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email') ?? '';
+
+    var ref = _db.collection('users').doc(email);
+
+    ref.update({'imageUrls': urls}).then(
+      (value) => debugPrint("DocumentSnapshot successfully updated!"),
+      onError: (e) => debugPrint("Error updating document $e"),
+    );
+  }
+
+  Future<void> uploadImage(XFile image) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+
+      String email = prefs.getString('email') ?? 'anonymous';
+
+      await _fs.ref('$email/${image.name}').putFile(File(image.path));
+    } catch (_) {
+      debugPrint(_.toString());
+    }
+  }
+
+  Future<String> getDownloadURL(String imgName) async {
+    final prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email') ?? 'anonymous';
+
+    String downloadURL = await _fs.ref('$email/$imgName').getDownloadURL();
+
+    return downloadURL;
   }
 }

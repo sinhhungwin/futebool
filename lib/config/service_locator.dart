@@ -21,4 +21,5 @@ void setupLocator() {
   locator.registerFactory<SplashModel>(() => SplashModel());
   locator.registerFactory<SignInModel>(() => SignInModel());
   locator.registerFactory<ProfileModel>(() => ProfileModel());
+  locator.registerFactory<ImgModel>(() => ImgModel());
 }

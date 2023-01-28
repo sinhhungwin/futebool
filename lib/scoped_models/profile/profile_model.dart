@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -106,4 +109,82 @@ class ProfileModel extends BaseModel {
   }
 
   toProfilePic(context) => Navigator.pushNamed(context, ProfilePic.routeName);
+}
+
+class ImgModel extends BaseModel {
+  ApiService apiService = locator<ApiService>();
+
+  List<String> imageUrls = [];
+
+  late ImageProvider image;
+  late String url;
+
+  onModelReady(url) async {
+    setState(ViewState.busy);
+    final prefs = await SharedPreferences.getInstance();
+    imageUrls = prefs.getStringList('imageUrls') ?? [];
+    this.url = url;
+    image = NetworkImage(url);
+
+    setState(ViewState.retrieved);
+  }
+
+  updateImage(url, context) async {
+    ImagePicker picker = ImagePicker();
+
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No image was selected'),
+        ),
+      );
+    } else {
+      debugPrint('Uploading ...');
+
+      setState(ViewState.busy);
+
+      await apiService.uploadImage(image);
+      this.image = FileImage(
+        File(image.path),
+      );
+
+      if (isOld(url)) {
+        modifyImage(image.name);
+      } else {
+        addNewImage(image.name);
+      }
+
+      setState(ViewState.retrieved);
+    }
+  }
+
+  addNewImage(String name) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> imageUrls = prefs.getStringList('imageUrls') ?? [];
+    imageUrls.add(
+      await apiService.getDownloadURL(name),
+    );
+    prefs.setStringList('imageUrls', imageUrls);
+    apiService.updateImg(prefs.getStringList('imageUrls') ?? []);
+    debugPrint('ImageUrls: $imageUrls');
+  }
+
+  modifyImage(String name) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> imageUrls = prefs.getStringList('imageUrls') ?? [];
+
+    int index = imageUrls.indexOf(url);
+    imageUrls.remove(url);
+    imageUrls.insert(
+      index,
+      await apiService.getDownloadURL(name),
+    );
+    prefs.setStringList('imageUrls', imageUrls);
+    apiService.updateImg(prefs.getStringList('imageUrls') ?? []);
+    debugPrint('ImageUrls: $imageUrls');
+  }
+
+  bool isOld(url) => url != kImgPlaceholderUrl;
 }
