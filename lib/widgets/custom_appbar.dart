@@ -41,7 +41,9 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
           ? []
           : [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, MatchScreen.routeName);
+                },
                 icon: const Icon(Icons.message),
                 color: Theme.of(context).primaryColor,
               ),

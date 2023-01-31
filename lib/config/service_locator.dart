@@ -22,4 +22,5 @@ void setupLocator() {
   locator.registerFactory<SignInModel>(() => SignInModel());
   locator.registerFactory<ProfileModel>(() => ProfileModel());
   locator.registerFactory<ImgModel>(() => ImgModel());
+  locator.registerFactory<MatchesModel>(() => MatchesModel());
 }

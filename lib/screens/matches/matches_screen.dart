@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:futebol/screens/chat/chat_screen.dart';
-import 'package:futebol/widgets/widgets.dart';
 
-import '../../models/models.dart';
+import '../../widgets/widgets.dart';
+import '../base_screen.dart';
+import '../screens.dart';
 
 class MatchScreen extends StatelessWidget {
   static const String routeName = '/match';
@@ -17,119 +17,123 @@ class MatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inactiveMatches = UserMatch.matches
-        .where((match) => match.userId == 1 && match.chat!.isEmpty)
-        .toList();
-
-    final activeMatches = UserMatch.matches
-        .where((match) => match.userId == 1 && match.chat!.isNotEmpty)
-        .toList();
-
     return Scaffold(
       appBar: CustomAppBar(title: 'matches'.toUpperCase()),
-      bottomNavigationBar: const CustomNavBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Your Like Section
-              Text(
-                'Your Likes',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              SizedBox(
-                height: 100,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        UserImageSmall(
-                            url: inactiveMatches[index]
-                                .matchedUser
-                                .imageUrls
-                                .first),
-                        Text(
-                          inactiveMatches[index].matchedUser.name,
-                          style: Theme.of(context).textTheme.headline5,
-                        )
-                      ],
-                    );
-                  },
-                  itemCount: inactiveMatches.length,
+      body: BaseScreen<MatchesModel>(onModelReady: (model) {
+        model.onModelReady();
+      }, builder: (context, child, model) {
+        switch (model.state) {
+// TODO: Busy
+          case ViewState.busy:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+
+// TODO: Retrieved
+          case ViewState.retrieved:
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Your Like Section
+                    Text(
+                      'Like You',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              UserImageSmall(
+                                  url: model.liked[index].imageUrls.first),
+                              Text(
+                                model.liked[index].name,
+                                style: Theme.of(context).textTheme.headline5,
+                              )
+                            ],
+                          );
+                        },
+                        itemCount: model.liked.length,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    // Your Chat Section
+                    Text(
+                      'Your Chats',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            // TODO: Fix to Chat Screen
+                            Navigator.pushNamed(context, ChatScreen.routeName);
+                          },
+                          child: Row(
+                            children: [
+                              // Avatar Pic
+                              UserImageSmall(
+                                  url: model.liked[index].imageUrls.first),
+
+                              // Other info
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Name
+                                  Text(
+                                    model.liked[index].name,
+                                    style:
+                                        Theme.of(context).textTheme.headline5,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+
+                                  // Last chat message
+                                  Text(
+                                    model.match.chats[0].last,
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+
+                                  // Last chat time
+                                  Text(
+                                    model.match.chats[0].last,
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                      itemCount: model.match.chats.length,
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+            );
+// TODO: Error
+          case ViewState.error:
 
-              // Your Chat Section
-              Text(
-                'Your Chats',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, ChatScreen.routeName,
-                          arguments: activeMatches[index]);
-                    },
-                    child: Row(
-                      children: [
-                        // Avatar Pic
-                        UserImageSmall(
-                            url: activeMatches[index]
-                                .matchedUser
-                                .imageUrls
-                                .first),
-
-                        // Other info
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Name
-                            Text(
-                              activeMatches[index].matchedUser.name,
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-
-                            // Last chat message
-                            Text(
-                              activeMatches[index].chat![0].messages[0].message,
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-
-                            // Last chat time
-                            Text(
-                              activeMatches[index]
-                                  .chat![0]
-                                  .messages[0]
-                                  .timeString,
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                },
-                itemCount: activeMatches.length,
-              ),
-            ],
-          ),
-        ),
-      ),
+          default:
+            return const Scaffold();
+        }
+      }),
     );
   }
 }

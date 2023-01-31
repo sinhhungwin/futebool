@@ -15,9 +15,12 @@ class ApiService {
   final _fa = FirebaseAuth.instance;
   final _fs = FirebaseStorage.instance;
 
-  Future<model.User> getProfileData() async {
-    final prefs = await SharedPreferences.getInstance();
-    String email = prefs.getString('email') ?? '';
+  Future<model.User> getProfileData({String email = ''}) async {
+    if (email.isEmpty) {
+      final prefs = await SharedPreferences.getInstance();
+      email = prefs.getString('email') ?? '';
+    }
+
     final docRef = _db.collection('users').doc(email);
     DocumentSnapshot value = await docRef.get().onError((error, stackTrace) {
       debugPrint("Error getting document: $error");
@@ -29,6 +32,7 @@ class ApiService {
     return model.User.fromJSON(data);
   }
 
+  // Authenticate
   Future<String> signInWithEmail(String email, String password) async {
     if (email.isNotEmpty && password.isNotEmpty) {
       UserCredential credential = await _fa
@@ -155,5 +159,21 @@ class ApiService {
       res.add(model.User.fromJSON(data));
     }
     return res;
+  }
+
+  //----------------------------------
+  // Matches
+  getMatches() async {
+    final prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email') ?? '';
+    final docRef = _db.collection('matches').doc(email);
+    DocumentSnapshot value = await docRef.get().onError((error, stackTrace) {
+      debugPrint("Error getting document: $error");
+
+      throw Exception(error);
+    });
+
+    final data = value.data() as Map<String, dynamic>;
+    return model.Match2.fromJSON(data);
   }
 }
