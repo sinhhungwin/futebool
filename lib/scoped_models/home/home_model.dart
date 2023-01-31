@@ -13,13 +13,12 @@ class HomeModel extends BaseModel {
   late User nextUser;
   late List<User> users;
 
-  onModelReady(List<User> users) async {
+  onModelReady() async {
     setState(ViewState.busy);
 
-    this.users = users;
-    currentUser = this.users[0];
-    nextUser = this.users[1];
-    await Future.delayed(const Duration(seconds: 2));
+    users = await apiService.getAllUsers();
+    currentUser = users[0];
+    nextUser = users[1];
 
     setState(ViewState.retrieved);
   }

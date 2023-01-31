@@ -18,14 +18,11 @@ import '../base_model.dart';
 
 class ProfileModel extends BaseModel {
   ApiService apiService = locator<ApiService>();
-  // TODO: Rename data model
-  User2? user;
+  User? user;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
-  String imgPlaceholderUrl =
-      'https://vn112.com/wp-content/uploads/2018/01/pxsolidwhiteborderedsvg-15161310048lcp4.png';
   List<String> imgUrls = [];
 
   late LatLng location;
@@ -47,24 +44,8 @@ class ProfileModel extends BaseModel {
 
     nameController.text = user?.name ?? '';
     descriptionController.text = user?.bio ?? '';
-
-    debugPrint(user?.imageUrls.toString() ?? '[]');
-
-    int urlLength = user?.imageUrls.length ?? 1;
-
     city = user?.city ?? '';
     location = LatLng(user?.latitude ?? 0, user?.longitude ?? 0);
-
-    // Get images
-    for (var j = 0; j < urlLength; j++) {
-      imgUrls.add(user?.imageUrls.elementAt(j) ?? imgPlaceholderUrl);
-    }
-
-    // Get image place holder for the rest
-    for (var i = urlLength; i < kMaxImgListLength; i++) {
-      imgUrls.add(imgPlaceholderUrl);
-      debugPrint(imgUrls.toString());
-    }
 
     setState(ViewState.retrieved);
   }

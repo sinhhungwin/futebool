@@ -66,7 +66,7 @@ class UserCard extends StatelessWidget {
                           .copyWith(color: Colors.white),
                     ),
                     Text(
-                      user.location.name,
+                      user.city,
                       style: Theme.of(context).textTheme.headline3!.copyWith(
                           color: Colors.white, fontWeight: FontWeight.normal),
                     ),

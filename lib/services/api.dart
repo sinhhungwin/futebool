@@ -4,21 +4,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:futebol/models/models.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../models/models.dart' as model;
 
 class ApiService {
   final _db = FirebaseFirestore.instance;
   final _fa = FirebaseAuth.instance;
   final _fs = FirebaseStorage.instance;
 
-  Future<User2> getProfileData() async {
+  Future<model.User> getProfileData() async {
     final prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('email') ?? '';
     final docRef = _db.collection('users').doc(email);
-
     DocumentSnapshot value = await docRef.get().onError((error, stackTrace) {
       debugPrint("Error getting document: $error");
 
@@ -26,7 +26,7 @@ class ApiService {
     });
 
     final data = value.data() as Map<String, dynamic>;
-    return User2.fromJSON(data);
+    return model.User.fromJSON(data);
   }
 
   Future<String> signInWithEmail(String email, String password) async {
@@ -139,5 +139,21 @@ class ApiService {
     }
 
     return urls;
+  }
+
+  Future<List<model.User>> getAllUsers() async {
+    List<model.User> res = [];
+    final docRef =
+        await _db.collection('users').get().onError((error, stackTrace) {
+      debugPrint("Error getting document: $error");
+
+      throw Exception(error);
+    });
+
+    for (var doc in docRef.docs) {
+      final data = doc.data();
+      res.add(model.User.fromJSON(data));
+    }
+    return res;
   }
 }

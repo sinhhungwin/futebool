@@ -1,126 +1,96 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
+class User {
+  String city;
+  double latitude;
+  double longitude;
+  List<String> imageUrls;
+  String name;
+  String bio;
+  String email;
 
-import 'location_model.dart';
-import 'match_result_model.dart';
-import 'rating_model.dart';
-
-class User extends Equatable {
-  final int id;
-  final String email;
-  final String name;
-  final String bio;
-  final List<String> imageUrls;
-  final Location location;
-  final int elo;
-  final List<MatchResult> log;
-  final List<Rating> ratings;
-
-  const User(
-      {required this.id,
-      required this.email,
+  User(
+      {required this.city,
+      required this.latitude,
+      required this.longitude,
+      required this.imageUrls,
       required this.name,
       required this.bio,
-      required this.imageUrls,
-      required this.location,
-      this.elo = 1800,
-      required this.log,
-      required this.ratings});
+      required this.email});
 
-  static User fromSnapshot(DocumentSnapshot snap) {
-    User user = User(
-        id: snap['id'],
-        email: snap['email'],
-        name: snap['name'],
-        bio: snap['bio'],
-        imageUrls: snap['imageUrls'],
-        location:
-            const Location(xCoordinate: "0", yCoordinate: "0", name: "Hanoi"),
-        log: const [],
-        ratings: const []);
+  User.blank()
+      : city = '',
+        latitude = 0,
+        longitude = 0,
+        imageUrls = [''],
+        name = '',
+        bio = 'bio',
+        email = '';
 
-    return user;
+  User.fromJSON(data)
+      : city = data['city'],
+        latitude = data['latitude'],
+        longitude = data['longitude'],
+        imageUrls = List<String>.from(data['imageUrls']),
+        name = data['name'],
+        bio = data['bio'],
+        email = data['email'];
+
+  @override
+  String toString() {
+    return "User: $email - $name - $bio - $city";
   }
 
   static List<User> users = [
-    const User(
-        id: 1,
-        email: 'foo3@gmail.com',
-        name: 'Alex',
-        bio: 'Lorem Ipsum',
-        imageUrls: [
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
-        ],
-        location: Location(xCoordinate: "0", yCoordinate: "0", name: "Hanoi"),
-        log: [],
-        ratings: []),
-    const User(
-        id: 1,
-        email: 'foo3@gmail.com',
-        name: 'Alex',
-        bio: 'Lorem Ipsum',
-        imageUrls: [
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
-        ],
-        location: Location(xCoordinate: "0", yCoordinate: "0", name: "Hanoi"),
-        log: [],
-        ratings: []),
-    const User(
-        id: 1,
-        email: 'foo3@gmail.com',
-        name: 'Alex',
-        bio: 'Lorem Ipsum',
-        imageUrls: [
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
-        ],
-        location: Location(xCoordinate: "0", yCoordinate: "0", name: "Hanoi"),
-        log: [],
-        ratings: []),
-    const User(
-        id: 1,
-        email: 'foo3@gmail.com',
-        name: 'Alex',
-        bio: 'Lorem Ipsum',
-        imageUrls: [
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
-          'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
-        ],
-        location: Location(xCoordinate: "0", yCoordinate: "0", name: "Hanoi"),
-        log: [],
-        ratings: []),
+    User(
+      email: 'foo3@gmail.com',
+      name: 'Alex',
+      bio: 'Lorem Ipsum',
+      imageUrls: [
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
+      ],
+      latitude: 0,
+      longitude: 0,
+      city: "Hanoi",
+    ),
+    User(
+      email: 'foo3@gmail.com',
+      name: 'Alex',
+      bio: 'Lorem Ipsum',
+      imageUrls: [
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
+      ],
+      latitude: 0,
+      longitude: 0,
+      city: "Hanoi",
+    ),
+    User(
+      email: 'foo3@gmail.com',
+      name: 'Alex',
+      bio: 'Lorem Ipsum',
+      imageUrls: [
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
+      ],
+      latitude: 0,
+      longitude: 0,
+      city: "Hanoi",
+    ),
+    User(
+      email: 'foo3@gmail.com',
+      name: 'Alex',
+      bio: 'Lorem Ipsum',
+      imageUrls: [
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg',
+        'https://image.thanhnien.vn/w1024/Uploaded/2023/oqivotiw/2023_01_08/real-madrid-7731.jpeg'
+      ],
+      latitude: 0,
+      longitude: 0,
+      city: "Hanoi",
+    ),
   ];
-
-  @override
-  List<Object?> get props =>
-      [id, email, name, bio, imageUrls, location, elo, log, ratings];
 }
-
-// TODO: For referencing only. Remove after job finished
-Stream<User> getUser() {
-  final FirebaseFirestore ff = FirebaseFirestore.instance;
-
-  return ff.collection('users').doc('JQKj3U7G2uRFxtNR4Pbv').snapshots().map(
-        (event) => User.fromSnapshot(event),
-      );
-}
-
-// Future<void> updateUserPictures(String imgName) async {
-//   final FirebaseFirestore ff = FirebaseFirestore.instance;
-//
-//   String downloadUrl = await getDownloadURL(imgName);
-//
-//   return ff.collection('users').doc('JQKj3U7G2uRFxtNR4Pbv').update(
-//     {
-//       'imageUrls': FieldValue.arrayUnion(
-//         [downloadUrl],
-//       ),
-//     },
-//   );
-// }

@@ -120,7 +120,7 @@ class UserScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline1,
                       ),
                       Text(
-                        user.location.name,
+                        user.city,
                         style: Theme.of(context)
                             .textTheme
                             .headline3!
