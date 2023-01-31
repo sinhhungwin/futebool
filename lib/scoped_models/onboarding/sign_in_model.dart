@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/service_locator.dart';
 import '../../enums/view_state.dart';
@@ -39,6 +40,9 @@ class SignInModel extends BaseModel {
     }
 
     if (signInRes.isNotEmpty) {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('email', email);
+
       Navigator.pushNamed(context, HomeScreen.routeName);
     }
   }

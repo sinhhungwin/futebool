@@ -22,10 +22,13 @@
 //       model.onModelReady();
 //     }, builder: (context, child, model) {
 //       switch (model.state) {
+// TODO: Busy
 //         case ViewState.busy:
 //
+// TODO: Retrieved
 //         case ViewState.retrieved:
 //
+// TODO: Error
 //         case ViewState.error:
 //
 //         default:

@@ -208,6 +208,15 @@ class ProfileScreen extends StatelessWidget {
                 ),
               );
             case ViewState.error:
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(38.0),
+                  child: Text(
+                    model.errorText,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              );
             default:
               return Container();
           }

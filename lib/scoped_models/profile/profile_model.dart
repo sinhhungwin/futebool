@@ -18,6 +18,8 @@ import '../base_model.dart';
 
 class ProfileModel extends BaseModel {
   ApiService apiService = locator<ApiService>();
+  String errorText = '';
+
   User? user;
 
   final TextEditingController nameController = TextEditingController();
@@ -38,7 +40,17 @@ class ProfileModel extends BaseModel {
 
   onModelReady() async {
     setState(ViewState.busy);
-    user = await apiService.getProfileData();
+
+    try {
+      user = await apiService.getProfileData();
+    } catch (e) {
+      errorText = e.toString();
+    }
+    if (errorText.isNotEmpty) {
+      setState(ViewState.error);
+      return;
+    }
+
     final prefs = await SharedPreferences.getInstance();
     prefs.setStringList('imageUrls', user?.imageUrls ?? []);
 

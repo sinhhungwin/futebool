@@ -5,6 +5,6 @@
 //
 // class TemplateModel extends BaseModel {
 //   ApiService apiService = locator<ApiService>();
-//
+//   String errorText = '';
 //   onModelReady() {}
 // }

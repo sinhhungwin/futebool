@@ -25,7 +25,7 @@ class HomeModel extends BaseModel {
 
   swipeLeft() {
     currentUser = nextUser;
-    int nextIndex = (users.indexOf(nextUser) + 1) % 3;
+    int nextIndex = (users.indexOf(nextUser) + 1) % users.length;
     if (kDebugMode) {
       print('nextIndex = $nextIndex');
     }
