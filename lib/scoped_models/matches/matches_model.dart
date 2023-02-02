@@ -14,6 +14,8 @@ class MatchesModel extends BaseModel {
   onModelReady() async {
     try {
       match = await apiService.getMatches();
+      apiService.getMessages();
+
       for (String i in match.liked) {
         await getUser(i);
       }
