@@ -1,17 +1,16 @@
-// TODO: rename match and chat
-class Match2 {
+class MatchModel {
   List<String> like;
   List<String> liked;
-  List<Chat2> chats;
+  List<ChatModel> chats;
 
-  Match2({required this.like, required this.liked, required this.chats});
+  MatchModel({required this.like, required this.liked, required this.chats});
 
-  Match2.fromJSON(data)
+  MatchModel.fromJSON(data)
       : like = List<String>.from(data['like']),
         liked = List<String>.from(data['liked']),
         chats = [] {
-    List<Chat2> res = [];
-    data['chats'].forEach((e) => res.add(Chat2.fromJSON(e)));
+    List<ChatModel> res = [];
+    data['chats'].forEach((e) => res.add(ChatModel.fromJSON(e)));
 
     chats = res;
   }
@@ -22,14 +21,15 @@ class Match2 {
   }
 }
 
-class Chat2 {
+class ChatModel {
   String last;
   String email;
   bool lastMessage;
 
-  Chat2({required this.email, required this.last, required this.lastMessage});
+  ChatModel(
+      {required this.email, required this.last, required this.lastMessage});
 
-  Chat2.fromJSON(data)
+  ChatModel.fromJSON(data)
       : last = data['last'],
         email = data['email'],
         lastMessage = data['lastMessage'];

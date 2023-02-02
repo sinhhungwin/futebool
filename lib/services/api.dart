@@ -185,7 +185,7 @@ class ApiService {
     });
 
     final data = value.data() as Map<String, dynamic>;
-    return model.Match2.fromJSON(data);
+    return model.MatchModel.fromJSON(data);
   }
 
   // Like a team

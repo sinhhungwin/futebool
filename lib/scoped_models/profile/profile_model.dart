@@ -76,7 +76,7 @@ class ProfileModel extends BaseModel {
 
   addImage() {}
 
-  updateImage() {}
+  pop(context) async => Navigator.pop(context);
 
   updateBio(context) async {
     await apiService.updateBio(nameController.text, descriptionController.text);

@@ -8,17 +8,21 @@ import '../base_model.dart';
 class MatchesModel extends BaseModel {
   ApiService apiService = locator<ApiService>();
   String errorText = '';
-  late Match2 match;
+  late MatchModel match;
   List<User> liked = [];
 
   onModelReady() async {
-    // TODO: try catch this
-    match = await apiService.getMatches();
-    for (String i in match.liked) {
-      await getUser(i);
-    }
+    try {
+      match = await apiService.getMatches();
+      for (String i in match.liked) {
+        await getUser(i);
+      }
 
-    setState(ViewState.retrieved);
+      setState(ViewState.retrieved);
+    } catch (e) {
+      errorText = e.toString();
+      setState(ViewState.error);
+    }
   }
 
   getUser(String email) async {

@@ -18,18 +18,19 @@ class MatchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'matches'.toUpperCase()),
+      appBar: CustomAppBar(
+        title: 'matches'.toUpperCase(),
+        hasActions: false,
+      ),
       body: BaseScreen<MatchesModel>(onModelReady: (model) {
         model.onModelReady();
       }, builder: (context, child, model) {
         switch (model.state) {
-// TODO: Busy
           case ViewState.busy:
             return const Center(
               child: CircularProgressIndicator(),
             );
 
-// TODO: Retrieved
           case ViewState.retrieved:
             return SingleChildScrollView(
               child: Padding(
@@ -127,9 +128,16 @@ class MatchScreen extends StatelessWidget {
                 ),
               ),
             );
-// TODO: Error
           case ViewState.error:
-
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(38.0),
+                child: Text(
+                  model.errorText,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+            );
           default:
             return const Scaffold();
         }

@@ -74,14 +74,13 @@ class ProfilePic extends StatelessWidget {
 
                         // To next onboarding screen
                         Column(
-                          children: const [
-                            SizedBox(
+                          children: [
+                            const SizedBox(
                               height: 10,
                             ),
                             CustomButton(
                               title: 'UPDATE',
-                              // TODO: Update pics
-                              // onPressed: () => model.,
+                              onPressed: () => model.pop(context),
                             )
                           ],
                         ),
