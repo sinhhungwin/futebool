@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/helper.dart';
 import '../../config/service_locator.dart';
-import '../../enums/view_state.dart';
 import '../../models/models.dart';
 import '../../screens/screens.dart';
 import '../../services/api.dart';

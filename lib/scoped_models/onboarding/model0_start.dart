@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../enums/view_state.dart';
 import '../../screens/screens.dart';
 import '../base_model.dart';
 

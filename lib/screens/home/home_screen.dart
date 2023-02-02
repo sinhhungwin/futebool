@@ -1,10 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:futebol/scoped_models/home/home_model.dart';
-import 'package:futebol/screens/screens.dart';
-import 'package:futebol/widgets/widgets.dart';
 
-import '../../enums/view_state.dart';
+import '../../widgets/widgets.dart';
 import '../base_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -38,26 +34,16 @@ class HomeScreen extends StatelessWidget {
                 return Column(
                   children: [
                     InkWell(
-                      onDoubleTap: () {
-                        Navigator.pushNamed(context, UserScreen.routeName,
-                            arguments: model.currentUser);
-                      },
+                      onDoubleTap: () => model.toUserScreen(context),
                       child: Draggable(
                         feedback: UserCard(user: model.currentUser),
                         childWhenDragging: UserCard(user: model.nextUser),
                         onDragEnd: (drag) {
                           if (drag.velocity.pixelsPerSecond.dx < 0) {
-                            // Swiped Left
-                            if (kDebugMode) {
-                              model.swipeLeft();
-                              print('Swipe Left');
-                            }
+                            // TODO: Backend for swiping left
+                            model.swipeLeft();
                           } else {
-                            // Swiped Right
-                            if (kDebugMode) {
-                              model.swipeRight();
-                              print('Swipe Right');
-                            }
+                            model.swipeRight();
                           }
                         },
                         child: UserCard(user: model.currentUser),
@@ -90,6 +76,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           InkWell(
+                            // TODO: Save this team for later
                             onTap: () => model.swipeLeft(),
                             child: ChoiceButton(
                               size: 25,

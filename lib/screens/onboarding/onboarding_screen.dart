@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../scoped_models/models.dart';
 import '../../widgets/widgets.dart';
 import '../base_screen.dart';
 import 'screen0_start.dart';

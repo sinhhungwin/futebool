@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:futebol/scoped_models/models.dart';
 import 'package:futebol/screens/base_screen.dart';
 
 class SplashScreen extends StatelessWidget {

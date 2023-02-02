@@ -1,5 +1,4 @@
 import 'package:futebol/config/service_locator.dart';
-import 'package:futebol/enums/view_state.dart';
 import 'package:futebol/services/api.dart';
 
 import '../../models/models.dart';

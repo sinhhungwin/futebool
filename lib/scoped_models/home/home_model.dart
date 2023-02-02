@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import '../../config/service_locator.dart';
-import '../../enums/view_state.dart';
 import '../../models/models.dart';
+import '../../screens/screens.dart';
 import '../../services/api.dart';
 import '../base_model.dart';
 
@@ -23,6 +24,9 @@ class HomeModel extends BaseModel {
     setState(ViewState.retrieved);
   }
 
+  toUserScreen(context) => Navigator.pushNamed(context, UserScreen.routeName,
+      arguments: currentUser);
+
   swipeLeft() {
     currentUser = nextUser;
     int nextIndex = (users.indexOf(nextUser) + 1) % users.length;
@@ -33,7 +37,10 @@ class HomeModel extends BaseModel {
     notifyListeners();
   }
 
-  swipeRight() {
+  swipeRight() async {
+    // Use API Service to update backend with this "like"
+    // Let's call this function like(String email)
+    await apiService.like(currentUser.email);
     swipeLeft();
   }
 }

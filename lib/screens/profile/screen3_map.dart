@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
-import '../../enums/view_state.dart';
-import '../../scoped_models/models.dart';
 import '../../widgets/widgets.dart';
 import '../base_screen.dart';
 

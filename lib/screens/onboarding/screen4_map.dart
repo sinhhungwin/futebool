@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-import '../../enums/view_state.dart';
-import '../../scoped_models/models.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_header.dart';
 import '../base_screen.dart';

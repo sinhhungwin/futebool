@@ -163,6 +163,17 @@ class ApiService {
 
   //----------------------------------
   // Matches
+  Future<bool> checkIfDocExists(
+      {required String collection, required String document}) async {
+    try {
+      var ref = _db.collection(collection);
+      var doc = await ref.doc(document).get();
+      return doc.exists;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   getMatches() async {
     final prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('email') ?? '';
@@ -175,5 +186,46 @@ class ApiService {
 
     final data = value.data() as Map<String, dynamic>;
     return model.Match2.fromJSON(data);
+  }
+
+  // Like a team
+  like(String email) async {
+    // 1. Get email from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    String myEmail = prefs.getString('email') ?? '';
+
+    // 2. Update 'matches' collection in
+    // 2.1. Document named after this email; 'like' array
+    final myDocRef = _db.collection('matches').doc(myEmail);
+    bool isDocExist =
+        await checkIfDocExists(collection: 'matches', document: myEmail);
+
+    // Set a new document if not exist
+    if (!isDocExist) {
+      myDocRef.set({
+        'like': [email]
+      });
+    } else {
+      // Update current document if exist
+      myDocRef.update({
+        'like': FieldValue.arrayUnion([email])
+      });
+    }
+
+    // 2.2. Document named after the email in argument; 'liked' array
+    final docRef = _db.collection('matches').doc(email);
+    isDocExist = await checkIfDocExists(collection: 'matches', document: email);
+
+    // Set a new document if not exist
+    if (!isDocExist) {
+      docRef.set({
+        'liked': [myEmail]
+      });
+    } else {
+      // Update current document if exist
+      docRef.update({
+        'liked': FieldValue.arrayUnion([myEmail])
+      });
+    }
   }
 }

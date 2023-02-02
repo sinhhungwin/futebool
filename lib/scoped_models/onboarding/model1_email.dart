@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/service_locator.dart';
-import '../../enums/view_state.dart';
 import '../../services/api.dart';
 import '../base_model.dart';
 

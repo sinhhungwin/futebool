@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../scoped_models/models.dart';
 import '../../widgets/custom_button.dart';
 import '../base_screen.dart';
 
