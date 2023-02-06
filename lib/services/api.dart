@@ -236,19 +236,9 @@ class ApiService {
     final prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('email') ?? '';
 
-    final senderDocRef = await _db
+    final ref = await _db
         .collection('chats')
-        .where('sender', isEqualTo: email)
-        .get()
-        .onError((error, stackTrace) {
-      debugPrint("Error getting document: $error");
-
-      throw Exception(error);
-    });
-
-    final receiverDocRef = await _db
-        .collection('chats')
-        .where('receiver', isEqualTo: email)
+        .where('user', isEqualTo: email)
         .get()
         .onError((error, stackTrace) {
       debugPrint("Error getting document: $error");
@@ -258,19 +248,13 @@ class ApiService {
 
     List<Map<String, dynamic>> res = [];
 
-    for (var doc in senderDocRef.docs) {
+    for (var doc in ref.docs) {
       final data = doc.data();
 
       res.add(data);
-      debugPrint(data.toString());
-    }
-    for (var doc in receiverDocRef.docs) {
-      final data = doc.data();
-
-      res.add(data);
-      debugPrint(data.toString());
+      debugPrint("Messages: ${data.toString()}");
     }
 
-    res.
+    // res.
   }
 }

@@ -4,7 +4,7 @@ import '../../widgets/widgets.dart';
 import '../base_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  static const String routeName = '/';
+  static const String routeName = '/home';
 
   static Route route() {
     return MaterialPageRoute(
