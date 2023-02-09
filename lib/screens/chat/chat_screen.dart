@@ -61,7 +61,7 @@ class ChatScreen extends StatelessWidget {
       ),
       body: BaseScreen<ChatModel>(
         onModelReady: (model) {
-          model.onModelReady();
+          model.onModelReady(email);
         },
         builder: (context, child, model) {
           switch (model.state) {
@@ -70,120 +70,115 @@ class ChatScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             case ViewState.retrieved:
-            // return Column(
-            //   children: [
-            //     Expanded(
-            //       child: SingleChildScrollView(
-            //         child: userMatch.chat != null
-            //             ? ListView.builder(
-            //                 shrinkWrap: true,
-            //                 itemCount: userMatch.chat![0].messages.length,
-            //                 itemBuilder: (context, index) {
-            //                   return ListTile(
-            //                     title: userMatch.chat![0].messages[index]
-            //                                 .senderId ==
-            //                             1
-            //                         ? Align(
-            //                             alignment: Alignment.topRight,
-            //                             child: Container(
-            //                               padding: const EdgeInsets.all(8),
-            //                               decoration: BoxDecoration(
-            //                                   borderRadius:
-            //                                       const BorderRadius.all(
-            //                                     Radius.circular(8),
-            //                                   ),
-            //                                   color: Theme.of(context)
-            //                                       .backgroundColor),
-            //                               child: Text(
-            //                                 userMatch.chat![0].messages[index]
-            //                                     .message,
-            //                                 style: Theme.of(context)
-            //                                     .textTheme
-            //                                     .headline6,
-            //                               ),
-            //                             ),
-            //                           )
-            //                         : Align(
-            //                             alignment: Alignment.topLeft,
-            //                             child: Row(
-            //                               children: [
-            //                                 CircleAvatar(
-            //                                   radius: 15,
-            //                                   backgroundImage: NetworkImage(
-            //                                       userMatch.matchedUser
-            //                                           .imageUrls.first),
-            //                                 ),
-            //                                 const SizedBox(
-            //                                   width: 10,
-            //                                 ),
-            //                                 Container(
-            //                                   padding:
-            //                                       const EdgeInsets.all(8),
-            //                                   decoration: BoxDecoration(
-            //                                       borderRadius:
-            //                                           const BorderRadius.all(
-            //                                         Radius.circular(8),
-            //                                       ),
-            //                                       color: Theme.of(context)
-            //                                           .primaryColor),
-            //                                   child: Text(
-            //                                     userMatch.chat![0]
-            //                                         .messages[index].message,
-            //                                     style: Theme.of(context)
-            //                                         .textTheme
-            //                                         .headline6!
-            //                                         .copyWith(
-            //                                             color: Colors.white),
-            //                                   ),
-            //                                 ),
-            //                               ],
-            //                             ),
-            //                           ),
-            //                   );
-            //                 })
-            //             : const SizedBox(),
-            //       ),
-            //     ),
-            //     Container(
-            //       padding: const EdgeInsets.all(20),
-            //       height: 100,
-            //       child: Row(
-            //         children: [
-            //           Container(
-            //             decoration: BoxDecoration(
-            //                 color: Theme.of(context).primaryColor,
-            //                 shape: BoxShape.circle),
-            //             child: IconButton(
-            //               onPressed: () {},
-            //               color: Colors.white,
-            //               icon: const Icon(Icons.send_outlined),
-            //             ),
-            //           ),
-            //           const SizedBox(
-            //             width: 12,
-            //           ),
-            //           const Expanded(
-            //             child: TextField(
-            //               decoration: InputDecoration(
-            //                 filled: true,
-            //                 fillColor: Colors.white,
-            //                 hintText: 'Type here...',
-            //                 contentPadding:
-            //                     EdgeInsets.only(left: 20, bottom: 5, top: 5),
-            //                 focusedBorder: OutlineInputBorder(
-            //                   borderSide: BorderSide(color: Colors.white),
-            //                 ),
-            //                 enabledBorder: UnderlineInputBorder(
-            //                   borderSide: BorderSide(color: Colors.white),
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     )
-            //   ],
-            // );
+              return Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: model.messages.isNotEmpty
+                          ? ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: model.messages.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: model.messages[index].sender == email
+                                      ? Align(
+                                          alignment: Alignment.topRight,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(8),
+                                                ),
+                                                color: Theme.of(context)
+                                                    .backgroundColor),
+                                            child: Text(
+                                              model.messages[index].message,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6,
+                                            ),
+                                          ),
+                                        )
+                                      : Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Row(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 15,
+                                                backgroundImage:
+                                                    NetworkImage(avatarUrl),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                      Radius.circular(8),
+                                                    ),
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                                child: Text(
+                                                  model.messages[index].message,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline6!
+                                                      .copyWith(
+                                                          color: Colors.white),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                );
+                              })
+                          : const SizedBox(),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    height: 100,
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              shape: BoxShape.circle),
+                          child: IconButton(
+                            onPressed: () {},
+                            color: Colors.white,
+                            icon: const Icon(Icons.send_outlined),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        const Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: 'Type here...',
+                              contentPadding:
+                                  EdgeInsets.only(left: 20, bottom: 5, top: 5),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              );
             case ViewState.error:
               return Center(
                 child: Padding(
