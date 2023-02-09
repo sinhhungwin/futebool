@@ -44,20 +44,36 @@ class MatchScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline4,
                     ),
                     SizedBox(
-                      height: 100,
+                      height: 120,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              UserImageSmall(
-                                  url: model.liked[index].imageUrls.first),
-                              Text(
-                                model.liked[index].name,
-                                style: Theme.of(context).textTheme.headline5,
-                              )
-                            ],
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  ChatScreen.routeName,
+                                  arguments: ChatScreenArguments(
+                                      model.liked[index].email,
+                                      model.liked[index].name,
+                                      model.liked[index].imageUrls.first),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  UserImageSmall(
+                                      url: model.liked[index].imageUrls.first),
+                                  Text(
+                                    model.liked[index].name,
+                                    style:
+                                        Theme.of(context).textTheme.headline5,
+                                  )
+                                ],
+                              ),
+                            ),
                           );
                         },
                         itemCount: model.liked.length,
@@ -77,7 +93,6 @@ class MatchScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            // TODO: Fix to Chat Screen
                             Navigator.pushNamed(
                               context,
                               ChatScreen.routeName,
