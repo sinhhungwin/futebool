@@ -80,7 +80,7 @@ class ChatScreen extends StatelessWidget {
                               itemCount: model.messages.length,
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                  title: model.messages[index].sender == email
+                                  title: model.messages[index].sender != email
                                       ? Align(
                                           alignment: Alignment.topRight,
                                           child: Container(
@@ -149,7 +149,7 @@ class ChatScreen extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                               shape: BoxShape.circle),
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () => model.sendMessage(email),
                             color: Colors.white,
                             icon: const Icon(Icons.send_outlined),
                           ),
@@ -157,9 +157,10 @@ class ChatScreen extends StatelessWidget {
                         const SizedBox(
                           width: 12,
                         ),
-                        const Expanded(
+                        Expanded(
                           child: TextField(
-                            decoration: InputDecoration(
+                            controller: model.newMessage,
+                            decoration: const InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
                               hintText: 'Type here...',

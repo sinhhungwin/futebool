@@ -276,4 +276,69 @@ class ApiService {
 
     return res;
   }
+
+  sendMessage(String text, String partner) async {
+    // 1. Get email from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    String myEmail = prefs.getString('email') ?? '';
+
+    // 2. Update 'matches' collection in
+    // 2.1. Document named after this email; 'like' array
+
+    debugPrint("partner: $partner");
+
+    String user1 = myEmail;
+    String user2 = partner;
+
+    if (user1.compareTo(user2) > 0) {
+      user1 = partner;
+      user2 = myEmail;
+    }
+
+    final ref = await _db
+        .collection('chats')
+        .where('users', isEqualTo: [user1, user2])
+        .get()
+        .onError((error, stackTrace) {
+          debugPrint("Error getting document: $error");
+
+          throw Exception(error);
+        });
+
+    for (var doc in ref.docs) {
+      bool isDocExist =
+          await checkIfDocExists(collection: 'chats', document: doc.id);
+
+      final ref2 = _db.collection('chats').doc(doc.id);
+
+      // Set a new document if not exist
+      if (!isDocExist) {
+        ref2.set({
+          'users': [user1, user2],
+          'messages': [
+            {
+              'sender': myEmail,
+              'receiver': partner,
+              'message': text,
+              'dateTime': Timestamp.fromMicrosecondsSinceEpoch(
+                  DateTime.now().microsecondsSinceEpoch)
+            }
+          ]
+        });
+      } else {
+        // Update current document if exist
+        ref2.update({
+          'messages': FieldValue.arrayUnion([
+            {
+              'sender': myEmail,
+              'receiver': partner,
+              'message': text,
+              'dateTime': Timestamp.fromMicrosecondsSinceEpoch(
+                  DateTime.now().microsecondsSinceEpoch)
+            }
+          ])
+        });
+      }
+    }
+  }
 }
