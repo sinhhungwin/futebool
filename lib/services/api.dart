@@ -237,9 +237,19 @@ class ApiService {
     final prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('email') ?? '';
 
+    debugPrint("partner: $partner");
+
+    String user1 = email;
+    String user2 = partner;
+
+    if (user1.compareTo(user2) > 0) {
+      user1 = partner;
+      user2 = email;
+    }
+
     final ref = await _db
         .collection('chats')
-        .where('users', arrayContainsAny: [email, partner])
+        .where('users', isEqualTo: [user1, user2])
         .get()
         .onError((error, stackTrace) {
           debugPrint("Error getting document: $error");
