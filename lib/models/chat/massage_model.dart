@@ -1,6 +1,6 @@
 class Massage {
-  final int sender;
-  final int receiver;
+  final String sender;
+  final String receiver;
   final String message;
   final DateTime dateTime;
 
@@ -10,4 +10,11 @@ class Massage {
     required this.message,
     required this.dateTime,
   });
+
+  Massage.fromJSON(data)
+      : sender = data['sender'],
+        receiver = data['receiver'],
+        message = data['message'],
+        dateTime = DateTime.fromMillisecondsSinceEpoch(
+            data['dateTime'].seconds * 1000);
 }

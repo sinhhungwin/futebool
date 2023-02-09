@@ -78,7 +78,14 @@ class MatchScreen extends StatelessWidget {
                         return InkWell(
                           onTap: () {
                             // TODO: Fix to Chat Screen
-                            Navigator.pushNamed(context, ChatScreen.routeName);
+                            Navigator.pushNamed(
+                              context,
+                              ChatScreen.routeName,
+                              arguments: ChatScreenArguments(
+                                  model.liked[index].email,
+                                  model.liked[index].name,
+                                  model.liked[index].imageUrls.first),
+                            );
                           },
                           child: Row(
                             children: [
@@ -102,7 +109,7 @@ class MatchScreen extends StatelessWidget {
 
                                   // Last chat message
                                   Text(
-                                    model.match.chats[0].last,
+                                    model.match.chats[0].message,
                                     style:
                                         Theme.of(context).textTheme.headline6,
                                   ),
@@ -112,7 +119,7 @@ class MatchScreen extends StatelessWidget {
 
                                   // Last chat time
                                   Text(
-                                    model.match.chats[0].last,
+                                    model.match.chats[0].dateTime.toString(),
                                     style:
                                         Theme.of(context).textTheme.headline6,
                                   ),

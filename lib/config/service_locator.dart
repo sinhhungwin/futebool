@@ -23,4 +23,5 @@ void setupLocator() {
   locator.registerFactory<ProfileModel>(() => ProfileModel());
   locator.registerFactory<ImgModel>(() => ImgModel());
   locator.registerFactory<MatchesModel>(() => MatchesModel());
+  locator.registerFactory<ChatModel>(() => ChatModel());
 }

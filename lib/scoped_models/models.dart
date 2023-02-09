@@ -1,3 +1,4 @@
+export 'chat/chat_model.dart';
 export 'home/home_model.dart';
 export 'matches/matches_model.dart';
 export 'onboarding/model0_start.dart';

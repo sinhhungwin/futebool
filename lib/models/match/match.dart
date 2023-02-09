@@ -1,7 +1,9 @@
+import '../chat/massage_model.dart';
+
 class MatchModel {
   List<String> like;
   List<String> liked;
-  List<ChatModel> chats;
+  List<Massage> chats;
 
   MatchModel({required this.like, required this.liked, required this.chats});
 
@@ -9,8 +11,8 @@ class MatchModel {
       : like = List<String>.from(data['like']),
         liked = List<String>.from(data['liked']),
         chats = [] {
-    List<ChatModel> res = [];
-    data['chats'].forEach((e) => res.add(ChatModel.fromJSON(e)));
+    List<Massage> res = [];
+    data['chats'].forEach((e) => res.add(Massage.fromJSON(e)));
 
     chats = res;
   }
@@ -18,24 +20,5 @@ class MatchModel {
   @override
   String toString() {
     return "Match: $like - $liked - $chats";
-  }
-}
-
-class ChatModel {
-  String last;
-  String email;
-  bool lastMessage;
-
-  ChatModel(
-      {required this.email, required this.last, required this.lastMessage});
-
-  ChatModel.fromJSON(data)
-      : last = data['last'],
-        email = data['email'],
-        lastMessage = data['lastMessage'];
-
-  @override
-  String toString() {
-    return "Chat: $email - $last - $lastMessage";
   }
 }
