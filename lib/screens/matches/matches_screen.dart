@@ -52,16 +52,7 @@ class MatchScreen extends StatelessWidget {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  ChatScreen.routeName,
-                                  arguments: ChatScreenArguments(
-                                      model.liked[index].email,
-                                      model.liked[index].name,
-                                      model.liked[index].imageUrls.first),
-                                );
-                              },
+                              onTap: () => model.toChatScreen(context, index),
                               child: Column(
                                 children: [
                                   UserImageSmall(
@@ -92,20 +83,24 @@ class MatchScreen extends StatelessWidget {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(
+                          onTap: () async {
+                            await Navigator.pushNamed(
                               context,
                               ChatScreen.routeName,
                               arguments: ChatScreenArguments(
-                                  model.liked[index].email,
-                                  model.liked[index].name,
+                                  model.match.messages[index].email,
+                                  model.match.messages[index].name,
+                                  // TODO: Add avatar to backend
                                   model.liked[index].imageUrls.first),
                             );
+
+                            model.onModelReady();
                           },
                           child: Row(
                             children: [
                               // Avatar Pic
                               UserImageSmall(
+                                  // TODO: Add avatar to backend and update here
                                   url: model.liked[index].imageUrls.first),
 
                               // Other info
@@ -114,7 +109,7 @@ class MatchScreen extends StatelessWidget {
                                 children: [
                                   // Name
                                   Text(
-                                    model.liked[index].name,
+                                    model.match.messages[index].name,
                                     style:
                                         Theme.of(context).textTheme.headline5,
                                   ),
@@ -124,7 +119,7 @@ class MatchScreen extends StatelessWidget {
 
                                   // Last chat message
                                   Text(
-                                    model.match.chats[0].message,
+                                    model.match.messages[index].message,
                                     style:
                                         Theme.of(context).textTheme.headline6,
                                   ),
@@ -134,7 +129,7 @@ class MatchScreen extends StatelessWidget {
 
                                   // Last chat time
                                   Text(
-                                    model.match.chats[0].dateTime.toString(),
+                                    model.match.messages[index].time.toString(),
                                     style:
                                         Theme.of(context).textTheme.headline6,
                                   ),
@@ -144,7 +139,7 @@ class MatchScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      itemCount: model.match.chats.length,
+                      itemCount: model.match.messages.length,
                     ),
                   ],
                 ),

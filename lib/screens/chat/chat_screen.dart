@@ -73,71 +73,68 @@ class ChatScreen extends StatelessWidget {
               return Column(
                 children: [
                   Expanded(
-                    child: SingleChildScrollView(
-                      child: model.messages.isNotEmpty
-                          ? ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: model.messages.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: model.messages[index].sender != email
-                                      ? Align(
-                                          alignment: Alignment.topRight,
-                                          child: Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(8),
-                                                ),
-                                                color: Theme.of(context)
-                                                    .backgroundColor),
-                                            child: Text(
-                                              model.messages[index].message,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline6,
-                                            ),
-                                          ),
-                                        )
-                                      : Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Row(
-                                            children: [
-                                              CircleAvatar(
-                                                radius: 15,
-                                                backgroundImage:
-                                                    NetworkImage(avatarUrl),
+                    child: model.messages.isNotEmpty
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: model.messages.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: model.messages[index].sender != email
+                                    ? Align(
+                                        alignment: Alignment.topRight,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(8),
                                               ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(8),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(8),
-                                                    ),
-                                                    color: Theme.of(context)
-                                                        .primaryColor),
-                                                child: Text(
-                                                  model.messages[index].message,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline6!
-                                                      .copyWith(
-                                                          color: Colors.white),
-                                                ),
-                                              ),
-                                            ],
+                                              color: Theme.of(context)
+                                                  .backgroundColor),
+                                          child: Text(
+                                            model.messages[index].message,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6,
                                           ),
                                         ),
-                                );
-                              })
-                          : const SizedBox(),
-                    ),
+                                      )
+                                    : Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 15,
+                                              backgroundImage:
+                                                  NetworkImage(avatarUrl),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                    Radius.circular(8),
+                                                  ),
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                              child: Text(
+                                                model.messages[index].message,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline6!
+                                                    .copyWith(
+                                                        color: Colors.white),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                              );
+                            })
+                        : const SizedBox(),
                   ),
                   Container(
                     padding: const EdgeInsets.all(20),
@@ -149,7 +146,7 @@ class ChatScreen extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                               shape: BoxShape.circle),
                           child: IconButton(
-                            onPressed: () => model.sendMessage(email),
+                            onPressed: () => model.sendMessage(email, name),
                             color: Colors.white,
                             icon: const Icon(Icons.send_outlined),
                           ),

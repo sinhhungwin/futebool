@@ -285,8 +285,6 @@ class ApiService {
     // 2. Update 'matches' collection in
     // 2.1. Document named after this email; 'like' array
 
-    debugPrint("partner: $partner");
-
     String user1 = myEmail;
     String user2 = partner;
 
@@ -340,5 +338,27 @@ class ApiService {
         });
       }
     }
+  }
+
+  updateLastMessage(String text, String partner, String name) async {
+    final prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email') ?? '';
+
+    final ref = _db.collection('matches').doc(email);
+
+    debugPrint('### Update Last Message');
+
+    ref.update(
+      {
+        'messages': {
+          partner: {
+            'message': text,
+            'name': name,
+            'time': Timestamp.fromMicrosecondsSinceEpoch(
+                DateTime.now().microsecondsSinceEpoch),
+          },
+        },
+      },
+    );
   }
 }

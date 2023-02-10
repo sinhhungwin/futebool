@@ -17,4 +17,9 @@ class Massage {
         message = data['message'],
         dateTime = DateTime.fromMillisecondsSinceEpoch(
             data['dateTime'].seconds * 1000);
+
+  @override
+  String toString() {
+    return 'Massage{sender: $sender, receiver: $receiver, message: $message, dateTime: $dateTime}';
+  }
 }

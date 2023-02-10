@@ -24,8 +24,9 @@ class ChatModel extends BaseModel {
     }
   }
 
-  sendMessage(String email) async {
+  sendMessage(String email, String name) async {
     apiService.sendMessage(newMessage.text, email);
+    apiService.updateLastMessage(newMessage.text, email, name);
 
     final prefs = await SharedPreferences.getInstance();
     String myEmail = prefs.getString('email') ?? '';
