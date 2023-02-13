@@ -345,19 +345,24 @@ class ApiService {
     String email = prefs.getString('email') ?? '';
 
     final ref = _db.collection('matches').doc(email);
+    final res = await ref.get();
+    debugPrint("RES: ${res.data()?['messages']}");
+    final data = res.data()?['messages'] ?? {};
 
-    debugPrint('### Update Last Message');
+    Map res2 = {
+      partner: {
+        'message': text,
+        'name': name,
+        'time': Timestamp.fromMicrosecondsSinceEpoch(
+            DateTime.now().microsecondsSinceEpoch),
+      },
+    };
+
+    res2.addAll(data);
 
     ref.update(
       {
-        'messages': {
-          partner: {
-            'message': text,
-            'name': name,
-            'time': Timestamp.fromMicrosecondsSinceEpoch(
-                DateTime.now().microsecondsSinceEpoch),
-          },
-        },
+        'messages': res2,
       },
     );
   }

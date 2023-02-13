@@ -14,6 +14,7 @@ class MatchesModel extends BaseModel {
   List<User> liked = [];
 
   onModelReady() async {
+    liked = [];
     setState(ViewState.busy);
     try {
       match = await apiService.getMatches();
@@ -35,7 +36,13 @@ class MatchesModel extends BaseModel {
     try {
       User user = await apiService.getProfileData(email: email);
       debugPrint(user.toString());
-      liked.add(user);
+      debugPrint(match.messages.toString());
+      debugPrint(
+          "EMAIL: $email - FLAG - ${match.messages.every((element) => element.email != email)}");
+
+      if (match.messages.every((element) => element.email != email)) {
+        liked.add(user);
+      }
     } catch (e) {
       errorText = e.toString();
     }
