@@ -278,12 +278,8 @@ class ApiService {
   }
 
   sendMessage(String text, String partner) async {
-    // 1. Get email from SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     String myEmail = prefs.getString('email') ?? '';
-
-    // 2. Update 'matches' collection in
-    // 2.1. Document named after this email; 'like' array
 
     String user1 = myEmail;
     String user2 = partner;
@@ -303,40 +299,29 @@ class ApiService {
           throw Exception(error);
         });
 
+    Map<String, dynamic> message = {
+      'sender': myEmail,
+      'receiver': partner,
+      'message': text,
+      'dateTime': Timestamp.fromMicrosecondsSinceEpoch(
+          DateTime.now().microsecondsSinceEpoch)
+    };
+
+    if (ref.docs.isEmpty) {
+      final newChatRef = _db.collection('chats').doc();
+
+      newChatRef.set({
+        'users': [user1, user2],
+        'messages': [message]
+      });
+    }
+
     for (var doc in ref.docs) {
-      bool isDocExist =
-          await checkIfDocExists(collection: 'chats', document: doc.id);
+      final newMessageRef = _db.collection('chats').doc(doc.id);
 
-      final ref2 = _db.collection('chats').doc(doc.id);
-
-      // Set a new document if not exist
-      if (!isDocExist) {
-        ref2.set({
-          'users': [user1, user2],
-          'messages': [
-            {
-              'sender': myEmail,
-              'receiver': partner,
-              'message': text,
-              'dateTime': Timestamp.fromMicrosecondsSinceEpoch(
-                  DateTime.now().microsecondsSinceEpoch)
-            }
-          ]
-        });
-      } else {
-        // Update current document if exist
-        ref2.update({
-          'messages': FieldValue.arrayUnion([
-            {
-              'sender': myEmail,
-              'receiver': partner,
-              'message': text,
-              'dateTime': Timestamp.fromMicrosecondsSinceEpoch(
-                  DateTime.now().microsecondsSinceEpoch)
-            }
-          ])
-        });
-      }
+      newMessageRef.update({
+        'messages': FieldValue.arrayUnion([message])
+      });
     }
   }
 
