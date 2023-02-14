@@ -14,7 +14,7 @@ class MatchModel {
     (data['messages'] as Map).forEach((key, value) {
       messages.add(Message.fromJSON(key, value));
     });
-    messages = messages;
+    this.messages = messages;
   }
 
   @override
@@ -38,6 +38,6 @@ class Message {
 
   @override
   String toString() {
-    return 'MMassage{email: $email, message: $message, name: $name, time: $time}';
+    return 'Message{email: $email, message: $message, name: $name, time: $time}';
   }
 }
