@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:futebol/models/chat/massage_model.dart';
+import 'package:futebol/models/chat/message_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/service_locator.dart';
@@ -11,7 +11,7 @@ class ChatModel extends BaseModel {
   String errorText = '';
 
   TextEditingController newMessage = TextEditingController();
-  List<Massage> messages = [];
+  List<MessageModel> messages = [];
 
   onModelReady(email) async {
     try {
@@ -32,7 +32,7 @@ class ChatModel extends BaseModel {
     String myEmail = prefs.getString('email') ?? '';
 
     messages.add(
-      Massage(
+      MessageModel(
         sender: myEmail,
         receiver: email,
         message: newMessage.text,

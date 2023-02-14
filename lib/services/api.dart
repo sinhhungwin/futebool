@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:futebol/models/chat/massage_model.dart';
+import 'package:futebol/models/chat/message_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -232,7 +232,7 @@ class ApiService {
 
 //----------------------------------
 // Chat
-  Future<List<Massage>> getMessages(String partner) async {
+  Future<List<MessageModel>> getMessages(String partner) async {
     // 1. Get email from SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('email') ?? '';
@@ -258,7 +258,7 @@ class ApiService {
         });
 
     List<dynamic> resMap = [];
-    List<Massage> res = [];
+    List<MessageModel> res = [];
 
     for (var doc in ref.docs) {
       final data = doc.data();
@@ -270,7 +270,7 @@ class ApiService {
       debugPrint("Item: $item");
 
       for (var i in item) {
-        res.add(Massage.fromJSON(i));
+        res.add(MessageModel.fromJSON(i));
       }
     }
 

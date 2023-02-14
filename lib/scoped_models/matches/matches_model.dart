@@ -25,7 +25,7 @@ class MatchesModel extends BaseModel {
         }
       }
 
-      for (MMassage i in match.messages) {
+      for (Message i in match.messages) {
         chatted.add(await getUser(i.email));
       }
 
