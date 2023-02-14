@@ -331,10 +331,9 @@ class ApiService {
 
     final ref = _db.collection('matches').doc(email);
     final res = await ref.get();
-    debugPrint("RES: ${res.data()?['messages']}");
-    final data = res.data()?['messages'] ?? {};
+    Map<String, dynamic> data = res.data()?['messages'] ?? {};
 
-    Map res2 = {
+    Map<String, dynamic> lastMessage = {
       partner: {
         'message': text,
         'name': name,
@@ -343,11 +342,14 @@ class ApiService {
       },
     };
 
-    res2.addAll(data);
+    if (data.containsKey(partner)) {
+      data[partner] = lastMessage[partner];
+    }
+    lastMessage.addAll(data);
 
     ref.update(
       {
-        'messages': res2,
+        'messages': lastMessage,
       },
     );
   }
