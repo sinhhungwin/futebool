@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:futebol/screens/base_screen.dart';
 
 class ChatScreenArguments {
@@ -75,6 +76,7 @@ class ChatScreen extends StatelessWidget {
                   Expanded(
                     child: model.messages.isNotEmpty
                         ? ListView.builder(
+                            controller: model.chatController,
                             shrinkWrap: true,
                             itemCount: model.messages.length,
                             itemBuilder: (context, index) {
@@ -156,6 +158,9 @@ class ChatScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: TextField(
+                            textInputAction: TextInputAction.newline,
+                            onSubmitted: (value) =>
+                                model.sendMessage(email, name),
                             controller: model.newMessage,
                             decoration: const InputDecoration(
                               filled: true,

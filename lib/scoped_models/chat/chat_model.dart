@@ -11,6 +11,7 @@ class ChatModel extends BaseModel {
   String errorText = '';
 
   TextEditingController newMessage = TextEditingController();
+  ScrollController chatController = ScrollController();
   List<MessageModel> messages = [];
 
   onModelReady(email) async {
@@ -18,10 +19,24 @@ class ChatModel extends BaseModel {
       messages = await apiService.getMessages(email);
 
       setState(ViewState.retrieved);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        //write or call your logic
+        //code will run when widget rendering complete
+        scrollDown();
+      });
     } catch (e) {
       errorText = e.toString();
       setState(ViewState.error);
     }
+  }
+
+  scrollDown() {
+    if (chatController.hasClients) {
+      chatController.animateTo(chatController.position.maxScrollExtent + 60,
+          curve: Curves.easeOut, duration: const Duration(milliseconds: 300));
+    }
+
+    notifyListeners();
   }
 
   sendMessage(String email, String name) async {
@@ -42,6 +57,6 @@ class ChatModel extends BaseModel {
 
     newMessage.clear();
 
-    notifyListeners();
+    scrollDown();
   }
 }
