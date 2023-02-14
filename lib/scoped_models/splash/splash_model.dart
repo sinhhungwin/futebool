@@ -24,22 +24,24 @@ class SplashModel extends BaseModel {
   }
 
   toOnboardingScreen(context) => Timer(
-      const Duration(seconds: 1),
-      () => Navigator.push(
+        const Duration(seconds: 1),
+        () => Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
               type: PageTransitionType.fade,
               child: const OnboardingScreen(),
             ),
-          ));
+            (_) => false),
+      );
 
   toHomeScreen(context) => Timer(
-      const Duration(seconds: 1),
-      () => Navigator.push(
+        const Duration(seconds: 1),
+        () => Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
               type: PageTransitionType.fade,
               child: const HomeScreen(),
             ),
-          ));
+            (_) => false),
+      );
 }
