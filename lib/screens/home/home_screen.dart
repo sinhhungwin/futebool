@@ -40,7 +40,6 @@ class HomeScreen extends StatelessWidget {
                         childWhenDragging: UserCard(user: model.nextUser),
                         onDragEnd: (drag) {
                           if (drag.velocity.pixelsPerSecond.dx < 0) {
-                            // TODO: Backend for swiping left
                             model.swipeLeft();
                           } else {
                             model.swipeRight();
@@ -76,7 +75,6 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           InkWell(
-                            // TODO: Save this team for later
                             onTap: () => model.swipeLeft(),
                             child: ChoiceButton(
                               size: 25,

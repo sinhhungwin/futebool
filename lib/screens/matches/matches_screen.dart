@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/widgets.dart';
 import '../base_screen.dart';
-import '../screens.dart';
 
 class MatchScreen extends StatelessWidget {
   static const String routeName = '/match';
@@ -52,7 +51,8 @@ class MatchScreen extends StatelessWidget {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
-                              onTap: () => model.toChatScreen(context, index),
+                              onTap: () => model.toChatScreen(
+                                  context, model.liked[index].email),
                               child: Column(
                                 children: [
                                   UserImageSmall(
@@ -83,27 +83,13 @@ class MatchScreen extends StatelessWidget {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return InkWell(
-                          onTap: () async {
-                            await Navigator.pushNamed(
-                              context,
-                              ChatScreen.routeName,
-                              arguments: ChatScreenArguments(
-                                  model.match.messages[index].email,
-                                  model.match.messages[index].name,
-                                  // TODO: Add avatar to backend
-                                  model.liked[index].imageUrls.first),
-                            );
-
-                            model.onModelReady();
-                          },
+                          onTap: () => model.toChatScreen(
+                              context, model.chatted[index].email),
                           child: Row(
                             children: [
                               // Avatar Pic
                               UserImageSmall(
-                                  // TODO: Add avatar to backend and update here
-                                  url:
-                                      "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"),
-
+                                  url: model.chatted[index].imageUrls.first),
                               // Other info
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

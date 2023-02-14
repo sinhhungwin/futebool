@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/service_locator.dart';
@@ -12,6 +11,7 @@ class MatchesModel extends BaseModel {
   String errorText = '';
   late MatchModel match;
   List<User> liked = [];
+  List<User> chatted = [];
 
   onModelReady() async {
     liked = [];
@@ -19,10 +19,14 @@ class MatchesModel extends BaseModel {
     try {
       match = await apiService.getMatches();
 
-      debugPrint("MATCH: $match");
-
       for (String i in match.liked) {
-        await getUser(i);
+        if (match.messages.every((element) => element.email != i)) {
+          liked.add(await getUser(i));
+        }
+      }
+
+      for (MMassage i in match.messages) {
+        chatted.add(await getUser(i.email));
       }
 
       setState(ViewState.retrieved);
@@ -32,31 +36,23 @@ class MatchesModel extends BaseModel {
     }
   }
 
-  getUser(String email) async {
+  Future<User> getUser(String email) async {
     try {
       User user = await apiService.getProfileData(email: email);
-      debugPrint(user.toString());
-      debugPrint(match.messages.toString());
-      debugPrint(
-          "EMAIL: $email - FLAG - ${match.messages.every((element) => element.email != email)}");
 
-      if (match.messages.every((element) => element.email != email)) {
-        liked.add(user);
-      }
+      return user;
     } catch (e) {
-      errorText = e.toString();
-    }
-    if (errorText.isNotEmpty) {
-      setState(ViewState.error);
+      rethrow;
     }
   }
 
-  toChatScreen(context, index) async {
+  toChatScreen(context, email) async {
+    User user = await getUser(email);
+
     await Navigator.pushNamed(
       context,
       ChatScreen.routeName,
-      arguments: ChatScreenArguments(
-          liked[index].email, liked[index].name, liked[index].imageUrls.first),
+      arguments: ChatScreenArguments(email, user.name, user.imageUrls.first),
     );
 
     onModelReady();
