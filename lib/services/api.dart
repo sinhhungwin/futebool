@@ -233,7 +233,6 @@ class ApiService {
 //----------------------------------
 // Chat
   Future<List<MessageModel>> getMessages(String partner) async {
-    // 1. Get email from SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('email') ?? '';
 
@@ -262,13 +261,10 @@ class ApiService {
 
     for (var doc in ref.docs) {
       final data = doc.data();
-      debugPrint("Data: $data");
       resMap.add(data['messages']);
     }
 
     for (var item in resMap) {
-      debugPrint("Item: $item");
-
       for (var i in item) {
         res.add(MessageModel.fromJSON(i));
       }
@@ -277,10 +273,30 @@ class ApiService {
     return res;
   }
 
-  void messagesStream() async {
-    await for (var snapshot in _db.collection('chats').doc().snapshots()) {
-      debugPrint(snapshot.toString());
+  Future<Stream<DocumentSnapshot>> messagesStream(String partner) async {
+    final prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email') ?? '';
+
+    debugPrint("partner: $partner");
+
+    String user1 = email;
+    String user2 = partner;
+
+    if (user1.compareTo(user2) > 0) {
+      user1 = partner;
+      user2 = email;
     }
+
+    final ref = await _db
+        .collection('chats')
+        .where('users', isEqualTo: [user1, user2])
+        .get()
+        .onError((error, stackTrace) {
+          debugPrint("Error getting document: $error");
+
+          throw Exception(error);
+        });
+    return _db.collection('chats').doc(ref.docs.first.id).snapshots();
   }
 
   sendMessage(String text, String partner) async {

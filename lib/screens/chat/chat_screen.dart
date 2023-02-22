@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:futebol/screens/base_screen.dart';
 
 class ChatScreenArguments {
@@ -76,68 +76,85 @@ class ChatScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: model.messages.isNotEmpty
-                        ? ListView.builder(
-                            controller: model.chatController,
-                            shrinkWrap: true,
-                            itemCount: model.messages.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: model.messages[index].sender != email
-                                    ? Align(
-                                        alignment: Alignment.topRight,
-                                        child: Container(
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(8),
+                        ? StreamBuilder<DocumentSnapshot>(
+                            stream: model.stream,
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+
+                              model.parseMessages(snapshot.data?.data() ?? {});
+                              return ListView.builder(
+                                  controller: model.chatController,
+                                  shrinkWrap: true,
+                                  itemCount: model.messages.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: model.messages[index].sender !=
+                                              email
+                                          ? Align(
+                                              alignment: Alignment.topRight,
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                      Radius.circular(8),
+                                                    ),
+                                                    color: Theme.of(context)
+                                                        .backgroundColor),
+                                                child: Text(
+                                                  model.messages[index].message,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline6,
+                                                ),
                                               ),
-                                              color: Theme.of(context)
-                                                  .backgroundColor),
-                                          child: Text(
-                                            model.messages[index].message,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline6,
-                                          ),
-                                        ),
-                                      )
-                                    : Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Row(
-                                          children: [
-                                            CircleAvatar(
-                                              radius: 15,
-                                              backgroundImage:
-                                                  CachedNetworkImageProvider(
-                                                      avatarUrl),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Container(
-                                              padding: const EdgeInsets.all(8),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                    Radius.circular(8),
+                                            )
+                                          : Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Row(
+                                                children: [
+                                                  CircleAvatar(
+                                                    radius: 15,
+                                                    backgroundImage:
+                                                        CachedNetworkImageProvider(
+                                                            avatarUrl),
                                                   ),
-                                                  color: Theme.of(context)
-                                                      .primaryColor),
-                                              child: Text(
-                                                model.messages[index].message,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline6!
-                                                    .copyWith(
-                                                        color: Colors.white),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.all(8),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                .all(
+                                                          Radius.circular(8),
+                                                        ),
+                                                        color: Theme.of(context)
+                                                            .primaryColor),
+                                                    child: Text(
+                                                      model.messages[index]
+                                                          .message,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline6!
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.white),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                              );
-                            })
+                                    );
+                                  });
+                            },
+                          )
                         : const SizedBox(),
                   ),
                   Container(

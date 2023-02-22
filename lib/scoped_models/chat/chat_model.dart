@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:futebol/models/chat/message_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,10 +14,12 @@ class ChatModel extends BaseModel {
   TextEditingController newMessage = TextEditingController();
   ScrollController chatController = ScrollController();
   List<MessageModel> messages = [];
+  late Stream<DocumentSnapshot> stream;
 
   onModelReady(email) async {
     try {
       messages = await apiService.getMessages(email);
+      stream = await apiService.messagesStream(email);
 
       setState(ViewState.retrieved);
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -28,6 +31,16 @@ class ChatModel extends BaseModel {
       errorText = e.toString();
       setState(ViewState.error);
     }
+  }
+
+  parseMessages(snapshot) {
+    List<MessageModel> res = [];
+    for (var item in snapshot['messages']) {
+      res.add(MessageModel.fromJSON(item));
+    }
+
+    messages = res;
+    notifyListeners();
   }
 
   scrollDown() {
