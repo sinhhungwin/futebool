@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:futebol/models/chat/message_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -71,5 +72,91 @@ class ChatModel extends BaseModel {
     newMessage.clear();
 
     scrollDown();
+  }
+
+  void addMatchDialog(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextStyle? ts = Theme.of(context).textTheme.headline1;
+        TextStyle? prompt = Theme.of(context).textTheme.headline3;
+
+        return AlertDialog(
+          title: Text('Your result:', style: prompt),
+          actions: [
+            TextButton(
+              child: Text(
+                'W',
+                style: ts?.copyWith(color: Colors.green),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text(
+                'D',
+                style: ts?.copyWith(color: Colors.grey),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text(
+                'L',
+                style: ts?.copyWith(color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void ratingDialog(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextStyle? ts = Theme.of(context).textTheme.headline1;
+        TextStyle? prompt = Theme.of(context).textTheme.headline3;
+
+        return AlertDialog(
+          title: Text('Your rating:', style: prompt),
+          actions: [
+            TextButton(
+              child: Text(
+                'W',
+                style: ts?.copyWith(color: Colors.green),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text(
+                'D',
+                style: ts?.copyWith(color: Colors.grey),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text(
+                'L',
+                style: ts?.copyWith(color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

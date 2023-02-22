@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:futebol/config/theme.dart';
 import 'package:futebol/screens/base_screen.dart';
 
 class ChatScreenArguments {
@@ -41,38 +43,87 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-        title: Center(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 15,
-                backgroundImage: CachedNetworkImageProvider(avatarUrl),
+    return BaseScreen<ChatModel>(
+      onModelReady: (model) {
+        model.onModelReady(email);
+      },
+      builder: (context, child, model) {
+        switch (model.state) {
+          case ViewState.busy:
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Theme.of(context).backgroundColor,
+                elevation: 0,
+                iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+                title: Center(
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundImage: CachedNetworkImageProvider(avatarUrl),
+                      ),
+                      Text(
+                        name,
+                        style: Theme.of(context).textTheme.headline4,
+                      )
+                    ],
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('Rate'),
+                  ),
+                  IconButton(
+                    onPressed: () => model.addMatchDialog(context),
+                    tooltip: 'Update result',
+                    icon: SvgPicture.asset(
+                      'assets/add_new_match.svg',
+                      color: primaryColor,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                name,
-                style: Theme.of(context).textTheme.headline4,
-              )
-            ],
-          ),
-        ),
-      ),
-      body: BaseScreen<ChatModel>(
-        onModelReady: (model) {
-          model.onModelReady(email);
-        },
-        builder: (context, child, model) {
-          switch (model.state) {
-            case ViewState.busy:
-              return const Center(
+              body: const Center(
                 child: CircularProgressIndicator(),
-              );
-            case ViewState.retrieved:
-              return Column(
+              ),
+            );
+          case ViewState.retrieved:
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Theme.of(context).backgroundColor,
+                elevation: 0,
+                iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+                title: Center(
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundImage: CachedNetworkImageProvider(avatarUrl),
+                      ),
+                      Text(
+                        name,
+                        style: Theme.of(context).textTheme.headline4,
+                      )
+                    ],
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('Rate'),
+                  ),
+                  IconButton(
+                    onPressed: () => model.addMatchDialog(context),
+                    tooltip: 'Update result',
+                    icon: SvgPicture.asset(
+                      'assets/add_new_match.svg',
+                      color: primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+              body: Column(
                 children: [
                   Expanded(
                     child: model.messages.isNotEmpty
@@ -200,9 +251,44 @@ class ChatScreen extends StatelessWidget {
                     ),
                   )
                 ],
-              );
-            case ViewState.error:
-              return Center(
+              ),
+            );
+          case ViewState.error:
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Theme.of(context).backgroundColor,
+                elevation: 0,
+                iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+                title: Center(
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundImage: CachedNetworkImageProvider(avatarUrl),
+                      ),
+                      Text(
+                        name,
+                        style: Theme.of(context).textTheme.headline4,
+                      )
+                    ],
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('Rate'),
+                  ),
+                  IconButton(
+                    onPressed: () => model.addMatchDialog(context),
+                    tooltip: 'Update result',
+                    icon: SvgPicture.asset(
+                      'assets/add_new_match.svg',
+                      color: primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+              body: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(38.0),
                   child: Text(
@@ -210,12 +296,12 @@ class ChatScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
-              );
-            default:
-              return Container();
-          }
-        },
-      ),
+              ),
+            );
+          default:
+            return Container();
+        }
+      },
     );
   }
 }
