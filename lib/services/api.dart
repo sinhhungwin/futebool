@@ -453,4 +453,13 @@ class ApiService {
       newMessageRef.update({'pending': FieldValue.delete()});
     }
   }
+
+  updateStrength(String email, int strength) {
+    var ref = _db.collection('users').doc(email);
+
+    ref.update({'email': email, 'strength': strength}).then(
+      (value) => debugPrint("DocumentSnapshot successfully updated!"),
+      onError: (e) => debugPrint("Error updating document $e"),
+    );
+  }
 }

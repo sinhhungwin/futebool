@@ -84,6 +84,31 @@ class ChatModel extends BaseModel {
     apiService.deletePending(partner);
   }
 
+  approveMatchResult(String partner) {
+    apiService.deletePending(partner);
+    updateStrength();
+    apiService.updateStrength(pending.home, pending.homeStrength);
+    apiService.updateStrength(pending.away, pending.awayStrength);
+  }
+
+  // TODO: Implement algorithm
+  updateStrength() {
+    int difference = (pending.homeStrength - pending.awayStrength).abs();
+
+    switch (pending.result) {
+      case Result.win:
+        pending.homeStrength += difference;
+        pending.awayStrength -= difference;
+        break;
+      case Result.draw:
+        break;
+      case Result.loss:
+        pending.awayStrength += difference;
+        pending.homeStrength -= difference;
+        break;
+    }
+  }
+
   void addMatchDialog(context, String email) {
     showDialog(
       context: context,

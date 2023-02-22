@@ -124,7 +124,6 @@ class ChatScreen extends StatelessWidget {
                       model.parseMessages(snapshot.data?.data());
 
                       Widget topWidget = const SizedBox(
-                        child: Text('Blah blog'),
                         height: 20,
                       );
 
@@ -155,7 +154,9 @@ class ChatScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          model.approveMatchResult(email);
+                                        },
                                         icon: const Icon(
                                           Icons.check,
                                           color: Colors.red,
