@@ -375,4 +375,53 @@ class ApiService {
       },
     );
   }
+
+  addMatch(String partner, String result) async {
+    final prefs = await SharedPreferences.getInstance();
+    String myEmail = prefs.getString('email') ?? '';
+
+    String user1 = myEmail;
+    String user2 = partner;
+
+    if (user1.compareTo(user2) > 0) {
+      user1 = partner;
+      user2 = myEmail;
+    }
+
+    final ref = await _db
+        .collection('chats')
+        .where('users', isEqualTo: [user1, user2])
+        .get()
+        .onError((error, stackTrace) {
+          debugPrint("Error getting document: $error");
+
+          throw Exception(error);
+        });
+
+    model.User home = await getProfileData();
+    model.User away = await getProfileData(email: partner);
+
+    Map<String, dynamic> pending = {
+      'home': home.email,
+      'homeStrength': home.strength,
+      'away': away.email,
+      'awayStrength': away.strength,
+      'result': result
+    };
+
+    if (ref.docs.isEmpty) {
+      final newChatRef = _db.collection('chats').doc();
+
+      newChatRef.set({
+        'users': [user1, user2],
+        'pending': pending
+      });
+    }
+
+    for (var doc in ref.docs) {
+      final newMessageRef = _db.collection('chats').doc(doc.id);
+
+      newMessageRef.update({'pending': pending});
+    }
+  }
 }

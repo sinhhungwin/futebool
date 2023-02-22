@@ -69,20 +69,6 @@ class ChatScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                actions: [
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text('Rate'),
-                  ),
-                  IconButton(
-                    onPressed: () => model.addMatchDialog(context),
-                    tooltip: 'Update result',
-                    icon: SvgPicture.asset(
-                      'assets/add_new_match.svg',
-                      color: primaryColor,
-                    ),
-                  ),
-                ],
               ),
               body: const Center(
                 child: CircularProgressIndicator(),
@@ -110,11 +96,11 @@ class ChatScreen extends StatelessWidget {
                 ),
                 actions: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => model.ratingDialog(context),
                     child: const Text('Rate'),
                   ),
                   IconButton(
-                    onPressed: () => model.addMatchDialog(context),
+                    onPressed: () => model.addMatchDialog(context, email),
                     tooltip: 'Update result',
                     icon: SvgPicture.asset(
                       'assets/add_new_match.svg',
@@ -126,88 +112,87 @@ class ChatScreen extends StatelessWidget {
               body: Column(
                 children: [
                   Expanded(
-                    child: model.messages.isNotEmpty
-                        ? StreamBuilder<DocumentSnapshot>(
-                            stream: model.stream,
-                            builder: (context, snapshot) {
-                              if (!snapshot.hasData) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
+                      child: StreamBuilder<DocumentSnapshot>(
+                    stream: model.stream,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
 
-                              model.parseMessages(snapshot.data?.data() ?? {});
-                              return ListView.builder(
-                                  controller: model.chatController,
-                                  shrinkWrap: true,
-                                  itemCount: model.messages.length,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      title: model.messages[index].sender !=
-                                              email
-                                          ? Align(
-                                              alignment: Alignment.topRight,
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.all(8),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(8),
-                                                    ),
-                                                    color: Theme.of(context)
-                                                        .backgroundColor),
-                                                child: Text(
-                                                  model.messages[index].message,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline6,
-                                                ),
-                                              ),
-                                            )
-                                          : Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Row(
-                                                children: [
-                                                  CircleAvatar(
-                                                    radius: 15,
-                                                    backgroundImage:
-                                                        CachedNetworkImageProvider(
-                                                            avatarUrl),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(8),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .all(
-                                                          Radius.circular(8),
-                                                        ),
-                                                        color: Theme.of(context)
-                                                            .primaryColor),
-                                                    child: Text(
-                                                      model.messages[index]
-                                                          .message,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline6!
-                                                          .copyWith(
-                                                              color:
-                                                                  Colors.white),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                      model.parseMessages(snapshot.data?.data());
+
+                      return ListView.builder(
+                          controller: model.chatController,
+                          shrinkWrap: true,
+                          itemCount:
+                              model.getMessagesLength(snapshot.data?.data()),
+                          itemBuilder: (context, index) {
+                            if (model.isPending(snapshot.data?.data()) &&
+                                index == 0) {
+                              return Text("PENDING");
+                            }
+
+                            return ListTile(
+                              title: model.messages[index].sender != email
+                                  ? Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(8),
                                             ),
-                                    );
-                                  });
-                            },
-                          )
-                        : const SizedBox(),
-                  ),
+                                            color: Theme.of(context)
+                                                .backgroundColor),
+                                        child: Text(
+                                          model.messages[index].message,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6,
+                                        ),
+                                      ),
+                                    )
+                                  : Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 15,
+                                            backgroundImage:
+                                                CachedNetworkImageProvider(
+                                                    avatarUrl),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(8),
+                                                ),
+                                                color: Theme.of(context)
+                                                    .primaryColor),
+                                            child: Text(
+                                              model.messages[index].message,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6!
+                                                  .copyWith(
+                                                      color: Colors.white),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                            );
+                          });
+                    },
+                  )
+                      // : const SizedBox(),
+                      ),
                   Container(
                     padding: const EdgeInsets.all(20),
                     height: 100,
@@ -273,20 +258,6 @@ class ChatScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                actions: [
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text('Rate'),
-                  ),
-                  IconButton(
-                    onPressed: () => model.addMatchDialog(context),
-                    tooltip: 'Update result',
-                    icon: SvgPicture.asset(
-                      'assets/add_new_match.svg',
-                      color: primaryColor,
-                    ),
-                  ),
-                ],
               ),
               body: Center(
                 child: Padding(
