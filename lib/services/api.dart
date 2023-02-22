@@ -457,8 +457,26 @@ class ApiService {
   updateStrength(String email, int strength) {
     var ref = _db.collection('users').doc(email);
 
-    ref.update({'email': email, 'strength': strength}).then(
+    ref.update({'strength': strength}).then(
       (value) => debugPrint("DocumentSnapshot successfully updated!"),
+      onError: (e) => debugPrint("Error updating document $e"),
+    );
+  }
+
+  addRating(String receiver, double rating, String comment) async {
+    final prefs = await SharedPreferences.getInstance();
+    String sender = prefs.getString('email') ?? '';
+
+    var ref = _db.collection('users').doc(receiver);
+
+    ref.update({'ratings': FieldValue.arrayUnion([
+        {
+          'email': sender,
+          'rating': rating,
+          'comment': comment
+        }
+      ])}).then(
+          (value) => debugPrint("DocumentSnapshot successfully updated!"),
       onError: (e) => debugPrint("Error updating document $e"),
     );
   }

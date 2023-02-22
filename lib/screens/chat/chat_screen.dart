@@ -98,7 +98,7 @@ class ChatScreen extends StatelessWidget {
                 ),
                 actions: [
                   TextButton(
-                    onPressed: () => model.ratingDialog(context),
+                    onPressed: () => model.ratingDialog(context, email),
                     child: const Text('Rate'),
                   ),
                   IconButton(

@@ -155,12 +155,14 @@ class ChatModel extends BaseModel {
     );
   }
 
-  void ratingDialog(context) {
+  void ratingDialog(context, String email) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        TextStyle? ts = Theme.of(context).textTheme.headline1;
         TextStyle? prompt = Theme.of(context).textTheme.headline3;
+
+        TextEditingController ratingController = TextEditingController();
+        double rating = 0;
 
         return AlertDialog(
           title: Text('Your rating:', style: prompt),
@@ -178,15 +180,26 @@ class ChatModel extends BaseModel {
                     Icons.star,
                     color: Colors.amber,
                   ),
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                  },
+                  onRatingUpdate: (_) => rating = _,
                 ),
-                TextFormField(),
+                TextFormField(
+                  controller: ratingController,
+                  decoration: const InputDecoration(hintText: "Your comment"),
+                ),
                 Row(
                   children: [
-                    TextButton(onPressed: () {}, child: const Text('Cancel')),
-                    TextButton(onPressed: () {}, child: const Text('Update')),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancel')),
+                    TextButton(
+                        onPressed: () {
+                          apiService.addRating(
+                              email, rating, ratingController.text);
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Update')),
                   ],
                 )
               ],
