@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class UserImageSmall extends StatelessWidget {
@@ -16,7 +17,7 @@ class UserImageSmall extends StatelessWidget {
       width: 70,
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage(
+              image: CachedNetworkImageProvider(
                 url,
               ),
               fit: BoxFit.cover),

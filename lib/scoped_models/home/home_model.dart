@@ -18,10 +18,28 @@ class HomeModel extends BaseModel {
     setState(ViewState.busy);
 
     users = await apiService.getAllUsers();
+    await sortUser();
+
     currentUser = users[0];
     nextUser = users[1];
 
     setState(ViewState.retrieved);
+  }
+
+  sortUser() async {
+    User me = await apiService.getProfileData();
+
+    // Sort the list of users by strength
+    users.sort((a, b) => b.strength.compareTo(a.strength));
+
+    // Sort the list of users by distance to user1
+    users.sort(
+      (a, b) => me.distanceTo(a).compareTo(
+            me.distanceTo(b),
+          ),
+    );
+
+    notifyListeners();
   }
 
   toUserScreen(context) => Navigator.pushNamed(context, UserScreen.routeName,

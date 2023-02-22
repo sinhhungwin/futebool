@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:futebol/screens/base_screen.dart';
 import 'package:futebol/widgets/choice_button.dart';
@@ -52,7 +53,8 @@ class UserScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(user.imageUrls.first),
+                              image: CachedNetworkImageProvider(
+                                  user.imageUrls.first),
                             ),
                           ),
                         ),

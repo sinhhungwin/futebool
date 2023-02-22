@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:futebol/models/models.dart';
 
@@ -35,7 +36,7 @@ class UserCard extends StatelessWidget {
                   ],
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(user.imageUrls[0]),
+                    image: CachedNetworkImageProvider(user.imageUrls[0]),
                   ),
                 ),
               ),

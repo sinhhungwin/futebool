@@ -277,6 +277,12 @@ class ApiService {
     return res;
   }
 
+  void messagesStream() async {
+    await for (var snapshot in _db.collection('chats').doc().snapshots()) {
+      debugPrint(snapshot.toString());
+    }
+  }
+
   sendMessage(String text, String partner) async {
     final prefs = await SharedPreferences.getInstance();
     String myEmail = prefs.getString('email') ?? '';

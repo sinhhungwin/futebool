@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
@@ -138,7 +139,7 @@ class ImgModel extends BaseModel {
     final prefs = await SharedPreferences.getInstance();
     imageUrls = prefs.getStringList('imageUrls') ?? [];
     this.url = url;
-    image = NetworkImage(url);
+    image = CachedNetworkImageProvider(url);
 
     setState(ViewState.retrieved);
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
   bool imageLoaded = false;
   bool imageLoading = false;
 
-  ImageProvider image = const NetworkImage(
+  ImageProvider image = const CachedNetworkImageProvider(
       'https://vn112.com/wp-content/uploads/2018/01/pxsolidwhiteborderedsvg-15161310048lcp4.png');
 
   Future<void> uploadImage(XFile image) async {
