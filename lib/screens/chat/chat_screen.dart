@@ -5,6 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:futebol/config/theme.dart';
 import 'package:futebol/screens/base_screen.dart';
 
+import '../../enums/match_result.dart';
+
 class ChatScreenArguments {
   final String email;
   final String name;
@@ -121,80 +123,130 @@ class ChatScreen extends StatelessWidget {
 
                       model.parseMessages(snapshot.data?.data());
 
-                      return ListView.builder(
-                          controller: model.chatController,
-                          shrinkWrap: true,
-                          itemCount:
-                              model.getMessagesLength(snapshot.data?.data()),
-                          itemBuilder: (context, index) {
-                            if (model.isPending(snapshot.data?.data()) &&
-                                index == 0) {
-                              model.loadPending(snapshot.data?.data());
+                      Widget topWidget = const SizedBox(
+                        child: Text('Blah blog'),
+                        height: 20,
+                      );
 
-                              return ListTile(
-                                title: Text(model.pending.home),
-                                subtitle: Text(model.pending.result.toString()),
-                                trailing: Text(model.pending.away),
-                              );
-                            }
+                      if (model.isPending(snapshot.data?.data())) {
+                        model.loadPending(snapshot.data?.data());
 
-                            return ListTile(
-                              title: model.messages[index - 1].sender != email
-                                  ? Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(8),
+                        // TODO: Change != to ==
+                        if (email != model.pending.home) {
+                          String result;
+
+                          switch (model.pending.result) {
+                            case Result.win:
+                              result = 'WIN';
+                              break;
+                            case Result.draw:
+                              result = 'DRAW';
+                              break;
+                            case Result.loss:
+                              result = 'LOSE';
+                              break;
+                          }
+
+                          topWidget = ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("$name $result to you ?"),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.check,
+                                          color: Colors.red,
+                                        )),
+                                    IconButton(
+                                        onPressed: () {
+                                          model.disapproveMatchResult(email);
+                                        },
+                                        icon: const Icon(
+                                            Icons.delete_outline_sharp)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      }
+
+                      return Column(
+                        children: [
+                          topWidget,
+                          Expanded(
+                            child: ListView.builder(
+                                controller: model.chatController,
+                                shrinkWrap: true,
+                                itemCount: model.messages.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    title: model.messages[index].sender != email
+                                        ? Align(
+                                            alignment: Alignment.topRight,
+                                            child: Container(
+                                              padding: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                    Radius.circular(8),
+                                                  ),
+                                                  color: Theme.of(context)
+                                                      .backgroundColor),
+                                              child: Text(
+                                                model.messages[index].message,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline6,
+                                              ),
                                             ),
-                                            color: Theme.of(context)
-                                                .backgroundColor),
-                                        child: Text(
-                                          model.messages[index - 1].message,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6,
-                                        ),
-                                      ),
-                                    )
-                                  : Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Row(
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 15,
-                                            backgroundImage:
-                                                CachedNetworkImageProvider(
-                                                    avatarUrl),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(8),
+                                          )
+                                        : Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Row(
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 15,
+                                                  backgroundImage:
+                                                      CachedNetworkImageProvider(
+                                                          avatarUrl),
                                                 ),
-                                                color: Theme.of(context)
-                                                    .primaryColor),
-                                            child: Text(
-                                              model.messages[index - 1].message,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline6!
-                                                  .copyWith(
-                                                      color: Colors.white),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.all(8),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                        Radius.circular(8),
+                                                      ),
+                                                      color: Theme.of(context)
+                                                          .primaryColor),
+                                                  child: Text(
+                                                    model.messages[index]
+                                                        .message,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline6!
+                                                        .copyWith(
+                                                            color:
+                                                                Colors.white),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                            );
-                          });
+                                  );
+                                }),
+                          ),
+                        ],
+                      );
                     },
                   )
                       // : const SizedBox(),

@@ -80,6 +80,10 @@ class ChatModel extends BaseModel {
     scrollDown();
   }
 
+  disapproveMatchResult(String partner) {
+    apiService.deletePending(partner);
+  }
+
   void addMatchDialog(context, String email) {
     showDialog(
       context: context,
@@ -144,8 +148,8 @@ class ChatModel extends BaseModel {
                   direction: Axis.horizontal,
                   allowHalfRating: true,
                   itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => Icon(
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => const Icon(
                     Icons.star,
                     color: Colors.amber,
                   ),
@@ -156,8 +160,8 @@ class ChatModel extends BaseModel {
                 TextFormField(),
                 Row(
                   children: [
-                    TextButton(onPressed: () {}, child: Text('Cancel')),
-                    TextButton(onPressed: () {}, child: Text('Update')),
+                    TextButton(onPressed: () {}, child: const Text('Cancel')),
+                    TextButton(onPressed: () {}, child: const Text('Update')),
                   ],
                 )
               ],

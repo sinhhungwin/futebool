@@ -424,4 +424,33 @@ class ApiService {
       newMessageRef.update({'pending': pending});
     }
   }
+
+  deletePending(String partner) async {
+    final prefs = await SharedPreferences.getInstance();
+    String myEmail = prefs.getString('email') ?? '';
+
+    String user1 = myEmail;
+    String user2 = partner;
+
+    if (user1.compareTo(user2) > 0) {
+      user1 = partner;
+      user2 = myEmail;
+    }
+
+    final ref = await _db
+        .collection('chats')
+        .where('users', isEqualTo: [user1, user2])
+        .get()
+        .onError((error, stackTrace) {
+          debugPrint("Error getting document: $error");
+
+          throw Exception(error);
+        });
+
+    for (var doc in ref.docs) {
+      final newMessageRef = _db.collection('chats').doc(doc.id);
+
+      newMessageRef.update({'pending': FieldValue.delete()});
+    }
+  }
 }
