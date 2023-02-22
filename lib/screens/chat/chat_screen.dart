@@ -129,11 +129,17 @@ class ChatScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             if (model.isPending(snapshot.data?.data()) &&
                                 index == 0) {
-                              return Text("PENDING");
+                              model.loadPending(snapshot.data?.data());
+
+                              return ListTile(
+                                title: Text(model.pending.home),
+                                subtitle: Text(model.pending.result.toString()),
+                                trailing: Text(model.pending.away),
+                              );
                             }
 
                             return ListTile(
-                              title: model.messages[index].sender != email
+                              title: model.messages[index - 1].sender != email
                                   ? Align(
                                       alignment: Alignment.topRight,
                                       child: Container(
@@ -146,7 +152,7 @@ class ChatScreen extends StatelessWidget {
                                             color: Theme.of(context)
                                                 .backgroundColor),
                                         child: Text(
-                                          model.messages[index].message,
+                                          model.messages[index - 1].message,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline6,
@@ -176,7 +182,7 @@ class ChatScreen extends StatelessWidget {
                                                 color: Theme.of(context)
                                                     .primaryColor),
                                             child: Text(
-                                              model.messages[index].message,
+                                              model.messages[index - 1].message,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .headline6!

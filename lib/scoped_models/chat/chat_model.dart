@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:futebol/enums/match_result.dart';
 import 'package:futebol/models/chat/message_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +17,7 @@ class ChatModel extends BaseModel {
   ScrollController chatController = ScrollController();
   List<MessageModel> messages = [];
   late Stream<DocumentSnapshot> stream;
+  late PendingMatch pending;
 
   onModelReady(email) async {
     try {
@@ -165,4 +167,28 @@ class ChatModel extends BaseModel {
       },
     );
   }
+
+  loadPending(snapshot) {
+    pending = PendingMatch.fromJson(snapshot['pending']);
+    notifyListeners();
+  }
+}
+
+class PendingMatch {
+  String home;
+  int homeStrength;
+  Result result;
+  String away;
+  int awayStrength;
+
+  PendingMatch.fromJson(data)
+      : home = data['home'] ?? '',
+        homeStrength = data['homeStrength'] ?? '',
+        away = data['away'] ?? '',
+        awayStrength = data['awayStrength'] ?? '',
+        result = data['result'] == 'W'
+            ? Result.win
+            : data['result'] == 'D'
+                ? Result.draw
+                : Result.loss;
 }
