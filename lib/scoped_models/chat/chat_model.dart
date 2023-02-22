@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:futebol/enums/match_result.dart';
 import 'package:futebol/models/chat/message_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

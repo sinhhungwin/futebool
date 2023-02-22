@@ -1,8 +1,8 @@
 import 'package:scoped_model/scoped_model.dart';
 
-import '../enums/view_state.dart';
+import '../config/helper.dart';
 
-export '../enums/view_state.dart';
+export '../config/helper.dart';
 
 class BaseModel extends Model {
   ViewState _state = ViewState.busy;

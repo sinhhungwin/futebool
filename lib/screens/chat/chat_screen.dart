@@ -5,8 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:futebol/config/theme.dart';
 import 'package:futebol/screens/base_screen.dart';
 
-import '../../enums/match_result.dart';
-
 class ChatScreenArguments {
   final String email;
   final String name;

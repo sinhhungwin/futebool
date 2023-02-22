@@ -3,9 +3,8 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../config/service_locator.dart';
 
-export 'package:futebol/enums/view_state.dart';
-
 export '../../scoped_models/models.dart';
+export '../config/helper.dart';
 
 class BaseScreen<T extends Model> extends StatefulWidget {
   final ScopedModelDescendantBuilder<T> _builder;
