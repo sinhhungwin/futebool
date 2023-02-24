@@ -6,10 +6,12 @@ import 'user_img_small.dart';
 
 class UserCard extends StatelessWidget {
   final User user;
+  final Function onInfoPressed;
 
   const UserCard({
     Key? key,
     required this.user,
+    required this.onInfoPressed,
   }) : super(key: key);
 
   @override
@@ -75,9 +77,8 @@ class UserCard extends StatelessWidget {
                     // Other images of user
                     Row(
                       children: [
-                        UserImageSmall(url: user.imageUrls[1]),
-                        UserImageSmall(url: user.imageUrls[1]),
-                        UserImageSmall(url: user.imageUrls[1]),
+                        for (int i = 1; i < user.imageUrls.length; i++)
+                          if (i < 3) UserImageSmall(url: user.imageUrls[i]),
                         const SizedBox(
                           width: 10,
                         ),
@@ -86,10 +87,13 @@ class UserCard extends StatelessWidget {
                           height: 35,
                           decoration: const BoxDecoration(
                               shape: BoxShape.circle, color: Colors.white),
-                          child: Icon(
-                            Icons.info_outline,
-                            size: 25,
-                            color: Theme.of(context).primaryColor,
+                          child: GestureDetector(
+                            onTap: () => onInfoPressed(),
+                            child: Icon(
+                              Icons.info_outline,
+                              size: 25,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         )
                       ],

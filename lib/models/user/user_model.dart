@@ -11,6 +11,7 @@ class User {
   String bio;
   String email;
   int strength;
+  List<Rating> ratings;
 
   User({
     required this.city,
@@ -21,7 +22,8 @@ class User {
     required this.bio,
     required this.email,
     this.strength = 1000,
-  });
+    List<Rating>? ratings,
+  }) : ratings = ratings ?? [];
 
   User.blank()
       : city = '',
@@ -31,8 +33,10 @@ class User {
         name = '',
         bio = 'bio',
         email = '',
+        ratings = [],
         strength = 1000;
 
+  // TODO: Xử lý lỗi khi parse data
   User.fromJSON(data)
       : city = data['city'],
         latitude = data['latitude'],
@@ -41,7 +45,19 @@ class User {
         name = data['name'],
         bio = data['bio'],
         email = data['email'],
-        strength = data['strength'] ?? 1000;
+        strength = data['strength'] ?? 1000,
+        ratings = [] {
+    List<Rating> ratings = [];
+
+    // TODO: Áp dụng với các model khác
+    if (data['ratings'] != null) {
+      for (var rating in data['ratings']) {
+        ratings.add(Rating.fromJSON(rating));
+      }
+    }
+
+    this.ratings = ratings;
+  }
 
   double _degreesToRadians(double degrees) {
     return degrees * pi / 180.0;
@@ -70,5 +86,23 @@ class User {
   @override
   String toString() {
     return "User: $email - $name - $bio - $city";
+  }
+}
+
+class Rating {
+  String email;
+  num rating;
+  String comment;
+
+  Rating({required this.email, required this.rating, this.comment = ''});
+
+  Rating.fromJSON(data)
+      : email = data['email'],
+        rating = data['rating'],
+        comment = data['comment'];
+
+  @override
+  String toString() {
+    return 'Rating{email: $email, rating: $rating, comment: $comment}';
   }
 }

@@ -36,8 +36,14 @@ class HomeScreen extends StatelessWidget {
                     InkWell(
                       onDoubleTap: () => model.toUserScreen(context),
                       child: Draggable(
-                        feedback: UserCard(user: model.currentUser),
-                        childWhenDragging: UserCard(user: model.nextUser),
+                        feedback: UserCard(
+                          user: model.currentUser,
+                          onInfoPressed: () => model.toUserScreen(context),
+                        ),
+                        childWhenDragging: UserCard(
+                          user: model.nextUser,
+                          onInfoPressed: () => model.toUserScreen(context),
+                        ),
                         onDragEnd: (drag) {
                           if (drag.velocity.pixelsPerSecond.dx < 0) {
                             model.swipeLeft();
@@ -45,7 +51,10 @@ class HomeScreen extends StatelessWidget {
                             model.swipeRight();
                           }
                         },
-                        child: UserCard(user: model.currentUser),
+                        child: UserCard(
+                          user: model.currentUser,
+                          onInfoPressed: () => model.toUserScreen(context),
+                        ),
                       ),
                     ),
                     Padding(
