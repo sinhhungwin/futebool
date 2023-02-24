@@ -108,7 +108,7 @@ class UserScreen extends StatelessWidget {
                   ),
                 ),
 
-                // Description
+                // Info
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
@@ -119,16 +119,27 @@ class UserScreen extends StatelessWidget {
                         user.name,
                         style: Theme.of(context).textTheme.headline1,
                       ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+
+                      // City
+                      Text(
+                        'City',
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
                       Text(
                         user.city,
                         style: Theme.of(context)
                             .textTheme
                             .headline3!
-                            .copyWith(fontWeight: FontWeight.normal),
+                            .copyWith(fontWeight: FontWeight.normal, height: 2),
                       ),
                       const SizedBox(
                         height: 15,
                       ),
+
+                      // Bio
                       Text(
                         'About',
                         style: Theme.of(context).textTheme.headline2,
@@ -143,9 +154,40 @@ class UserScreen extends StatelessWidget {
                       const SizedBox(
                         height: 15,
                       ),
+
+                      // Pictures
                       Text(
-                        'Interests',
+                        'Pictures',
                         style: Theme.of(context).textTheme.headline2,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 125,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: user.imageUrls.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 5.0),
+                                child: Container(
+                                  height: 125,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                        color: Theme.of(context).primaryColor),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: CachedNetworkImageProvider(
+                                          user.imageUrls[index]),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
                       ),
                     ],
                   ),

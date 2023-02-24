@@ -10,7 +10,6 @@ class UserModel extends BaseModel {
   late User user;
 
   onModelReady() {
-    user = User.users.first;
     setState(ViewState.retrieved);
   }
 }
