@@ -10,7 +10,9 @@ class User {
   String name;
   String bio;
   String email;
-  int strength;
+  num strength;
+  num phi;
+
   List<Rating> ratings;
 
   User({
@@ -22,6 +24,7 @@ class User {
     required this.bio,
     required this.email,
     this.strength = 1000,
+    this.phi = 350,
     List<Rating>? ratings,
   }) : ratings = ratings ?? [];
 
@@ -34,9 +37,9 @@ class User {
         bio = 'bio',
         email = '',
         ratings = [],
-        strength = 1000;
+        strength = 1000,
+        phi = 350;
 
-  // TODO: Xử lý lỗi khi parse data
   User.fromJSON(data)
       : city = data['city'],
         latitude = data['latitude'],
@@ -46,10 +49,10 @@ class User {
         bio = data['bio'],
         email = data['email'],
         strength = data['strength'] ?? 1000,
+        phi = data['phi'] ?? 350,
         ratings = [] {
     List<Rating> ratings = [];
 
-    // TODO: Áp dụng với các model khác
     if (data['ratings'] != null) {
       for (var rating in data['ratings']) {
         ratings.add(Rating.fromJSON(rating));

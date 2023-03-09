@@ -404,8 +404,10 @@ class ApiService {
     Map<String, dynamic> pending = {
       'home': home.email,
       'homeStrength': home.strength,
+      'homePhi': home.phi,
       'away': away.email,
       'awayStrength': away.strength,
+      'awayPhi': away.phi,
       'result': result
     };
 
@@ -454,10 +456,10 @@ class ApiService {
     }
   }
 
-  updateStrength(String email, num strength) {
+  updateStrength(String email, num strength, num phi) {
     var ref = _db.collection('users').doc(email);
 
-    ref.update({'strength': strength}).then(
+    ref.update({'strength': strength, 'phi': phi}).then(
       (value) => debugPrint("DocumentSnapshot successfully updated!"),
       onError: (e) => debugPrint("Error updating document $e"),
     );

@@ -87,8 +87,10 @@ class ChatModel extends BaseModel {
   approveMatchResult(String partner) {
     apiService.deletePending(partner);
     updateStrength();
-    apiService.updateStrength(pending.home, pending.homeStrength);
-    apiService.updateStrength(pending.away, pending.awayStrength);
+    apiService.updateStrength(
+        pending.home, pending.homeStrength, pending.homePhi);
+    apiService.updateStrength(
+        pending.away, pending.awayStrength, pending.awayPhi);
   }
 
   updateStrength() {
@@ -223,15 +225,19 @@ class ChatModel extends BaseModel {
 class PendingMatch {
   String home;
   num homeStrength;
+  num homePhi;
   Result result;
   String away;
   num awayStrength;
+  num awayPhi;
 
   PendingMatch.fromJson(data)
       : home = data['home'] ?? '',
-        homeStrength = data['homeStrength'] ?? '',
+        homeStrength = data['homeStrength'] ?? 0,
+        homePhi = data['homePhi'] ?? 0,
         away = data['away'] ?? '',
-        awayStrength = data['awayStrength'] ?? '',
+        awayStrength = data['awayStrength'] ?? 0,
+        awayPhi = data['awayPhi'] ?? 0,
         result = data['result'] == 'W'
             ? Result.win
             : data['result'] == 'D'
