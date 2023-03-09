@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:futebol/config/theme.dart';
 
 import '../screens/screens.dart';
 
@@ -21,6 +22,9 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     );
 
     return AppBar(
+      iconTheme: const IconThemeData(
+        color: primaryColor, //change your color here
+      ),
       backgroundColor: Colors.transparent,
       elevation: 0,
       title: Row(

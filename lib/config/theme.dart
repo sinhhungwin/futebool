@@ -17,6 +17,7 @@ ThemeData theme() {
 
 // Colors
 const primaryColor = Color(0xFFE84545);
+const fontColor = Color(0xFF2B3467);
 
 // Text Theme
 TextTheme textTheme() {
@@ -33,7 +34,7 @@ TextTheme textTheme() {
         fontWeight: FontWeight.bold),
     headline3: TextStyle(
         fontFamily: 'Montserrat',
-        color: primaryColor,
+        color: fontColor,
         fontSize: 18,
         fontWeight: FontWeight.bold),
     headline4: TextStyle(
@@ -48,17 +49,17 @@ TextTheme textTheme() {
         fontWeight: FontWeight.bold),
     headline6: TextStyle(
         fontFamily: 'Montserrat',
-        color: primaryColor,
+        color: fontColor,
         fontSize: 14,
         fontWeight: FontWeight.normal),
     bodyText1: TextStyle(
         fontFamily: 'Montserrat',
-        color: primaryColor,
+        color: fontColor,
         fontSize: 12,
         fontWeight: FontWeight.normal),
     bodyText2: TextStyle(
         fontFamily: 'Montserrat',
-        color: primaryColor,
+        color: fontColor,
         fontSize: 10,
         fontWeight: FontWeight.normal),
   );
