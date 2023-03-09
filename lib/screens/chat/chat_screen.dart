@@ -127,9 +127,7 @@ class ChatScreen extends StatelessWidget {
 
                       if (model.isPending(snapshot.data?.data())) {
                         model.loadPending(snapshot.data?.data());
-
-                        // TODO: Change != to ==
-                        if (email != model.pending.home) {
+                        if (email == model.pending.home) {
                           String result;
 
                           switch (model.pending.result) {

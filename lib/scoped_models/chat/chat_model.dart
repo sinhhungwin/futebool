@@ -111,8 +111,10 @@ class ChatModel extends BaseModel {
         break;
     }
 
-    pending.homeStrength = res.item1.sigma;
-    pending.awayStrength = res.item2.sigma;
+    pending.homeStrength = res.item1.mu;
+    pending.homePhi = res.item1.phi;
+    pending.awayStrength = res.item2.mu;
+    pending.awayPhi = res.item2.phi;
   }
 
   void addMatchDialog(context, String email) {
