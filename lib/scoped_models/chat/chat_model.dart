@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:futebol/models/chat/message_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../config/glicko.dart' as algo;
 import '../../config/service_locator.dart';
 import '../../services/api.dart';
 import '../base_model.dart';
@@ -90,22 +91,26 @@ class ChatModel extends BaseModel {
     apiService.updateStrength(pending.away, pending.awayStrength);
   }
 
-  // TODO: Implement algorithm
   updateStrength() {
-    int difference = (pending.homeStrength - pending.awayStrength).abs();
+    algo.Rating r1 = algo.Glicko2().createRating(mu: pending.homeStrength);
+    algo.Rating r2 = algo.Glicko2().createRating(mu: pending.awayStrength);
+
+    algo.Tuple<algo.Rating, algo.Rating> res;
 
     switch (pending.result) {
       case Result.win:
-        pending.homeStrength += difference;
-        pending.awayStrength -= difference;
+        res = algo.Glicko2().rate1vs1(r1, r2);
         break;
       case Result.draw:
+        res = algo.Glicko2().rate1vs1(r1, r2, drawn: true);
         break;
       case Result.loss:
-        pending.awayStrength += difference;
-        pending.homeStrength -= difference;
+        res = algo.Glicko2().rate1vs1(r2, r1);
         break;
     }
+
+    pending.homeStrength = res.item1.sigma;
+    pending.awayStrength = res.item2.sigma;
   }
 
   void addMatchDialog(context, String email) {
@@ -217,10 +222,10 @@ class ChatModel extends BaseModel {
 
 class PendingMatch {
   String home;
-  int homeStrength;
+  num homeStrength;
   Result result;
   String away;
-  int awayStrength;
+  num awayStrength;
 
   PendingMatch.fromJson(data)
       : home = data['home'] ?? '',

@@ -10,6 +10,8 @@ import '../base_model.dart';
 class HomeModel extends BaseModel {
   ApiService apiService = locator<ApiService>();
 
+  List<String> like = [];
+
   late User currentUser;
   late User nextUser;
   late List<User> users;
@@ -17,11 +19,23 @@ class HomeModel extends BaseModel {
   onModelReady() async {
     setState(ViewState.busy);
 
-    users = await apiService.getAllUsers();
-    await sortUser();
+    try {
+      users = await apiService.getAllUsers();
 
-    currentUser = users[0];
-    nextUser = users[1];
+      // Get user that we've already liked
+      MatchModel matchModel = await apiService.getMatches();
+      like = matchModel.like;
+
+      await sortUser();
+
+      currentUser = users[0];
+      nextUser = users[1];
+    } catch (e) {
+      dump(e);
+
+      setState(ViewState.error);
+      return;
+    }
 
     setState(ViewState.retrieved);
   }
@@ -29,15 +43,17 @@ class HomeModel extends BaseModel {
   sortUser() async {
     User me = await apiService.getProfileData();
 
+    users = users.where((element) => !like.contains(element.email)).toList();
+
     // Sort the list of users by strength
     users.sort((a, b) => b.strength.compareTo(a.strength));
 
     // Sort the list of users by distance to user1
-    users.sort(
-      (a, b) => me.distanceTo(a).compareTo(
-            me.distanceTo(b),
-          ),
-    );
+    // users.sort(
+    //   (a, b) => me.distanceTo(a).compareTo(
+    //         me.distanceTo(b),
+    //       ),
+    // );
 
     notifyListeners();
   }

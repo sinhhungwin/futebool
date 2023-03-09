@@ -454,7 +454,7 @@ class ApiService {
     }
   }
 
-  updateStrength(String email, int strength) {
+  updateStrength(String email, num strength) {
     var ref = _db.collection('users').doc(email);
 
     ref.update({'strength': strength}).then(
@@ -469,14 +469,12 @@ class ApiService {
 
     var ref = _db.collection('users').doc(receiver);
 
-    ref.update({'ratings': FieldValue.arrayUnion([
-        {
-          'email': sender,
-          'rating': rating,
-          'comment': comment
-        }
-      ])}).then(
-          (value) => debugPrint("DocumentSnapshot successfully updated!"),
+    ref.update({
+      'ratings': FieldValue.arrayUnion([
+        {'email': sender, 'rating': rating, 'comment': comment}
+      ])
+    }).then(
+      (value) => debugPrint("DocumentSnapshot successfully updated!"),
       onError: (e) => debugPrint("Error updating document $e"),
     );
   }
