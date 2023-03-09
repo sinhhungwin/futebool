@@ -4,7 +4,7 @@ const num WIN = 1.0;
 const num DRAW = 0.5;
 const num LOSS = 0.0;
 
-const num MU = 1500;
+const num MU = 1000;
 const num PHI = 350;
 const num SIGMA = 0.06;
 const num TAU = 1.0;
@@ -34,12 +34,8 @@ class Glicko2 {
     this.epsilon = EPSILON,
   });
 
-  Rating createRating({num? mu, num? phi, num? sigma}) {
-    mu ??= this.mu;
-    phi ??= this.phi;
-    sigma ??= this.sigma;
-    return Rating(mu: mu, phi: phi, sigma: sigma);
-  }
+  Rating createRating({num? mu, num? phi, num? sigma}) => Rating(
+      mu: mu ?? this.mu, phi: phi ?? this.phi, sigma: sigma ?? this.sigma);
 
   Rating scaleDown(Rating rating, [num ratio = 173.7178]) {
     num mu = (rating.mu - this.mu) / ratio;
@@ -64,23 +60,24 @@ class Glicko2 {
   }
 
   num determineSigma(Rating rating, num difference, num variance) {
-// Determines new sigma.
+    // Determines new sigma.
     num phi = rating.phi;
     num differenceSquared = pow(difference, 2);
-// 1. Let a = ln(s^2), and define f(x)
+
+    // 1. Let a = ln(s^2), and define f(x)
     num alpha = log(pow(rating.sigma, 2));
 
     num f(num x) {
-/* This function is twice the conditional log-posterior density of
-* phi, and is the optimality criterion.
-*/
+      /* This function is twice the conditional log-posterior density of
+    * phi, and is the optimality criterion.
+    */
       num tmp = pow(phi, 2) + variance + exp(x);
       num a = exp(x) * (differenceSquared - tmp) / (2 * pow(tmp, 2));
       num b = (x - alpha) / pow(tau, 2);
       return a - b;
     }
 
-// 2. Set the initial values of the iterative algorithm.
+    // 2. Set the initial values of the iterative algorithm.
     num a = alpha;
     num b;
     if (differenceSquared > pow(phi, 2) + variance) {
@@ -93,15 +90,15 @@ class Glicko2 {
       b = alpha - k * sqrt(pow(tau, 2));
     }
 
-// 3. Let fA = f(A) and f(B) = f(B)
+    // 3. Let fA = f(A) and f(B) = f(B)
     num f_a = f(a), f_b = f(b);
 
-// 4. While |B-A| > e, carry out the following steps.
-// (a) Let C = A + (A - B)fA / (fB-fA), and let fC = f(C).
-// (b) If fCfB < 0, then set A <- B and fA <- fB; otherwise, just set
-// fA <- fA/2.
-// (c) Set B <- C and fB <- fC.
-// (d) Stop if |B-A| <= e. Repeat the above three steps otherwise.
+    // 4. While |B-A| > e, carry out the following steps.
+    // (a) Let C = A + (A - B)fA / (fB-fA), and let fC = f(C).
+    // (b) If fCfB < 0, then set A <- B and fA <- fB; otherwise, just set
+    // fA <- fA/2.
+    // (c) Set B <- C and fB <- fC.
+    // (d) Stop if |B-A| <= e. Repeat the above three steps otherwise.
     while ((b - a).abs() > epsilon) {
       num c = a + (a - b) * f_a / (f_b - f_a);
       num f_c = f(c);
@@ -115,7 +112,7 @@ class Glicko2 {
       f_b = f_c;
     }
 
-// 5. Once |B-A| <= e, set s' <- e^(A/2)
+    // 5. Once |B-A| <= e, set s' <- e^(A/2)
     return pow(e, a / 2);
   }
 
