@@ -9,7 +9,6 @@ import 'package:latlong2/latlong.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../config/helper.dart';
 import '../../config/service_locator.dart';
 import '../../models/models.dart';
 import '../../screens/screens.dart';
@@ -54,6 +53,7 @@ class ProfileModel extends BaseModel {
     final prefs = await SharedPreferences.getInstance();
     prefs.setStringList('imageUrls', user?.imageUrls ?? []);
 
+    imgUrls = user?.imageUrls ?? [];
     nameController.text = user?.name ?? '';
     descriptionController.text = user?.bio ?? '';
     city = user?.city ?? '';
