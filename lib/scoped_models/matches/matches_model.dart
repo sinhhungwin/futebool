@@ -17,7 +17,8 @@ class MatchesModel extends BaseModel {
     liked = [];
     setState(ViewState.busy);
     try {
-      match = await apiService.getMatches();
+      match = await apiService.getMatches() ??
+          MatchModel(like: [], liked: [], messages: []);
 
       for (String i in match.liked) {
         if (match.messages.every((element) => element.email != i)) {

@@ -137,7 +137,7 @@ class MatchScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(38.0),
                 child: Text(
-                  model.errorText,
+                  'Something went wrong',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
