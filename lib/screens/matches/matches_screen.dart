@@ -42,34 +42,41 @@ class MatchScreen extends StatelessWidget {
                       'Like You',
                       style: Theme.of(context).textTheme.headline4,
                     ),
-                    SizedBox(
-                      height: 120,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () => model.toChatScreen(
-                                  context, model.liked[index].email),
-                              child: Column(
-                                children: [
-                                  UserImageSmall(
-                                      url: model.liked[index].imageUrls.first),
-                                  Text(
-                                    model.liked[index].name,
-                                    style:
-                                        Theme.of(context).textTheme.headline5,
-                                  )
-                                ],
-                              ),
+                    model.match.liked.isEmpty
+                        ? const Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Text("No one likes you"),
+                          )
+                        : SizedBox(
+                            height: 120,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () => model.toChatScreen(
+                                        context, model.liked[index].email),
+                                    child: Column(
+                                      children: [
+                                        UserImageSmall(
+                                            url: model
+                                                .liked[index].imageUrls.first),
+                                        Text(
+                                          model.liked[index].name,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                              itemCount: model.liked.length,
                             ),
-                          );
-                        },
-                        itemCount: model.liked.length,
-                      ),
-                    ),
+                          ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -79,55 +86,67 @@ class MatchScreen extends StatelessWidget {
                       'Your Chats',
                       style: Theme.of(context).textTheme.headline4,
                     ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () => model.toChatScreen(
-                              context, model.chatted[index].email),
-                          child: Row(
-                            children: [
-                              // Avatar Pic
-                              UserImageSmall(
-                                  url: model.chatted[index].imageUrls.first),
-                              // Other info
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // Name
-                                  Text(
-                                    model.match.messages[index].name,
-                                    style:
-                                        Theme.of(context).textTheme.headline5,
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
+                    model.match.messages.isEmpty
+                        ? const Padding(
+                            padding: EdgeInsets.all(8),
+                            child:
+                                Text("There is no messages for you right now"),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () => model.toChatScreen(
+                                    context, model.chatted[index].email),
+                                child: Row(
+                                  children: [
+                                    // Avatar Pic
+                                    UserImageSmall(
+                                        url: model
+                                            .chatted[index].imageUrls.first),
+                                    // Other info
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        // Name
+                                        Text(
+                                          model.match.messages[index].name,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
 
-                                  // Last chat message
-                                  Text(
-                                    model.match.messages[index].message,
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
+                                        // Last chat message
+                                        Text(
+                                          model.match.messages[index].message,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
 
-                                  // Last chat time
-                                  Text(
-                                    model.match.messages[index].time.toString(),
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
-                                  ),
-                                ],
-                              )
-                            ],
+                                        // Last chat time
+                                        Text(
+                                          model.match.messages[index].time
+                                              .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                            itemCount: model.match.messages.length,
                           ),
-                        );
-                      },
-                      itemCount: model.match.messages.length,
-                    ),
                   ],
                 ),
               ),
