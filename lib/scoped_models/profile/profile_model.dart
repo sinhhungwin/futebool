@@ -114,13 +114,13 @@ class ProfileModel extends BaseModel {
     prefs.setDouble('longitude', 0);
     prefs.setStringList('imageUrls', []);
 
-    Navigator.push(
-      context,
-      PageTransition(
-        type: PageTransitionType.fade,
-        child: const OnboardingScreen(),
-      ),
-    );
+    Navigator.pushAndRemoveUntil(
+        context,
+        PageTransition(
+          type: PageTransitionType.fade,
+          child: const OnboardingScreen(),
+        ),
+        (Route<dynamic> route) => false);
   }
 }
 

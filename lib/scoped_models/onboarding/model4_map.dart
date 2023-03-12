@@ -57,7 +57,8 @@ class MapModel extends BaseModel {
 
     try {
       await apiService.setInitialData(data);
-      Navigator.pushNamed(context, HomeScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(
+          context, HomeScreen.routeName, (Route<dynamic> route) => false);
     } catch (e) {
       SnackBar snackBar = SnackBar(
         content: Text(

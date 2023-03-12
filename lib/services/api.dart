@@ -10,6 +10,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/models.dart' as model;
+import '../config/helper.dart';
 
 class ApiService {
   final _db = FirebaseFirestore.instance;
@@ -184,6 +185,12 @@ class ApiService {
 
       throw Exception(error);
     });
+
+    dump("getMatches Value data: ${value.data()}");
+
+    if (value.data() == null) {
+      return null;
+    }
 
     final data = value.data() as Map<String, dynamic>;
     return model.MatchModel.fromJSON(data);

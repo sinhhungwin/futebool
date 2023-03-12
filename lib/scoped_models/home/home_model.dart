@@ -23,8 +23,9 @@ class HomeModel extends BaseModel {
       users = await apiService.getAllUsers();
 
       // Get user that we've already liked
-      MatchModel matchModel = await apiService.getMatches();
-      like = matchModel.like;
+      MatchModel? matchModel = await apiService.getMatches();
+
+      like = matchModel?.like ?? [];
 
       await sortUser();
 

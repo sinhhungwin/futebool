@@ -120,7 +120,7 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
       padding: const EdgeInsets.only(bottom: 10.0, right: 10),
       child: Container(
         height: 150,
-        width: 100,
+        width: 90,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: image,

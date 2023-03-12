@@ -34,6 +34,7 @@ class Picture extends StatelessWidget {
                       // 3 pics each row
                       // First row of pics
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
                           CustomImageContainer(),
                           CustomImageContainer(),
@@ -43,6 +44,7 @@ class Picture extends StatelessWidget {
 
                       // Second row of pics
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
                           CustomImageContainer(),
                           CustomImageContainer(),

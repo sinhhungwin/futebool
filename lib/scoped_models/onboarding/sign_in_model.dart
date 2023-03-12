@@ -42,7 +42,8 @@ class SignInModel extends BaseModel {
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('email', email);
 
-      Navigator.pushNamed(context, HomeScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(
+          context, HomeScreen.routeName, (Route<dynamic> route) => false);
     }
   }
 }
