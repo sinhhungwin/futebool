@@ -37,7 +37,7 @@ class User {
         bio = 'bio',
         email = '',
         ratings = [],
-        strength = 1000,
+        strength = 1500,
         phi = 350;
 
   User.fromJSON(data)

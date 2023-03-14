@@ -22,10 +22,15 @@ class HomeModel extends BaseModel {
     try {
       users = await apiService.getAllUsers();
 
+      dump("USERS: $users");
+
       // Get user that we've already liked
       MatchModel? matchModel = await apiService.getMatches();
+      dump("matchModel: $matchModel");
 
       like = matchModel?.like ?? [];
+
+      dump("like: $like");
 
       await sortUser();
 
@@ -42,8 +47,6 @@ class HomeModel extends BaseModel {
   }
 
   sortUser() async {
-    User me = await apiService.getProfileData();
-
     users = users.where((element) => !like.contains(element.email)).toList();
 
     // Sort the list of users by strength

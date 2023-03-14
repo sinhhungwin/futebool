@@ -6,12 +6,12 @@ class MatchModel {
   MatchModel({required this.like, required this.liked, required this.messages});
 
   MatchModel.fromJSON(data)
-      : like = List<String>.from(data['like']),
-        liked = List<String>.from(data['liked']),
+      : like = List<String>.from(data['like'] ?? []),
+        liked = List<String>.from(data['liked'] ?? []),
         messages = [] {
     List<Message> messages = [];
 
-    (data['messages'] as Map).forEach((key, value) {
+    ((data['messages'] ?? {}) as Map).forEach((key, value) {
       messages.add(Message.fromJSON(key, value));
     });
     this.messages = messages;

@@ -32,13 +32,14 @@ class ChatModel extends BaseModel {
       });
     } catch (e) {
       errorText = e.toString();
+      dump(e);
       setState(ViewState.error);
     }
   }
 
   parseMessages(snapshot) {
     List<MessageModel> res = [];
-    for (var item in snapshot['messages']) {
+    for (var item in snapshot['messages'] ?? []) {
       res.add(MessageModel.fromJSON(item));
     }
 

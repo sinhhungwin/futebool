@@ -115,11 +115,20 @@ class ChatScreen extends StatelessWidget {
                       child: StreamBuilder<DocumentSnapshot>(
                     stream: model.stream,
                     builder: (context, snapshot) {
+                      dump("snapshot.data: ${snapshot.data}");
+
+                      if (snapshot.data == null) {
+                        dump('RETURNING CONTAINER()');
+                        return Container();
+                      }
+
                       if (!snapshot.hasData) {
                         return const Center(child: CircularProgressIndicator());
                       }
 
                       model.parseMessages(snapshot.data?.data());
+
+                      dump("snapshot.data?.data(): ${snapshot.data?.data()}");
 
                       Widget topWidget = const SizedBox(
                         height: 20,

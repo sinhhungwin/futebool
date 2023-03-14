@@ -30,6 +30,11 @@ class ApiService {
       throw Exception(error);
     });
 
+    dump(value.data());
+
+    if (value.data() == null) {
+      return model.User.blank();
+    }
     final data = value.data() as Map<String, dynamic>;
     return model.User.fromJSON(data);
   }
@@ -155,6 +160,8 @@ class ApiService {
 
       throw Exception(error);
     });
+
+    dump("docRef.docs : ${docRef.docs}");
 
     for (var doc in docRef.docs) {
       final data = doc.data();
@@ -303,6 +310,20 @@ class ApiService {
 
           throw Exception(error);
         });
+
+    dump(ref.docs);
+
+    if (ref.docs.isEmpty) {
+      final newChatRef = _db.collection('chats').doc();
+
+      newChatRef.set({
+        'users': [user1, user2],
+      });
+    }
+    dump(ref.docs);
+
+    dump(
+        "_db.collection('chats').doc(ref.docs.first.id).snapshots(): ${_db.collection('chats').doc(ref.docs.first.id).snapshots()}");
     return _db.collection('chats').doc(ref.docs.first.id).snapshots();
   }
 
